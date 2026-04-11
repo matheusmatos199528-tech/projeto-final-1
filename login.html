@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tela de login </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/login.style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+</style>
+
+<body>
+
+  <div class="container">
+    <img class="login-img" src="./img/Imagem1.png " alt="logotipo do login">
+    <form class="form" action="TelaUsuario.html">
+      <input 
+     placeholder="E-mail ou CPF" id="emailCpf" name="emailCpf" type="text" class="input" required pattern="(^\d{3}\.\d{3}\.\d{3}-\d{2}$)|(^\d{11}$)|(^[^\s@]+@[^\s@]+\.[^\s@]+$)"
+       title="Digite um CPF ou um e-mail válido"/>
+    <div class="senha-container">
+      <input placeholder="Senha" id="senha" name="senha" type="password" class="input" required 
+      pattern="^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{6,}$"
+      title="Mínimo 6 caracteres, com letra, número e caractere especial"/>
+      <span class="toggle-senha" onclick="verSenha('senha')">👁</span>
+    </div>
+    
+    <span class="agreement2"><a href="esqueceu.senha.html">Esqueceu sua Senha?</a></span> 
+      
+    <input value="Entrar " type="submit" class="login-button" />
+    
+      <span class="agreement1"><a href="cadastro.html">Cadastre-se</a></span>
+
+
+    </form>
+
+    <div class="social-account-container">
+      <span class="title">Ou faça login com</span>
+      <div class="social-accounts">
+        <button class="social-button google" onclick="window.location.href='login-google.html'">
+          <svg viewBox="0 0 488 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="svg">
+            <path
+              d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z">
+            </path>
+          </svg>
+        </button>
+        <button class="social-button microsoft" onclick="window.location.href='login-microsoft.html'">
+  <svg viewBox="0 0 24 24" height="1em" xmlns="http://www.w3.org/2000/svg" class="svg">
+    <path 
+      d="M2 3l9-1v9H2V3zm11-1l9-1v10h-9V2zM2 13h9v9l-9-1v-8zm11 0h9v10l-9-1v-9z">
+    </path>
+  </svg>
+</button>
+      </div>
+    </div>
+    <span class="agreement"><a href="#">Leia o contrato de licença do usuario</a></span>
+  </div>
+
+  <script src="./js/login.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
