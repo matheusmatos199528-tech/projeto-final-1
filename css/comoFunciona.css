@@ -21,7 +21,7 @@ a:focus, button:focus {
 
 /* ===== NAVBAR ===== */
 .navbar {
-  background: linear-gradient(135deg, #bfd5ec, #0f517c);
+  background: #bfd5ec;
   min-height: 75px;
   display: flex;
   align-items: center;
@@ -40,7 +40,7 @@ a:focus, button:focus {
 }
 
 .nav-link {
-  color: white;
+  color: #000000;
   border-radius: 10px;
   transition: 0.3s;
   padding: 8px 12px;
@@ -54,7 +54,7 @@ a:focus, button:focus {
 /* ===== HERO ===== */
 .interactive-hero {
   background: linear-gradient(135deg, #5fa8d3, #91c2e5);
-  color: white;
+  color: #000000;
   padding: 40px 20px;
   border-radius: 12px;
   text-align: center;

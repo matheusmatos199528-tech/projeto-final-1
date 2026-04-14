@@ -32,8 +32,8 @@ body {
 }
 
 .nav-link:hover {
-  color: #000000;
-  background: #ffe600;
+  color: #ffe600;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .navbar-toggler {

@@ -15,8 +15,8 @@ body {
 
 /* ===== NAVBAR ===== */
 .navbar {
-  background: linear-gradient(135deg, #bfd5ec, #0f517c);
-  min-height: 75px;
+  background: #bfd5ec;
+  height: 75px;
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -34,7 +34,7 @@ body {
 }
 
 .nav-link {
-  color: white;
+  color: #000000;
   border-radius: 10px;
   transition: 0.3s;
   padding: 6px 10px;
