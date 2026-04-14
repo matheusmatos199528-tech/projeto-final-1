@@ -2,203 +2,240 @@
 <html lang="pt-br">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Acessibilidade - IncluCity</title>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Mapa de Acessibilidade - IncluCity</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="css/mapa.css">
-
-    <!-- ICONES -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/mapa.css">
 </head>
 
 <body>
-    <!-- NAVBAR -->
 
-    <nav class="navbar navbar-expand-lg">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="TelaInicial.html">
+        <img src="./img/Imagem1.png" alt="IncluCity" class="logotipo">
+      </a>
 
-        <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <a class="navbar-brand" href="TelaInicial.html">
-                <img src="img/Imagem1.png" class="logo">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="menuNavbar">
-
-                <ul class="navbar-nav">
-
-                    <li class="nav-item">
-
-                        <a class="nav-link" href="TelaInicial.html"><i class="fa-solid fa-house"></i>Início</a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a class="nav-link" href="mapa.html"><i class="fa-solid fa-map"></i>Mapa de acessibilidade</a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a class="nav-link" href="ComoFunciona.html"><i class="fa-solid fa-circle-info"></i>Como
-                            funciona</a>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a class="nav-link" href="login.html"><i class="fa-solid fa-user"></i>Login</a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cadastro.html"><i class="fa-solid fa-user"></i>Cadastre-se</a>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-    </nav>
-
-    <div class="container-mapa">
-
-        <!-- SIDEBAR -->
-
-        <div class="sidebar">
-
-            <h3>Mapa Acessível</h3>
-
-            <button class="btn btn-primary btn-add" onclick="adicionarLocal()">
-                + Adicionar local
-            </button>
-
-            <div class="filtros">
-
-                <select id="filtroDeficiencia" class="form-select" onchange="filtrar()">
-
-                    <option value="todos">Tipo de deficiência</option>
-                    <option value="fisica">Física</option>
-                    <option value="visual">Visual</option>
-                    <option value="auditiva">Auditiva</option>
-                    <option value="intelectual">Intelectual</option>
-
-                </select>
-
-                <select id="filtroAvaliacao" class="form-select" onchange="filtrar()">
-
-                    <option value="todos">Avaliação</option>
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="1">⭐</option>
-
-                </select>
-
-            </div>
-
-            <button class="btn btn-primary  m-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
-
-                Ver locais avaliados
-
-            </button>
-
-        </div>
-
-        <!-- MAPA -->
-
-        <div id="map"></div>
-
+      <div class="collapse navbar-collapse justify-content-end" id="menuNavbar">
+        <ul class="navbar-nav align-items-lg-center ms-auto">
+          <li class="nav-item"><a class="nav-link" href="TelaInicial.html"><i
+                class="fa-solid fa-house me-2"></i>Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="mapa.html"><i class="fa-solid fa-map me-2"></i>Mapa</a></li>
+          <li class="nav-item"><a class="nav-link" href="ComoFunciona.html"><i
+                class="fa-solid fa-circle-info me-2"></i>Como funciona</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html"><i class="fa-solid fa-user me-2"></i>Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="cadastro.html"><i
+                class="fa-solid fa-user me-2"></i>Cadastre-se</a></li>
+        </ul>
+      </div>
     </div>
-    
-    <!-- OFFCANVAS -->
+  </nav>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight">
+  <!-- BOTÃO MOBILE 
+  <button id="btnListaAcessivel" class="btn btn-primary mb-3 d-lg-none">Ver lista acessível</button>-->
 
-        <div class="offcanvas-header">
+  <!-- LAYOUT -->
+  <div class="container-mapa">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h3>Mapa Acessível</h3>
+      <button id="btnAdicionarLocal" class="btn btn-success mb-3">+ Adicionar Local</button>
 
-            <h5 class="offcanvas-title">Locais Avaliados</h5>
+      <select id="filtroDeficiencia" class="form-select mb-2" onchange="filtrar()">
+        <option value="todos">Tipo de deficiência</option>
+        <option value="fisica">Física</option>
+        <option value="visual">Visual</option>
+        <option value="auditiva">Auditiva</option>
+        <option value="auditiva">Intelectual</option>
+      </select>
 
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      <select id="filtroAvaliacao" class="form-select mb-3" onchange="filtrar()">
+        <option value="todos">Avaliação</option>
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+      </select>
 
-        </div>
-
-        <div class="offcanvas-body">
-
-            <div id="listaLocais"></div>
-
-        </div>
-
+      <div id="listaLocais"></div>
     </div>
-    
-    <footer class="footer">
-        <div class="footer-container">
 
-            <div class="footer-col footer-brand">
-                <h2>IncluCity</h2>
-                <p>
-                    Tecnologia para cidades mais acessíveis, conectando pessoas a informações
-                    sobre mobilidade urbana e inclusão.
-                </p>
-            </div>
+    <!-- BOTÃO OFFCANVAS LATERAL 
+    <button class="btn btn-primary btn-offcanvas-lateral d-lg-none" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasLista">
+      Lista
+    </button>-->
 
-            <div class="footer-col">
-                <h3>Navegação</h3>
-                <ul>
-                    <li><a href="TelaInicial.html">Início</a></li>
-                    <li><a href="mapa.html">Mapa de Acessibilidade</a></li>
-                    <li><a href="ComoFunciona.html">Como Funciona</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="cadastro.html">Cadastre-se</a></li>
-                </ul>
-            </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLista">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Locais Acessíveis</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body" id="demoLocais"></div>
+    </div>
 
-            <div class="footer-col">
-                <h3>Contato</h3>
-                <ul>
-                    <li><a href="#">contato@inclucity.com</a></li>
-                    <li><a href="#">(12) 98215-9944</a></li>
-                    <li><a href="#">São José dos Campos - SP</a></li>
-                </ul>
-            </div>
+    <!-- MAPA -->
+    <div id="map"></div>
+  </div>
 
-            <div class="footer-col">
-                <h3>Redes</h3>
-                <div class="footer-social">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-            </div>
+  <!-- MODAL -->
+  <div id="formAdicionarLocal" class="modal-form">
+    <form id="formLocal" class="form-accessible">
 
+       <!--<button type="button" id="btnFechar" class="btn-fechar">&times;</button>
+      <h3>Adicionar Local Acessível</h3>-->
+
+      <!-- Nome -->
+      <input type="text" id="nome" placeholder="Nome do local" required minlength="3">
+
+      <!-- Tipo -->
+      <select id="tipoLocal" required>
+        <option value="">Tipo de local</option>
+        <option value="restaurante">Restaurante</option>
+        <option value="loja">Loja</option>
+        <option value="shopping">Shopping</option>
+        <option value="hospital">Hospital</option>
+        <option value="outro">Outro</option>
+      </select>
+
+      <!-- Endereço -->
+      <input type="text" id="endereco" placeholder="Endereço completo" required>
+
+      <!-- Tipo de acessibilidade -->
+      <select id="deficiencia" required>
+        <option value="">Tipo de acessibilidade principal</option>
+        <option value="fisica">Física</option>
+        <option value="visual">Visual</option>
+        <option value="auditiva">Auditiva</option>
+        <option value="intelectual">Intelectual</option>
+        <option value="todas">Atende todas</option>
+      </select>
+
+      <h4>Recursos de Acessibilidade</h4>
+
+      <style>
+        .checkbox-group {
+          display: flex;
+        }
+
+        #rampa {
+          width: 50px;
+        }
+      </style>
+
+      <div class="checkbox-group">
+
+        <div class="col-6 d-flex flex-column">
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="rampa">
+            <h5> Possui rampa de acesso</h5>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="rampa">
+            <h5> Possui rampa </h5>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="rampa">
+            <h5> banheiro acessivel</h5>
+          </div>
         </div>
 
-        <div class="footer-bottom">
-            <p>© 2026 IncluCity — Todos os direitos reservados.</p>
+        <div class="col-6 d-flex flex-column">
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="rampa">
+            <h5> Possui rampa de acesso</h5>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="rampa">
+            <h5> Possui rampa de acesso</h5>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="rampa">
+            <h5> Possui rampa de acesso</h5>
+          </div>
         </div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+      </div>
+
+      <!-- Avaliação -->
+      <select id="avaliacao" required>
+        <option value="">Avaliação geral</option>
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="2">⭐⭐</option>
+        <option value="1">⭐</option>
+      </select>
+
+      <!-- Comentário -->
+      <textarea id="comentario" placeholder="Descreva sua experiência no local..." required minlength="10"></textarea>
+
+      <!-- Fotos -->
+      <input type="file" id="foto" accept="image/*" multiple required>
+
+      <small>Envie fotos que comprovem a acessibilidade do local</small>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="button" id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col footer-brand">
+        <h2>IncluCity</h2>
+        <p>Tecnologia para cidades mais acessíveis, conectando pessoas a informações sobre mobilidade urbana e inclusão.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h3>Navegação</h3>
+        <ul>
+          <li><a href="TelaInicial.html">Início</a></li>
+          <li><a href="mapa.html">Mapa de Acessibilidade</a></li>
+          <li><a href="ComoFunciona.html">Como Funciona</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="cadastro.html">Cadastre-se</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Contato</h3>
+        <ul>
+          <li><a href="#">contato@inclucity.com</a></li>
+          <li><a href="#">(12) 98215-9944</a></li>
+          <li><a href="#">São José dos Campos - SP</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Redes</h3>
+        <div class="footer-social">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 IncluCity — Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="./js/mapa.js"></script>
-   
-
 </body>
 
 </html>
