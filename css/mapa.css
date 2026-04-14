@@ -1,3 +1,8 @@
+body, html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 /* ===== RESET ===== */
 * {
   box-sizing: border-box;
@@ -46,6 +51,11 @@ body {
   height: 90vh;
   overflow: hidden;
 }
+.container-principal {
+  display: flex;
+  height: calc(100vh - 75px);
+}
+
 
 /* ===== SIDEBAR ===== */
 .sidebar {
@@ -62,8 +72,15 @@ body {
 }
 
 /* ===== MAPA ===== */
+/*#map {
+  flex: 1;
+}*/
+
+/* MAPA */
 #map {
   flex: 1;
+  height: 100%;
+  width: 100%;
 }
 
 /* ===== LOCAIS ===== */
@@ -180,7 +197,7 @@ body {
   font-size: 12px;
 }
 
-/* ===== BOTÕES ===== */
+/* ===== BOTÕES ===== 
 .form-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -214,7 +231,7 @@ body {
 
 .btn-secondary:hover {
   background: #aaa;
-}
+}*/
 
 /* ===== BOTÃO MOBILE ===== */
 #btnListaAcessivel {
@@ -225,7 +242,7 @@ body {
   z-index: 1100;
 }
 
-/* ===== BOTÃO LATERAL ===== */
+/* ===== BOTÃO LATERAL 
 .btn-offcanvas-lateral {
   position: fixed;
   top: 50%;
@@ -235,7 +252,7 @@ body {
   padding: 0.25rem 0.5rem;
   font-size: 0.9rem;
   border-radius: 0 5px 5px 0;
-}
+}===== */
 
 /* ===== FOOTER ===== */
 .footer {
@@ -323,7 +340,7 @@ body {
 }
 
 /* Celular */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
 
   .container-mapa {
     flex-direction: column;
@@ -343,6 +360,24 @@ body {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+}*/
+@media (max-width: 768px) {
+
+  .container-principal {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 15px;
+  }
+
+  #map {
+    width: 100%;
+    height: 60vh; /* 🔥 aqui é o segredo */
   }
 
 }
