@@ -10,12 +10,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0f517c;
+  background-color: #bfd5ec;
 
 }
 
 .container {
- height: 600px;
+ height: 620px;
   width: 520px;
   background: linear-gradient(0deg, #ffffff 0%, #dedfe0 100%);
   border-radius: 40px;

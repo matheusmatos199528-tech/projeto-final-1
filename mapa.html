@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./css/mapa.css">
 </head>
 
-<body>
+<body onload="mudarposition()">
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark">
@@ -253,7 +253,12 @@
   new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
 <script src="https://freewebaccessible.com/dist/sienna.min.js" defer></script>
-
+<script>
+  function mudarposition() {
+      let btnteste = document.querySelector(".asw-menu-btn")
+      btnteste.style.top = "90px";     
+    }
+</script>
 </body>
 
 </html>
