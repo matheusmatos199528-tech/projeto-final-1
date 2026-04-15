@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/telaUsuario.css">
 </head>
 
-<body>
+<body onload="mudarposition()">
 
   <!-- NAVBAR -->
 
@@ -231,7 +231,12 @@
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
   <script src="https://freewebaccessible.com/dist/sienna.min.js" defer></script>
-
+<script>
+  function mudarposition() {
+      let btnteste = document.querySelector(".asw-menu-btn")
+      btnteste.style.top = "90px";     
+    }
+</script>
 
 </body>
 
