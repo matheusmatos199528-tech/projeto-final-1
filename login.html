@@ -20,7 +20,7 @@
 
   <div class="container">
     <img class="login-img" src="./img/Imagem1.png " alt="logotipo do login">
-    <form class="form" action="TelaUsuario.html">
+    <form class="form" action="TelaUsuario.html" method="post">
       <input 
      placeholder="E-mail ou CPF" id="emailCpf" name="emailCpf" type="text" class="input" required pattern="(^\d{3}\.\d{3}\.\d{3}-\d{2}$)|(^\d{11}$)|(^[^\s@]+@[^\s@]+\.[^\s@]+$)"
        title="Digite um CPF ou um e-mail válido"/>
@@ -32,6 +32,15 @@
     </div>
     
     <span class="agreement2"><a href="esqueceu.senha.html">Esqueceu sua Senha?</a></span> 
+    
+    <div class="termos-container">
+      <input type="checkbox" id="aceite" required>
+      <label for="aceite">
+        Li e aceito os <a href="termos.html" target="_blank">Termos de uso</a>
+        <a href="privacidade.html" target="_blank">Política de Privacidade</a>
+      </label>
+
+    </div>
       
     <input value="Entrar " type="submit" class="login-button" />
     
