@@ -1,3 +1,11 @@
+/* ===== body, html {
+  width: 100%;
+  overflow-x: hidden;
+}===== */
+
+html, body {
+  height: 100%;
+}
 /* ===== RESET ===== */
 * {
   box-sizing: border-box;
@@ -46,24 +54,32 @@ body {
   height: 90vh;
   overflow: hidden;
 }
+.container-principal {
+  display: flex;
+  height: calc(100vh - 75px);
+  overflow: hidden; /* 🔥 importante */
+}
 
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: 300px;
   min-width: 250px;
-  padding: 20px;
-  background: #f9fafb;
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
+  height: 100%;
 }
-
 .hidden {
   display: none;
 }
 
 /* ===== MAPA ===== */
+/*#map {
+  flex: 1;
+}*/
+
+/* MAPA */
 #map {
   flex: 1;
+  height: 100%;
+  min-height: 400px; /* 🔥 garante que nunca suma */
 }
 
 /* ===== LOCAIS ===== */
@@ -180,7 +196,7 @@ body {
   font-size: 12px;
 }
 
-/* ===== BOTÕES ===== */
+/* ===== BOTÕES ===== 
 .form-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -214,7 +230,7 @@ body {
 
 .btn-secondary:hover {
   background: #aaa;
-}
+}*/
 
 /* ===== BOTÃO MOBILE ===== */
 #btnListaAcessivel {
@@ -225,7 +241,7 @@ body {
   z-index: 1100;
 }
 
-/* ===== BOTÃO LATERAL ===== */
+/* ===== BOTÃO LATERAL 
 .btn-offcanvas-lateral {
   position: fixed;
   top: 50%;
@@ -235,7 +251,7 @@ body {
   padding: 0.25rem 0.5rem;
   font-size: 0.9rem;
   border-radius: 0 5px 5px 0;
-}
+}===== */
 
 /* ===== FOOTER ===== */
 .footer {
@@ -323,7 +339,7 @@ body {
 }
 
 /* Celular */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
 
   .container-mapa {
     flex-direction: column;
@@ -343,6 +359,18 @@ body {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+}*/
+@media (max-width: 768px) {
+
+  .container-principal {
+    flex-direction: column;
+    height: auto; /* 🔥 importante */
+  }
+
+  #map {
+    height: 60vh;
   }
 
 }

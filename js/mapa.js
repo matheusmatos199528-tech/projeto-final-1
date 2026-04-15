@@ -1,10 +1,25 @@
- // ---------------------------
+
+// ---------------------------
 // MAPA
 // ---------------------------
 var map = L.map('map').setView([-23.2237, -45.9009], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
   .addTo(map);
+
+// 🔥 CORREÇÃO PRINCIPAL (Leaflet)
+setTimeout(() => {
+  map.invalidateSize();
+}, 1000);
+
+setTimeout(() => {
+  map.invalidateSize();
+}, 2000);
+
+// 🔥 EXTRA (quando redimensionar tela)
+window.addEventListener("resize", () => {
+  map.invalidateSize();
+});
 
 // ---------------------------
 // DADOS
