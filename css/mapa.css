@@ -1,8 +1,11 @@
-body, html {
+/* ===== body, html {
   width: 100%;
   overflow-x: hidden;
-}
+}===== */
 
+html, body {
+  height: 100%;
+}
 /* ===== RESET ===== */
 * {
   box-sizing: border-box;
@@ -54,19 +57,15 @@ body {
 .container-principal {
   display: flex;
   height: calc(100vh - 75px);
+  overflow: hidden; /* 🔥 importante */
 }
-
 
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: 300px;
   min-width: 250px;
-  padding: 20px;
-  background: #f9fafb;
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
+  height: 100%;
 }
-
 .hidden {
   display: none;
 }
@@ -80,7 +79,7 @@ body {
 #map {
   flex: 1;
   height: 100%;
-  width: 100%;
+  min-height: 400px; /* 🔥 garante que nunca suma */
 }
 
 /* ===== LOCAIS ===== */
@@ -367,17 +366,11 @@ body {
 
   .container-principal {
     flex-direction: column;
-    height: auto;
-  }
-
-  .sidebar {
-    width: 100%;
-    padding: 15px;
+    height: auto; /* 🔥 importante */
   }
 
   #map {
-    width: 100%;
-    height: 60vh; /* 🔥 aqui é o segredo */
+    height: 60vh;
   }
 
 }
