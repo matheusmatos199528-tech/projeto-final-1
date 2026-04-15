@@ -5,7 +5,7 @@ body{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #0f517c;
+    background-color: #bfd5ec;
 }
 
 .login-img{
@@ -26,7 +26,7 @@ body{
   border-radius: 40px;
   padding: 25px 35px;
   border: 5px solid #2b2859;
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+  box-shadow: #85bdd7e0 0px 30px 30px -20px;
   margin: 20px;
 }
 
