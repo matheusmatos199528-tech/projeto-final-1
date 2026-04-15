@@ -48,6 +48,13 @@ body {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
 /* ===== LAYOUT ===== */
 .container-mapa {
   display: flex;
@@ -57,14 +64,17 @@ body {
 .container-principal {
   display: flex;
   height: calc(100vh - 75px);
-  overflow: hidden; /* 🔥 importante */
+  padding: 10px; /* 🔥 adiciona isso */
+  gap: 10px; /* 🔥 espaço entre sidebar e mapa */
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: 300px;
   min-width: 250px;
-  height: 100%;
+  padding: 20px; /* mais espaço interno */
+  background: #f9fafb;
+  border-radius: 10px; /* 🔥 deixa moderno */
 }
 .hidden {
   display: none;
@@ -371,6 +381,40 @@ body {
 
   #map {
     height: 60vh;
+  }
+
+}
+
+/* ===== NAVBAR MOBILE OVERLAY ===== */
+@media (max-width: 768px) {
+
+  .navbar-collapse {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+
+    background: linear-gradient(135deg, #0f517c, #1f2937);
+    border-radius: 15px;
+
+    padding: 20px;
+    z-index: 999;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-link {
+    color: white !important;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
 }
