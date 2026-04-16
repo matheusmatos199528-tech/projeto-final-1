@@ -22,7 +22,7 @@
 
 </style>
 
-<body>
+<body onload="mudarposition()">
 
   <div class="container">
     <img class="login-img" src="./img/Imagem1.png" alt="logotipo do cadastro">
@@ -119,6 +119,16 @@
   new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
 <script src="https://freewebaccessible.com/dist/sienna.min.js" defer></script>
+<script>
+    function mudarposition() {
+      let btnteste = document.querySelector(".asw-menu-btn")
+      btnteste.style.top = "315px";
+      btnteste.style.width = "36px";
+      btnteste.style.height = "36px"; 
+      btnteste.style.right = "10px"
+
+    }
+  </script>
 
 </body>
 
