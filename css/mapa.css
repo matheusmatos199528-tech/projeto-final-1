@@ -17,7 +17,7 @@ body {
 }
 
 /* ===== NAVBAR ===== */
-.navbar {
+/*.navbar {
   background: #bfd5ec;
   height: 75px;
   display: flex;
@@ -54,7 +54,66 @@ body {
 
 .navbar-toggler-icon {
   filter: invert(1);
+}*/
+
+.navbar {
+  background:  #bfd5ec;
+  height: 75px;
 }
+
+.logotipo {
+  height: 50px; 
+  justify-items: center;
+  align-items: center;
+}
+
+.navbar-nav {
+  gap: 0.8rem;
+}
+
+.nav-link {
+  color: #000000;
+  font-weight: 400;
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffe600;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.navbar-toggler {
+  border: none;
+  box-shadow: none !important;
+}
+
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: #0f517cf5;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 14px;
+    
+  }
+
+  .navbar-nav {
+    gap: 0.2rem;
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%;
+    color: white;
+  }
+}
+
+
 /* ===== LAYOUT ===== */
 .container-mapa {
   display: flex;
@@ -386,7 +445,7 @@ body {
 }
 
 /* ===== NAVBAR MOBILE OVERLAY ===== */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
 
   .navbar-collapse {
     position: absolute;
@@ -417,7 +476,7 @@ body {
     gap: 10px;
   }
 
-}
+}*/
 
 /* Celular pequeno */
 @media (max-width: 480px) {
