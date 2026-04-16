@@ -10,13 +10,13 @@ body{
 
 .login-img{
   height: 100px;
-  margin-left: 20px;
+  margin-left: 60px;
   justify-items: center;
   align-items: center;
 }
 
 .container {
-  max-width: 350px;
+  max-width: 430px;
   background: #0f517c;
   background: linear-gradient(
     0deg,
