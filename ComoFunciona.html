@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body>
+<body onload="mudarposition()">
 
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark">
@@ -97,71 +97,80 @@
   <!-- FOOTER -->
 
   <footer class="footer">
-  <div class="footer-container">
-    
-    <div class="footer-col footer-brand">
-      <h2>IncluCity</h2>
-      <p>
-        Tecnologia para cidades mais acessíveis, conectando pessoas a informações
-        sobre mobilidade urbana e inclusão.
-      </p>
-    </div>
+    <div class="footer-container">
 
-    <div class="footer-col">
-      <h3>Navegação</h3>
-      <ul>
-        <li><a href="TelaInicial.html">Início</a></li>
-        <li><a href="mapa.html">Mapa de Acessibilidade</a></li>
-        <li><a href="ComoFunciona.html">Como Funciona</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="cadastro.html">Cadastre-se</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h3>Contato</h3>
-      <ul>
-        <li><a href="#">contato@inclucity.com</a></li>
-        <li><a href="#">(12) 98215-9944</a></li>
-        <li><a href="#">São José dos Campos - SP</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h3>Redes</h3>
-      <div class="footer-social">
-        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+      <div class="footer-col footer-brand">
+        <h2>IncluCity</h2>
+        <p>
+          Tecnologia para cidades mais acessíveis, conectando pessoas a informações
+          sobre mobilidade urbana e inclusão.
+        </p>
       </div>
+
+      <div class="footer-col">
+        <h3>Navegação</h3>
+        <ul>
+          <li><a href="TelaInicial.html">Início</a></li>
+          <li><a href="mapa.html">Mapa de Acessibilidade</a></li>
+          <li><a href="ComoFunciona.html">Como Funciona</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="cadastro.html">Cadastre-se</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Contato</h3>
+        <ul>
+          <li><a href="#">contato@inclucity.com</a></li>
+          <li><a href="#">(12) 98215-9944</a></li>
+          <li><a href="#">São José dos Campos - SP</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Redes</h3>
+        <div class="footer-social">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
     </div>
 
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2026 IncluCity — Todos os direitos reservados.</p>
-  </div>
-</footer>
+    <div class="footer-bottom">
+      <p>© 2026 IncluCity — Todos os direitos reservados.</p>
+    </div>
+  </footer>
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
   <script src="./js/como.funciona.js"></script>
   <script src="js/telainicial.js"></script>
-  
-<div vw class="enabled">
-  <div vw-access-button class="active"></div>
-  <div vw-plugin-wrapper>
-    <div class="vw-plugin-top-wrapper"></div>
+
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
   </div>
-</div>
- 
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
- 
-<script>
-  new window.VLibras.Widget('https://vlibras.gov.br/app');
-</script>
-<script src="https://freewebaccessible.com/dist/sienna.min.js" defer></script>
 
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  <script src="https://freewebaccessible.com/dist/sienna.min.js" defer></script>
+  <script>
+    function mudarposition() {
+      let btnteste = document.querySelector(".asw-menu-btn")
+      btnteste.style.top = "315px";
+      btnteste.style.width = "36px";
+      btnteste.style.height = "36px"; 
+      btnteste.style.right = "10px"
+
+    }
+  </script>
 </body>
+
 </html>
