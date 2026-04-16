@@ -20,7 +20,7 @@ a:focus, button:focus {
 }
 
 /* ===== NAVBAR ===== */
-.navbar {
+/*.navbar {
   background: #bfd5ec;
   min-height: 75px;
   display: flex;
@@ -49,7 +49,64 @@ a:focus, button:focus {
 .nav-link:hover {
   color: #ffe600;
   background: rgba(0, 0, 0, 0.2);
+}*/
+.navbar {
+  background:  #bfd5ec;
+  height: 75px;
 }
+
+.logotipo {
+  height: 50px; 
+  justify-items: center;
+  align-items: center;
+}
+
+.navbar-nav {
+  gap: 0.8rem;
+}
+
+.nav-link {
+  color: #000000;
+  font-weight: 400;
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffe600;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.navbar-toggler {
+  border: none;
+  box-shadow: none !important;
+}
+
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: #0f517cf5;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 14px;
+    
+  }
+
+  .navbar-nav {
+    gap: 0.2rem;
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%;
+    color: white;
+  }
+}
+
 
 /* ===== HERO ===== */
 .interactive-hero {
@@ -254,6 +311,45 @@ a:focus, button:focus {
   }
 
 }
+/* ===== MENU MOBILE ESTILO APP ===== */
+/*@media (max-width: 768px) {
+
+  .navbar-collapse {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+
+    background: linear-gradient(135deg, #0f517c, #1f2937);
+    border-radius: 15px;
+
+    padding: 20px 16px;
+    z-index: 999;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .nav-link {
+    color: white !important;
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 11px 12px;
+    border-radius: 10px;
+  }
+
+}*/
+
 
 /* Celular pequeno */
 @media (max-width: 480px) {
