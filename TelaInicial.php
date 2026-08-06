@@ -13,7 +13,7 @@
 
   <!-- ICONES -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="css/telainicial.css">
+  <link rel="stylesheet" href="/assets/css/telainicial.css">
 </head>
 
 
@@ -241,7 +241,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script src="js/telainicial.js"></script>
+  <script src="/assets/js/telainicial.js"></script>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
