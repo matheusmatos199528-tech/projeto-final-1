@@ -66,73 +66,60 @@
             divulgação.<br>Medidas de segurança incluem:<br>
 
         </p>
+        <ul>
+            <li>Controle de acesso</li>
+            <li>Criptografia (quando aplicável)</li>
+            <li>Monitoramento de atividades
+            <li>
 
+        </ul>
 
+        <h2>Direitos dos usuários</h2>
+        <p>
+            De acordo com a legislação vigente, o usuário pode:
+        </p>
+        <ul>
+            <li>Solicitar acesso aos seus dados</li>
+            <li>Corrigir informações incorretas</li>
+            <li>Solicitar exclusão de dados</li>
+            <li>Revogar consentimento</li>
+        </ul>
 
+        <h2>Cookies</h2>
+        <p>
+            O IncluCity pode utilizar cookies para:
+        </p>
+        <ul>
+            <li>Melhorar a navegação</li>
+            <li>Armazenar preferências</li>
+            <li>Coletar dados estatísticos</li>
+        </ul>
 
-        Os dados são armazenados em ambiente seguro e protegidos contra acesso não autorizado, uso indevido ou
-        divulgação.
+        <p>
+            O usuário pode desativar cookies no navegador, se desejar.
+        </p>
 
-        Medidas de segurança incluem:
+        <h2>Alterações na Política</h2>
+        <p>
+            Esta política pode ser atualizada periodicamente. Recomenda-se a revisão frequente.
+        </p>
 
-        - Controle de acesso
-        - Criptografia (quando aplicável)
-        - Monitoramento de atividades
+        <h2>Contato</h2>
+        <p>
+          Para dúvidas ou solicitações relacionadas à privacidade, o usuário pode entrar em contato:
+          <br>📧 E-mail: suporte@inclucity.com<br>
+  
+        </p>
 
-        ---
+        <h2>Base legal</h2>
+        <p>
+          Esta política está em conformidade com a:
+          <br> Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018)<br>
+  
+        </p>
+        <p>Data: //______   Versão: 1.0 </p>
 
-        6. DIREITOS DO USUÁRIO
-
-        De acordo com a legislação vigente, o usuário pode:
-
-        - Solicitar acesso aos seus dados
-        - Corrigir informações incorretas
-        - Solicitar exclusão de dados
-        - Revogar consentimento
-
-        ---
-
-        7. COOKIES
-
-        O IncluCity pode utilizar cookies para:
-
-        - Melhorar a navegação
-        - Armazenar preferências
-        - Coletar dados estatísticos
-
-        O usuário pode desativar cookies no navegador, se desejar.
-
-        ---
-
-        8. ALTERAÇÕES NA POLÍTICA
-
-        Esta política pode ser atualizada periodicamente. Recomenda-se a revisão frequente.
-
-        ---
-
-        9. CONTATO
-
-        Para dúvidas ou solicitações relacionadas à privacidade, o usuário pode entrar em contato:
-
-        📧 E-mail: suporte@inclucity.com
-
-        ---
-
-        10. BASE LEGAL
-
-        Esta política está em conformidade com a:
-
-        Lei Geral de Proteção de Dados (LGPD – Lei nº 13.709/2018)
-
-        ---
-
-        Data: //______
-        Versão: 1.0 </a>
-
-
-
-
-
+                            
     </div>
 
 
