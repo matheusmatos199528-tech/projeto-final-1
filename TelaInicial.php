@@ -25,7 +25,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand" href="TelaInicial.html">
+      <a class="navbar-brand" href="TelaInicial.php">
         <img src="./img/Imagem_logo40up.webp" alt="IncluCity" class="logotipo">
       </a>
 
@@ -38,29 +38,29 @@
         <ul class="navbar-nav align-items-lg-center ms-auto">
           <li class="nav-item">
 
-            <a class="nav-link" href="TelaInicial.html"><i class="fa-solid fa-house"></i>Início</a>
+            <a class="nav-link" href="TelaInicial.php"><i class="fa-solid fa-house"></i>Início</a>
 
           </li>
 
           <li class="nav-item">
 
-            <a class="nav-link" href="mapa.html"><i class="fa-solid fa-map"></i>Mapa de acessibilidade</a>
+            <a class="nav-link" href="mapa.php"><i class="fa-solid fa-map"></i>Mapa de acessibilidade</a>
 
           </li>
 
           <li class="nav-item">
 
-            <a class="nav-link" href="ComoFunciona.html"><i class="fa-solid fa-circle-info"></i>Como funciona</a>
+            <a class="nav-link" href="ComoFunciona.php"><i class="fa-solid fa-circle-info"></i>Como funciona</a>
 
           </li>
 
           <li class="nav-item">
 
-            <a class="nav-link" href="login.html"><i class="fa-solid fa-user"></i>Login</a>
+            <a class="nav-link" href="login.php"><i class="fa-solid fa-user"></i>Login</a>
 
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="cadastro.html"><i class="fa-solid fa-user"></i>Cadastre-se</a>
+            <a class="nav-link" href="cadastro.php"><i class="fa-solid fa-user"></i>Cadastre-se</a>
 
           </li>
 
@@ -82,7 +82,7 @@
 
       <p>Uma plataforma colaborativa que promove acessibilidade urbana.</p>
 
-      <button class="btn btn-light btn-lg" onclick="window.location.href='ComoFunciona.html'">Saiba Mais </button>
+      <button class="btn btn-light btn-lg" onclick="window.location.href='ComoFunciona.php'">Saiba Mais </button>
 
     </div>
 
@@ -204,8 +204,8 @@
       <div class="footer-col">
         <h3>Navegação</h3>
         <ul>
-          <li><a href="TelaInicial.html">Início</a></li>
-          <li><a href="mapa.html">Mapa de Acessibilidade</a></li>
+          <li><a href="TelaInicial.php">Início</a></li>
+          <li><a href="mapa.php">Mapa de Acessibilidade</a></li>
           <li><a href="ComoFunciona.html">Como Funciona</a></li>
           <li><a href="login.html">Login</a></li>
           <li><a href="cadastro.html">Cadastre-se</a></li>

@@ -31,20 +31,20 @@
       <span class="toggle-senha" onclick="verSenha('senha')">👁</span>
     </div>
     
-    <span class="agreement2"><a href="esqueceu.senha.html">Esqueceu sua Senha?</a></span> 
+    <span class="agreement2"><a href="esqueceu.senha.php">Esqueceu sua Senha?</a></span> 
     
     <div class="termos-container">
       <input type="checkbox" id="aceite" required>
       <label for="aceite">
-        Li e aceito os <a href="termos.html" target="_blank">Termos de uso</a>
-        <a href="privacidade.html" target="_blank">Política de Privacidade</a>
+        Li e aceito os <a href="termos.php" target="_blank">Termos de uso</a>
+        <a href="privacidade.php" target="_blank">Política de Privacidade</a>
       </label>
 
     </div>
       
     <input value="Entrar " type="submit" class="login-button" />
     
-      <span class="agreement1"><a href="cadastro.html">Cadastre-se</a></span>
+      <span class="agreement1"><a href="cadastro.php">Cadastre-se</a></span>
 
 
     </form>

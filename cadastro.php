@@ -57,9 +57,9 @@
 
         <label for="aceite">
             Li e aceito os 
-            <a href="termos.html" target="_blank">Termos de uso</a> 
+            <a href="termos.php" target="_blank">Termos de uso</a> 
             e 
-            <a href="privacidade.html" target="_blank">
+            <a href="privacidade.php" target="_blank">
                 Política de Privacidade
             </a>
         </label>
@@ -104,7 +104,7 @@
     </div>
 
     <span class="agreement">
-      Já tem uma conta? <a href="login.html">Entrar</a>
+      Já tem uma conta? <a href="login.php">Entrar</a>
     </span>
   </div>
 
