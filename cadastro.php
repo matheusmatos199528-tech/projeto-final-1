@@ -7,7 +7,7 @@
   <title>Cadastrar-se </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/css/cadastro.style.css">
+  <link rel="stylesheet" href="css/cadastro.style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -29,20 +29,20 @@
 
 
 
-    <form class="form" onsubmit="return validarFormulario()" action="login.html">
+    <form class="form" onsubmit="return validarFormulario()" action="salvar_usuario.php" method="POST">
     
     <div class="linha">
-      <input placeholder="Nome completo" id="nome" type="text" class="input" required>
-      <input placeholder="E-mail" id="email" type="email" class="input" required>
+      <input placeholder="Nome completo" id="nome" name="nome" type="text" class="input" required>
+      <input placeholder="E-mail" id="email" name="email" type="email" class="input" required>
     </div>
 
     <div class="linha">
-      <input placeholder="Celular" id="celular" type="text" class="input" required maxlength="15">
-      <input placeholder="CPF" id="cpf" type="text" class="input" required>
+      <input placeholder="Celular" id="celular" name="celular" type="text" class="input" required maxlength="15">
+      <input placeholder="CPF" id="cpf" name="cpf" type="text" class="input" required>
     </div>
 
     <div class="senha-container">
-      <input placeholder="Senha" id="senha" type="password" class="input" required>
+      <input placeholder="Senha" id="senha" name="senha" type="password" class="input" required>
       <span class="toggle-senha" onclick="verSenha('senha')">👁</span>
     </div>
 
@@ -52,14 +52,22 @@
     </div>
 
     <div class="termos-container">
-      <input type="checkbox" id="aceite" required>
-      <label for="aceite">
-        Li e aceito os <a href="termos.html" target="_blank">Termos de uso</a> e <a href="privacidade.html" target="_blank">Política de Privacidade</a>
-      </label>
+
+        <input type="checkbox" id="aceite" required>
+
+        <label for="aceite">
+            Li e aceito os 
+            <a href="termos.html" target="_blank">Termos de uso</a> 
+            e 
+            <a href="privacidade.html" target="_blank">
+                Política de Privacidade
+            </a>
+        </label>
+
     </div>
 
     <button type="submit" class="cadastrar-button">
-      Cadastrar
+        Cadastrar
     </button>
   </form>
 
