@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Bem vindo ao IncluCity</h1>
-<a href="./TelaInicial.html">Ir para Tela Inicial</a>
+<a href="./TelaInicial.php">Ir para Tela Inicial</a>
 
 </body>
 </html>
