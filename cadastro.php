@@ -7,7 +7,7 @@
   <title>Cadastrar-se </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/cadastro.style.css">
+  <link rel="stylesheet" href="./assets/css/cadastro.style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -25,7 +25,7 @@
 <body onload="mudarposition()">
 
   <div class="container">
-    <img class="login-img" src="./img/Imagem1.png" alt="logotipo do cadastro">
+    <img class="login-img" src="./assets/img/Imagem1.png" alt="logotipo do cadastro">
 
 
 
@@ -57,9 +57,9 @@
 
         <label for="aceite">
             Li e aceito os 
-            <a href="termos.html" target="_blank">Termos de uso</a> 
+            <a href="termos.php" target="_blank">Termos de uso</a> 
             e 
-            <a href="privacidade.html" target="_blank">
+            <a href="privacidade.php" target="_blank">
                 Política de Privacidade
             </a>
         </label>
@@ -104,7 +104,7 @@
     </div>
 
     <span class="agreement">
-      Já tem uma conta? <a href="login.html">Entrar</a>
+      Já tem uma conta? <a href="login.php">Entrar</a>
     </span>
   </div>
 
@@ -112,7 +112,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-    <script src="js/telainicial.js"></script>
+    <script src="./assets/js/cadastro.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
