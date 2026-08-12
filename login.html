@@ -20,44 +20,31 @@
 
   <div class="container">
     <img class="login-img" src="./img/Imagem1.png " alt="logotipo do login">
-    <form class="form" action="autenticar.php" method="POST">
+    <form class="form" action="TelaUsuario.html" method="post">
       <input 
-     placeholder="E-mail ou CPF" 
-     id="login" 
-     name="login" 
-     type="text" 
-     class="input" 
-     required pattern="(^\d{3}\.\d{3}\.\d{3}-\d{2}$)|(^\d{11}$)|(^[^\s@]+@[^\s@]+\.[^\s@]+$)"
-     title="Digite um CPF ou um e-mail válido"/>
-
-
+     placeholder="E-mail ou CPF" id="emailCpf" name="emailCpf" type="text" class="input" required pattern="(^\d{3}\.\d{3}\.\d{3}-\d{2}$)|(^\d{11}$)|(^[^\s@]+@[^\s@]+\.[^\s@]+$)"
+       title="Digite um CPF ou um e-mail válido"/>
     <div class="senha-container">
-      <input 
-      placeholder="Senha" 
-      id="senha" 
-      name="senha" 
-      type="password" 
-      class="input" 
-      required 
+      <input placeholder="Senha" id="senha" name="senha" type="password" class="input" required 
       pattern="^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{6,}$"
       title="Mínimo 6 caracteres, com letra, número e caractere especial"/>
       <span class="toggle-senha" onclick="verSenha('senha')">👁</span>
     </div>
     
-    <span class="agreement2"><a href="esqueceu.senha.php">Esqueceu sua Senha?</a></span> 
+    <span class="agreement2"><a href="esqueceu.senha.html">Esqueceu sua Senha?</a></span> 
     
     <div class="termos-container">
       <input type="checkbox" id="aceite" required>
       <label for="aceite">
-        Li e aceito os <a href="termos.php" target="_blank">Termos de uso</a>
-        <a href="privacidade.php" target="_blank">Política de Privacidade</a>
+        Li e aceito os <a href="termos.html" target="_blank">Termos de uso</a>
+        <a href="privacidade.html" target="_blank">Política de Privacidade</a>
       </label>
 
     </div>
       
     <input value="Entrar " type="submit" class="login-button" />
     
-      <span class="agreement1"><a href="cadastro.php">Cadastre-se</a></span>
+      <span class="agreement1"><a href="cadastro.html">Cadastre-se</a></span>
 
 
     </form>
