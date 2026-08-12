@@ -19,7 +19,7 @@
 <body onload="mudarposition()">
 
   <div class="container">
-    <img class="login-img" src="./img/Imagem1.png " alt="logotipo do login">
+    <img class="login-img" src="./assets/img/Imagem1.png " alt="logotipo do login">
     <form class="form" action="autenticar.php" method="POST">
       <input 
      placeholder="E-mail ou CPF" 
@@ -84,11 +84,11 @@
     <span class="agreement"><a href="#">Leia o contrato de licença do usuario</a></span>
   </div>
 
-  <script src="./js/login.js"></script>
+  <script src="./assets/js/login.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-    <script src="js/telainicial.js"></script>
+    <script src="./assets/js/telainicial.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>

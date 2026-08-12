@@ -18,7 +18,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="TelaInicial.php">
-        <img src="./img/Imagem1.png" alt="IncluCity" class="logotipo">
+        <img src="./assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar">
@@ -29,10 +29,14 @@
         <ul class="navbar-nav align-items-lg-center ms-auto">
           <li class="nav-item"><a class="nav-link" href="TelaInicial.php"><i
                 class="fa-solid fa-house me-2"></i>Início</a></li>
+
           <li class="nav-item"><a class="nav-link" href="mapa.php"><i class="fa-solid fa-map me-2"></i>Mapa de acessibilidade</a></li>
+
           <li class="nav-item"><a class="nav-link" href="ComoFunciona.php"><i
                 class="fa-solid fa-circle-info me-2"></i>Como funciona</a></li>
+
           <li class="nav-item"><a class="nav-link" href="login.php"><i class="fa-solid fa-user me-2"></i>Login</a></li>
+
           <li class="nav-item"><a class="nav-link" href="cadastro.php"><i
                 class="fa-solid fa-user me-2"></i>Cadastre-se</a></li>
         </ul>
@@ -237,8 +241,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="./js/mapa.js"></script>
-  <script src="js/telainicial.js"></script>
+  <script src="./assets/js/mapa.js"></script>
+  <script src="./assets/js/telainicial.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
