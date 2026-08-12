@@ -77,19 +77,19 @@
     <div class="step card shadow-sm p-3 text-center">
       <h3>1 Busque</h3>
       <p>Pesquise por cidade ou tipo de estabelecimento e aplique filtros de acessibilidade.</p>
-      <img src="./img/Busque.jpg.jpg" alt="Pessoa buscando locais acessíveis">
+      <img src="./assets/img/Busque.jpg.jpg" alt="Pessoa buscando locais acessíveis">
     </div>
 
     <div class="step card shadow-sm p-3 text-center">
       <h3>2 Verifique</h3>
       <p>Confira informações detalhadas como rampas, banheiros adaptados e sinalização.</p>
-      <img src="./img/verifique.pnj.png" alt="Verificação de acessibilidade">
+      <img src="./assets/img/verifique.pnj.png" alt="Verificação de acessibilidade">
     </div>
 
     <div class="step card shadow-sm p-3 text-center">
       <h3>3 Avalie</h3>
       <p>Avalie e compartilhe sua experiência para ajudar outras pessoas.</p>
-      <img src="./img/Avalie.jpj.jpg" alt="Pessoa avaliando um local">
+      <img src="./assets/img/Avalie.jpj.jpg" alt="Pessoa avaliando um local">
     </div>
 
   </section>
@@ -145,8 +145,8 @@
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./js/como.funciona.js"></script>
-  <script src="js/telainicial.js"></script>
+  <script src="./assets/js/como.funciona.js"></script>
+  <script src="./assets/js/telainicial.js"></script>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>

@@ -18,9 +18,9 @@
 
 <body>
 <div class="container">
-    <img class="login-img" src="./img/Imagem1.png" alt="Código de recuperação">
+    <img class="login-img" src="./assets/img/Imagem1.png" alt="Código de recuperação">
 
-    <form class="form" action="nova.senha.html">
+    <form class="form" action="nova.senha.php">
       <input
         placeholder="Digite o código" id="codigo" name="codigo" type="text" class="input" required
         pattern="[a-zA-Z0-9]{6}" 
@@ -32,11 +32,11 @@
     
   </div>
 
-  <script src="./js/script.js"></script>
+  <script src="./assets/js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-    <script src="js/telainicial.js"></script>
+    <script src="./assets/js/telainicial.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>

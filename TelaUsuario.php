@@ -22,7 +22,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="TelaInicial.php">
-        <img src="./img/Imagem1.png" alt="IncluCity" class="logotipo">
+        <img src="./assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar"
@@ -76,7 +76,7 @@
 
       <section class="bloco perfil-usuario" id="menuUsuario">
         <div class="foto-usuario">
-          <img src="img/—Pngtree—avatar bussinesman man profile icon_7268049.png" alt="Foto do usuário">
+          <img src="./assets/img/—Pngtree—avatar bussinesman man profile icon_7268049.png" alt="Foto do usuário">
         </div>
 
         <div class="dados-usuario">
@@ -214,9 +214,9 @@
     </div>
   </footer>
 
-  <script src="./js/Telausuario.script.js"></script>
+  <script src="./assets/js/Telausuario.script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/telainicial.js"></script>
+  <script src="./assets/js/telainicial.js"></script>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
