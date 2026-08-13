@@ -1,6 +1,6 @@
 <?php
 
-include "conexao.php";
+require_once __DIR__ . '/config/conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: cadastro.php");
