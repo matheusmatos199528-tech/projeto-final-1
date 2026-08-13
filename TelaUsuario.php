@@ -104,12 +104,12 @@
 
           <div class="linha-info">
             <span class="label">Ação:</span>
-            <a href="#" class="valor link-acao">Alterar senha</a>
+            <a href="nova.senha.php" class="valor link-acao">Alterar senha</a>
           </div>
 
           <div class="linha-info">
             <span class="label">Sessão:</span>
-            <a href="#" class="valor link-acao">Sair</a>
+            <a href="login.php" class="valor link-acao">Sair</a>
           </div>
         </div>
       </section>

@@ -110,7 +110,7 @@ if ($stmt->execute()) {
 
     echo "<script>
         alert('Cadastro realizado com sucesso!');
-        window.location.href = 'login.html';
+        window.location.href = 'login.php';
     </script>";
 
 } else {

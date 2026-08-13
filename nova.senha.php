@@ -19,21 +19,33 @@
   <div class="container">
     <img class="login-img" src="./assets/img/Imagem1.png" alt="Nova senha">
 
-    <form class="form" action="TelaInicial.php">
+    <form class="form" action="TelaInicial.php" onsubmit="return validarNovaSenha()">
       <div class="senha-container">
-        <input
-          placeholder="Nova senha" id="novaSenha" name="novaSenha" type="password" class="input" required
-          pattern="[a-zA-Z0-9]{8}" title="A senhas dever ser iguais."
-        >
-        <span class="toggle-senha" onclick="verSenha('novaSenha')">👁</span>
+       <input
+       placeholder="Nova senha"
+       id="novaSenha"
+       name="novaSenha"
+       type="password"
+       class="input"
+       required
+       minlength="8"
+       title="A senha deve conter pelo menos 8 caracteres."
+      >
+      <span class="toggle-senha" onclick="verSenha('novaSenha')">👁</span>
       </div>
 
       <div class="senha-container">
         <input
-          placeholder="Confirmar nova senha" id="confirmarNovaSenha" name="confirmarNovaSenha" type="password" class="input" required
-          pattern="[a-zA-Z0-9]{8}" title="A senhas dever ser iguais."
-        >        
-        <span class="toggle-senha" onclick="verSenha('confirmarNovaSenha')">👁</span>        
+        placeholder="Confirmar nova senha"
+        id="confirmarNovaSenha"
+        name="confirmarNovaSenha"
+        type="password"
+        class="input"
+        required
+        minlength="8"
+        title="A senha deve conter pelo menos 8 caracteres."
+      >
+      <span class="toggle-senha" onclick="verSenha('confirmarNovaSenha')">👁</span>        
       </div>
       Conter 8 caracteres
 
