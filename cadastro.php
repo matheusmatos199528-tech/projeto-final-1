@@ -14,14 +14,6 @@
 
 </head>
 
-<style>
-   
-
-   
-   
-
-</style>
-
 <body onload="mudarposition()">
 
   <div class="container">
@@ -32,28 +24,28 @@
     <form class="form" onsubmit="return validarFormulario()" action="salvar_usuario.php" method="POST">
     
     <div class="linha">
-      <input placeholder="Nome completo" id="nome" name="nome" type="text" class="input" required>
-      <input placeholder="E-mail" id="email" name="email" type="email" class="input" required>
+      <input placeholder="Nome completo" id="nome" name="nome" type="text" class="input" minlength="3" maxlength="150" autocomplete="name" required>
+      <input placeholder="E-mail" id="email" name="email" type="email" class="input" maxlength="150" autocomplete="email" required>
     </div>
 
     <div class="linha">
-      <input placeholder="Celular" id="celular" name="celular" type="text" class="input" required maxlength="15">
-      <input placeholder="CPF" id="cpf" name="cpf" type="text" class="input" required>
+      <input placeholder="Celular" id="celular" name="celular" type="text" class="input" inputmode="numeric" autocomplete="tel" required maxlength="15">
+      <input placeholder="CPF" id="cpf" name="cpf" type="text" class="input" inputmode="numeric" required maxlength="14">
     </div>
 
     <div class="senha-container">
-      <input placeholder="Senha" id="senha" name="senha" type="password" class="input" required>
+      <input placeholder="Senha" id="senha" name="senha" type="password" class="input" minlength="8" autocomplete="new-password" required>
       <span class="toggle-senha" onclick="verSenha('senha')">👁</span>
     </div>
 
     <div class="confirmarSenha-container">
-      <input placeholder="Confirmar senha" id="confirmarSenha" type="password" class="input" required>
+      <input placeholder="Confirmar senha" id="confirmarSenha" name="confirmarSenha" type="password" class="input" minlength="8" autocomplete="new-password" required>
       <span class="toggle-senha" onclick="verSenha('confirmarSenha')">👁</span>
     </div>
 
     <div class="termos-container">
 
-        <input type="checkbox" id="aceite" required>
+        <input type="checkbox" id="aceite" name="aceite" value="1" required>
 
         <label for="aceite">
             Li e aceito os 
@@ -80,10 +72,6 @@
     </div>
   </div>
 
-  
-
-
-</html>
     <div class="social-account-container">
       <span class="title">Ou faça login com</span>
       <div class="social-accounts">
