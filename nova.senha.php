@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+$recuperacaoAutorizada = !empty($_SESSION["recuperacao_verificada"])
+    && isset($_SESSION["email_recuperacao"]);
+$usuarioAutenticado = isset($_SESSION["usuario_id"], $_SESSION["usuario_email"]);
+
+if (!$recuperacaoAutorizada && !$usuarioAutenticado) {
+  header("Location: esqueceu.senha.php");
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -19,7 +31,12 @@
   <div class="container">
     <img class="login-img" src="./assets/img/Imagem1.png" alt="Nova senha">
 
-    <form class="form" action="TelaInicial.php" onsubmit="return validarNovaSenha()">
+    <form class="form"
+      action="alterar_senha.php"
+      method="POST"
+      onsubmit="return validarNovaSenha()"
+    >
+
       <div class="senha-container">
        <input
        placeholder="Nova senha"
