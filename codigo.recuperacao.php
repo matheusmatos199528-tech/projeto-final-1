@@ -1,57 +1,106 @@
+<?php
+session_start();
+require_once "conexao.php";
+
+$erro = "";
+$codigoDesenvolvimento = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["emailCelular"])) {
+    $identificador = trim($_POST["emailCelular"] ?? "");
+
+    if ($identificador === "") {
+        $erro = "Informe seu e-mail ou celular.";
+    } else {
+        $sql = "SELECT email FROM usuarios WHERE email = ? OR celular = ? LIMIT 1";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("ss", $identificador, $identificador);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $usuario = $resultado->fetch_assoc();
+        $stmt->close();
+
+        if (!$usuario) {
+            $erro = "Nenhum usuário foi encontrado com esse e-mail ou celular.";
+        } else {
+            $codigo = (string) random_int(100000, 999999);
+            $_SESSION["email_recuperacao"] = $usuario["email"];
+            $_SESSION["codigo_recuperacao_hash"] = password_hash($codigo, PASSWORD_DEFAULT);
+            $_SESSION["codigo_recuperacao_expira"] = time() + 600;
+            $_SESSION["recuperacao_verificada"] = false;
+            $codigoDesenvolvimento = $codigo;
+
+            // TODO: enviar $codigo ao e-mail/SMS do usuario em producao.
+        }
+    }
+} elseif ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["codigo"])) {
+    $codigoInformado = trim($_POST["codigo"] ?? "");
+    $hash = $_SESSION["codigo_recuperacao_hash"] ?? "";
+    $expira = (int) ($_SESSION["codigo_recuperacao_expira"] ?? 0);
+
+    if (!isset($_SESSION["email_recuperacao"]) || $hash === "") {
+        $erro = "Solicite um novo código de recuperação.";
+    } elseif (time() > $expira) {
+        $erro = "O código expirou. Solicite um novo código.";
+        unset($_SESSION["codigo_recuperacao_hash"], $_SESSION["codigo_recuperacao_expira"]);
+    } elseif (!password_verify($codigoInformado, $hash)) {
+        $erro = "Código inválido.";
+    } else {
+        $_SESSION["recuperacao_verificada"] = true;
+        unset($_SESSION["codigo_recuperacao_hash"], $_SESSION["codigo_recuperacao_expira"]);
+        header("Location: nova.senha.php");
+        exit;
+    }
+} elseif (!isset($_SESSION["email_recuperacao"])) {
+    header("Location: esqueceu.senha.php");
+    exit;
+}
+
+$con->close();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Codigo de Recuperação </title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <title>Código de recuperação</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/codigo.recuperacao.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
-
-
-
 <body>
-<div class="container">
+  <div class="container">
     <img class="login-img" src="./assets/img/Imagem1.png" alt="Código de recuperação">
 
-    <form class="form" action="nova.senha.php">
-      <input
-        placeholder="Digite o código" id="codigo" name="codigo" type="text" class="input" required
-        pattern="[a-zA-Z0-9]{6}" 
-        title="O código deve conter exatamente 6 caracteres (letras e números).">
+    <?php if ($erro !== ""): ?>
+      <div class="alert alert-danger" role="alert"><?= htmlspecialchars($erro) ?></div>
+    <?php endif; ?>
 
-      <button type="submit" class="login-button">Confirmar código</button>
-    </form>
+    <?php if ($codigoDesenvolvimento !== ""): ?>
+      <div class="alert alert-info" role="status">
+        Código para teste: <strong><?= htmlspecialchars($codigoDesenvolvimento) ?></strong>
+        (válido por 10 minutos)
+      </div>
+    <?php endif; ?>
 
-    
+    <?php if (isset($_SESSION["email_recuperacao"])): ?>
+      <form class="form" action="codigo.recuperacao.php" method="POST">
+        <input
+          placeholder="Digite o código"
+          id="codigo"
+          name="codigo"
+          type="text"
+          class="input"
+          required
+          inputmode="numeric"
+          pattern="[0-9]{6}"
+          maxlength="6"
+          autocomplete="one-time-code"
+          title="O código deve conter exatamente 6 números."
+        >
+        <button type="submit" class="login-button">Confirmar código</button>
+      </form>
+    <?php else: ?>
+      <a href="esqueceu.senha.php" class="btn btn-primary">Solicitar novo código</a>
+    <?php endif; ?>
   </div>
-
-  <script src="./assets/js/script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"></script>
-    <script src="./assets/js/telainicial.js"></script>
-  
-<div vw class="enabled">
-  <div vw-access-button class="active"></div>
-  <div vw-plugin-wrapper>
-    <div class="vw-plugin-top-wrapper"></div>
-  </div>
-</div>
- 
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
- 
-<script>
-  new window.VLibras.Widget('https://vlibras.gov.br/app');
-</script>
-<script src="https://freewebaccessible.com/dist/sienna.min.js" defer></script>
-
 </body>
-
 </html>
