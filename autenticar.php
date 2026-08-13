@@ -2,7 +2,7 @@
 
 session_start();
 
-include "conexao.php";
+require_once __DIR__ . '/config/conn.php';
 
 
 /*

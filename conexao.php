@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 require_once __DIR__ . '/vendor/autoload.php';
 use Dotenv\Dotenv;
 $dotenv = 
@@ -24,3 +25,7 @@ $con->set_charset("utf8mb4");
 ?>
 
 
+=======
+// Mantido para compatibilidade com arquivos antigos.
+require_once __DIR__ . '/config/conn.php';
+>>>>>>> 55fd9d83b33705d47ce3b9f494b0767d8f9d7a98
