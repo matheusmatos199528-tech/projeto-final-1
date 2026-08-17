@@ -2,6 +2,6 @@ DirectoryIndex index.php
 
 Options -Indexes
 
-<FilesMatch "(?i)(^\.env(?:\..*)?$|\.sql$)">
+<FilesMatch "(?i)(^\.env(?:\..*)?$|\.sql$|^composer\.(json|lock)$)">
     Require all denied
 </FilesMatch>
