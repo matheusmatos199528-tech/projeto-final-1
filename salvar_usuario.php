@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/config/session.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: cadastro.php');
     exit;
 }
+
+exigirCsrf();
 
 require_once __DIR__ . '/config/conn.php';
 

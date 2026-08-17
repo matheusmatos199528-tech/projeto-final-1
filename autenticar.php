@@ -1,7 +1,6 @@
 <?php
 
-session_start();
-
+require_once __DIR__ . '/config/session.php';
 require_once __DIR__ . '/config/conn.php';
 
 
@@ -17,6 +16,18 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+exigirCsrf();
+
+$tentativasLogin = array_values(array_filter(
+    $_SESSION['tentativas_login'] ?? [],
+    static fn (int $instante): bool => $instante > time() - 900
+));
+
+if (count($tentativasLogin) >= 5) {
+    http_response_code(429);
+    exit('Muitas tentativas de login. Aguarde 15 minutos e tente novamente.');
+}
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 |--------------------------------------------------------------------------
 */
 
-$login = trim($_POST["login"] ?? "");
+$login = trim((string) ($_POST["login"] ?? ""));
 $senha = $_POST["senha"] ?? "";
+$cpfSemMascara = preg_replace('/\D/', '', $login) ?? '';
 
 
 /*
@@ -53,11 +65,12 @@ if ($login === "" || $senha === "") {
 
 $sql = "SELECT id, nome, email, celular, cpf, senha
         FROM usuarios
-        WHERE email = ? OR cpf = ?";
+        WHERE email = ? OR REPLACE(REPLACE(cpf, '.', ''), '-', '') = ?
+        LIMIT 1";
 
 $stmt = $con->prepare($sql);
 
-$stmt->bind_param("ss", $login, $login);
+$stmt->bind_param("ss", $login, $cpfSemMascara);
 
 $stmt->execute();
 
@@ -71,6 +84,9 @@ $resultado = $stmt->get_result();
 */
 
 if ($resultado->num_rows === 0) {
+
+    $tentativasLogin[] = time();
+    $_SESSION['tentativas_login'] = $tentativasLogin;
 
     echo "<script>
         alert('E-mail, CPF ou senha incorretos.');
@@ -101,6 +117,9 @@ $usuario = $resultado->fetch_assoc();
 
 if (!password_verify($senha, $usuario["senha"])) {
 
+    $tentativasLogin[] = time();
+    $_SESSION['tentativas_login'] = $tentativasLogin;
+
     echo "<script>
         alert('E-mail, CPF ou senha incorretos.');
         window.location.href = 'login.php';
@@ -124,6 +143,8 @@ $_SESSION["usuario_nome"] = $usuario["nome"];
 $_SESSION["usuario_email"] = $usuario["email"];
 $_SESSION["usuario_celular"] = $usuario["celular"];
 $_SESSION["usuario_cpf"] = $usuario["cpf"];
+unset($_SESSION['tentativas_login']);
+session_regenerate_id(true);
 
 
 /*

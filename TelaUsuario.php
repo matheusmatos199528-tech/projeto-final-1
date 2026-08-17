@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/config/session.php';
+
+if (!isset($_SESSION['usuario_id'])) {
+  header('Location: login.php');
+  exit;
+}
+
+$nomeUsuario = htmlspecialchars((string) ($_SESSION['usuario_nome'] ?? ''), ENT_QUOTES, 'UTF-8');
+$emailUsuario = htmlspecialchars((string) ($_SESSION['usuario_email'] ?? ''), ENT_QUOTES, 'UTF-8');
+$cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QUOTES, 'UTF-8');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -84,17 +96,17 @@
 
           <div class="linha-info">
             <span class="label">Nome:</span>
-            <span class="valor">Leandro Souza</span>
+            <span class="valor"><?= $nomeUsuario ?></span>
           </div>
 
           <div class="linha-info">
             <span class="label">CPF:</span>
-            <span class="valor">000.000.000-00</span>
+            <span class="valor"><?= $cpfUsuario ?></span>
           </div>
 
           <div class="linha-info">
             <span class="label">E-mail:</span>
-            <span class="valor">leandro@email.com</span>
+            <span class="valor"><?= $emailUsuario ?></span>
           </div>
 
           <div class="linha-info">
@@ -109,7 +121,7 @@
 
           <div class="linha-info">
             <span class="label">Sessão:</span>
-            <a href="login.php" class="valor link-acao">Sair</a>
+            <a href="logout.php" class="valor link-acao">Sair</a>
           </div>
         </div>
       </section>
@@ -234,6 +246,7 @@
   <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
+      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px";

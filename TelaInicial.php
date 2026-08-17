@@ -101,8 +101,6 @@
       </p>
     </div>
   </section>
-  </section>
-
   <div class="container-info d-flex justify-content-center gap-5 flex-wrap">
 
     <div class="card">
@@ -241,7 +239,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script src="/assets/js/telainicial.js"></script>
+  <script src="./assets/js/telainicial.js"></script>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
@@ -275,6 +273,7 @@
  <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
+      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 

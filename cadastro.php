@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/config/session.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,6 +23,7 @@
 
 
     <form class="form" onsubmit="return validarFormulario()" action="salvar_usuario.php" method="POST">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf(), ENT_QUOTES, 'UTF-8') ?>">
     
     <div class="linha">
       <input placeholder="Nome completo" id="nome" name="nome" type="text" class="input" minlength="3" maxlength="150" autocomplete="name" required>
@@ -75,14 +77,14 @@
     <div class="social-account-container">
       <span class="title">Ou faça login com</span>
       <div class="social-accounts">
-        <button class="social-button google" onclick="window.location.href='login-google.html'">
+        <button type="button" class="social-button google" disabled title="Cadastro com Google ainda não configurado">
           <svg viewBox="0 0 488 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="svg">
             <path
               d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z">
             </path>
           </svg>
         </button>
-        <button class="social-button microsoft" onclick="window.location.href='login-microsoft.html'">
+        <button type="button" class="social-button microsoft" disabled title="Cadastro com Microsoft ainda não configurado">
           <svg viewBox="0 0 24 24" height="1em" xmlns="http://www.w3.org/2000/svg" class="svg">
             <path d="M2 3l9-1v9H2V3zm11-1l9-1v10h-9V2zM2 13h9v9l-9-1v-8zm11 0h9v10l-9-1v-9z">
             </path>
@@ -118,6 +120,7 @@
 <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
+      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 

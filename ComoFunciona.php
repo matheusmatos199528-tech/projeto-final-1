@@ -164,6 +164,7 @@
   <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
+      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 

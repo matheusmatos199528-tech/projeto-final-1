@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/config/session.php';
 
 $recuperacaoAutorizada = !empty($_SESSION["recuperacao_verificada"])
     && isset($_SESSION["email_recuperacao"]);
@@ -36,6 +36,7 @@ if (!$recuperacaoAutorizada && !$usuarioAutenticado) {
       method="POST"
       onsubmit="return validarNovaSenha()"
     >
+      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf(), ENT_QUOTES, 'UTF-8') ?>">
 
       <div class="senha-container">
        <input
@@ -46,7 +47,8 @@ if (!$recuperacaoAutorizada && !$usuarioAutenticado) {
        class="input"
        required
        minlength="8"
-       title="A senha deve conter pelo menos 8 caracteres."
+       pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&amp;.#_-]).{8,}"
+       title="Mínimo de 8 caracteres, com maiúscula, minúscula, número e símbolo."
       >
       <span class="toggle-senha" onclick="verSenha('novaSenha')">👁</span>
       </div>
@@ -60,11 +62,12 @@ if (!$recuperacaoAutorizada && !$usuarioAutenticado) {
         class="input"
         required
         minlength="8"
-        title="A senha deve conter pelo menos 8 caracteres."
+        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&amp;.#_-]).{8,}"
+        title="Mínimo de 8 caracteres, com maiúscula, minúscula, número e símbolo."
       >
       <span class="toggle-senha" onclick="verSenha('confirmarNovaSenha')">👁</span>        
       </div>
-      Conter 8 caracteres
+      Use ao menos 8 caracteres, com maiúscula, minúscula, número e símbolo.
 
       <button type="submit" class="login-button">Salvar nova senha</button>
     </form>
@@ -93,6 +96,7 @@ if (!$recuperacaoAutorizada && !$usuarioAutenticado) {
 <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
+      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 

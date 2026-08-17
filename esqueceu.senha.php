@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/config/session.php';
 
 // Remove uma tentativa de recuperacao anterior ao iniciar um novo fluxo.
 unset(
@@ -23,6 +23,7 @@ unset(
     <img class="login-img" src="./assets/img/Imagem1.png" alt="Recuperar senha">
 
     <form class="form" action="codigo.recuperacao.php" method="POST">
+      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf(), ENT_QUOTES, 'UTF-8') ?>">
       <input
         placeholder="Digite seu e-mail ou celular"
         id="emailCelular"

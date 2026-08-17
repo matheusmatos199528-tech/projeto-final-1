@@ -61,7 +61,7 @@
         <option value="fisica">Física</option>
         <option value="visual">Visual</option>
         <option value="auditiva">Auditiva</option>
-        <option value="auditiva">Intelectual</option>
+        <option value="intelectual">Intelectual</option>
       </select>
 
       <select id="filtroAvaliacao" class="form-select mb-3" onchange="filtrar()">
@@ -96,8 +96,8 @@
   <div id="formAdicionarLocal" class="modal-form">
     <form id="formLocal" class="form-accessible">
 
-       <!--<button type="button" id="btnFechar" class="btn-fechar">&times;</button>
-      <h3>Adicionar Local Acessível</h3>-->
+      <button type="button" id="btnFechar" class="btn-fechar" aria-label="Fechar">&times;</button>
+      <h3>Adicionar Local Acessível</h3>
 
       <!-- Nome -->
       <input type="text" id="nome" placeholder="Nome do local" required minlength="3">
@@ -132,7 +132,7 @@
           display: flex;
         }
 
-        #rampa {
+        .checkbox-group input {
           width: 50px;
         }
       </style>
@@ -141,31 +141,31 @@
 
         <div class="col-6 d-flex flex-column">
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa">
-            <h5> Possui rampa de acesso</h5>
+            <input type="checkbox" id="rampa" name="recursos" value="Rampa de acesso">
+            <label for="rampa">Possui rampa de acesso</label>
           </div>
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa">
-            <h5> Possui rampa </h5>
+            <input type="checkbox" id="elevador" name="recursos" value="Elevador acessível">
+            <label for="elevador">Elevador acessível</label>
           </div>
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa">
-            <h5> banheiro acessivel</h5>
+            <input type="checkbox" id="banheiro" name="recursos" value="Banheiro acessível">
+            <label for="banheiro">Banheiro acessível</label>
           </div>
         </div>
 
         <div class="col-6 d-flex flex-column">
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa">
-            <h5> Possui rampa de acesso</h5>
+            <input type="checkbox" id="pisoTatil" name="recursos" value="Piso tátil">
+            <label for="pisoTatil">Piso tátil</label>
           </div>
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa">
-            <h5> Possui rampa de acesso</h5>
+            <input type="checkbox" id="libras" name="recursos" value="Atendimento em Libras">
+            <label for="libras">Atendimento em Libras</label>
           </div>
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa">
-            <h5> Possui rampa de acesso</h5>
+            <input type="checkbox" id="vaga" name="recursos" value="Vaga reservada">
+            <label for="vaga">Vaga reservada</label>
           </div>
         </div>
 
@@ -185,11 +185,6 @@
 
       <!-- Comentário -->
       <textarea id="comentario" placeholder="Descreva sua experiência no local..." required minlength="10"></textarea>
-
-      <!-- Fotos -->
-      <input type="file" id="foto" accept="image/*" multiple required>
-
-      <small>Envie fotos que comprovem a acessibilidade do local</small>
 
       <div class="form-buttons">
         <button type="submit" class="btn btn-success">Salvar</button>
@@ -260,6 +255,7 @@
 <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
+      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 

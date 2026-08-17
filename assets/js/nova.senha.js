@@ -14,9 +14,10 @@ function validarNovaSenha() {
     const novaSenha = document.getElementById("novaSenha").value;
     const confirmarNovaSenha = document.getElementById("confirmarNovaSenha").value;
 
-    // Verifica se possui pelo menos 8 caracteres
-    if (novaSenha.length < 8) {
-        alert("A senha deve conter pelo menos 8 caracteres.");
+    const senhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-]).{8,}$/;
+
+    if (!senhaForte.test(novaSenha)) {
+        alert("A senha deve ter no mínimo 8 caracteres, com maiúscula, minúscula, número e símbolo.");
         return false;
     }
 

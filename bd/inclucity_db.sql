@@ -21,6 +21,11 @@ SET time_zone = "+00:00";
 -- Banco de dados: `inclucity_db`
 --
 
+CREATE DATABASE IF NOT EXISTS `inclucity_db`
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+USE `inclucity_db`;
+
 -- --------------------------------------------------------
 
 --
@@ -36,13 +41,6 @@ CREATE TABLE `usuarios` (
   `senha` varchar(255) NOT NULL,
   `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `celular`, `cpf`, `senha`, `data_cadastro`) VALUES
-(1, 'Matheus Fonseca', 'matheus@gmail.com', '12982263548', '444.696.638-32', '$2y$10$btwi8/bQv6xjH98p7Uoitek5IexfkLb6OtDgMsWC6Rsy1G1zv18Qa', '2026-08-06 01:26:10');
 
 --
 -- Índices para tabelas despejadas
@@ -64,7 +62,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

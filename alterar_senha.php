@@ -1,11 +1,13 @@
 <?php
-session_start();
+require_once __DIR__ . '/config/session.php';
 require_once "conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: nova.senha.php");
     exit;
 }
+
+exigirCsrf();
 
 $recuperacaoAutorizada = !empty($_SESSION["recuperacao_verificada"])
     && isset($_SESSION["email_recuperacao"]);
@@ -22,8 +24,8 @@ $email = $recuperacaoAutorizada
 $novaSenha = $_POST["novaSenha"] ?? "";
 $confirmarNovaSenha = $_POST["confirmarNovaSenha"] ?? "";
 
-if (strlen($novaSenha) < 8) {
-    echo "<script>alert('A senha deve conter pelo menos 8 caracteres.'); history.back();</script>";
+if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-]).{8,}$/', $novaSenha)) {
+    echo "<script>alert('A senha deve ter no mínimo 8 caracteres, com maiúscula, minúscula, número e símbolo.'); history.back();</script>";
     exit;
 }
 
