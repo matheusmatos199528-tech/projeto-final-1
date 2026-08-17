@@ -3,6 +3,11 @@
 declare(strict_types=1);
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
+    $diretorioSessoes = dirname(__DIR__) . '/sessions';
+    if (!is_dir($diretorioSessoes) && !mkdir($diretorioSessoes, 0700, true) && !is_dir($diretorioSessoes)) {
+        throw new RuntimeException('Não foi possível preparar o diretório de sessões.');
+    }
+    session_save_path($diretorioSessoes);
     ini_set('session.use_strict_mode', '1');
     session_set_cookie_params([
         'httponly' => true,

@@ -6,23 +6,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 setTimeout(() => map.invalidateSize(), 300);
 window.addEventListener('resize', () => map.invalidateSize());
 
-const locaisDemo = [
-  { nome: 'Parque Industrial', lat: -23.2220, lng: -45.9000, avaliacao: 5, deficiencia: 'fisica', recursos: ['Rampa de acesso'] },
-  { nome: 'Jardim Satélite', lat: -23.2240, lng: -45.9050, avaliacao: 4, deficiencia: 'visual', recursos: ['Piso tátil'] },
-  { nome: 'Centro', lat: -23.2230, lng: -45.9070, avaliacao: 3, deficiencia: 'auditiva', recursos: ['Atendimento em Libras'] }
-];
-
-function carregarArmazenados() {
-  try {
-    const dados = JSON.parse(localStorage.getItem('locaisInclucity') || '[]');
-    return Array.isArray(dados) ? dados : [];
-  } catch (erro) {
-    console.warn('Não foi possível ler os locais armazenados.', erro);
-    return [];
-  }
-}
-
-let locais = carregarArmazenados();
+let locais = [];
 let marcadores = [];
 
 function escaparHtml(valor) {
@@ -69,11 +53,18 @@ function renderizar(listaLocais = locais) {
   });
 }
 
-const demoContainer = document.getElementById('demoLocais');
-locaisDemo.forEach(local => {
-  const marker = L.marker([local.lat, local.lng]).addTo(map).bindPopup(conteudoLocal(local));
-  adicionarItem(demoContainer, local, marker);
-});
+async function carregarLocais() {
+  try {
+    const resposta = await fetch('locais.php', { headers: { Accept: 'application/json' } });
+    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+    const dados = await resposta.json();
+    locais = Array.isArray(dados.locais) ? dados.locais : [];
+    renderizar();
+  } catch (erro) {
+    console.error('Erro ao carregar locais:', erro);
+    document.getElementById('listaLocais').textContent = 'Não foi possível carregar os locais.';
+  }
+}
 
 function filtrar() {
   const tipo = document.getElementById('filtroDeficiencia').value;
@@ -112,6 +103,7 @@ document.getElementById('formLocal').addEventListener('submit', async function (
     const novoLocal = {
       nome,
       tipo: document.getElementById('tipoLocal').value,
+      endereco,
       lat: Number(dados[0].lat),
       lng: Number(dados[0].lon),
       deficiencia: document.getElementById('deficiencia').value,
@@ -121,16 +113,32 @@ document.getElementById('formLocal').addEventListener('submit', async function (
       status: 'pendente'
     };
 
-    locais.push(novoLocal);
-    localStorage.setItem('locaisInclucity', JSON.stringify(locais));
-    renderizar();
-    alert('Local adicionado e salvo neste navegador!');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    const salvamento = await fetch('locais.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      body: JSON.stringify(novoLocal)
+    });
+    const resultado = await salvamento.json();
+    if (salvamento.status === 401) {
+      alert(resultado.erro);
+      window.location.href = 'login.php';
+      return;
+    }
+    if (!salvamento.ok) throw new Error(resultado.erro || 'Falha ao salvar o local.');
+
+    await carregarLocais();
+    alert('Local adicionado ao banco de dados!');
     modal.style.display = 'none';
     this.reset();
   } catch (erro) {
     console.error('Erro ao localizar endereço:', erro);
-    alert('Não foi possível consultar o endereço agora. Tente novamente.');
+    alert(erro.message || 'Não foi possível concluir a operação. Tente novamente.');
   }
 });
 
-renderizar();
+carregarLocais();

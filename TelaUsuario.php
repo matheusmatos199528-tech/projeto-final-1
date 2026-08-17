@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/config/session.php';
+require_once __DIR__ . '/config/conn.php';
 
 if (!isset($_SESSION['usuario_id'])) {
   header('Location: login.php');
@@ -9,6 +10,20 @@ if (!isset($_SESSION['usuario_id'])) {
 $nomeUsuario = htmlspecialchars((string) ($_SESSION['usuario_nome'] ?? ''), ENT_QUOTES, 'UTF-8');
 $emailUsuario = htmlspecialchars((string) ($_SESSION['usuario_email'] ?? ''), ENT_QUOTES, 'UTF-8');
 $cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QUOTES, 'UTF-8');
+$usuarioId = (int) $_SESSION['usuario_id'];
+$stmtLocais = $con->prepare(
+  'SELECT nome, comentario, recursos, status, data_cadastro
+   FROM locais WHERE usuario_id = ? ORDER BY data_cadastro DESC'
+);
+$stmtLocais->bind_param('i', $usuarioId);
+$stmtLocais->execute();
+$locaisUsuario = $stmtLocais->get_result()->fetch_all(MYSQLI_ASSOC);
+$stmtLocais->close();
+
+function escapar(string $valor): string
+{
+  return htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -121,7 +136,10 @@ $cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QU
 
           <div class="linha-info">
             <span class="label">Sessão:</span>
-            <a href="logout.php" class="valor link-acao">Sair</a>
+            <form action="logout.php" method="POST" class="valor">
+              <input type="hidden" name="csrf_token" value="<?= escapar(tokenCsrf()) ?>">
+              <button type="submit" class="link-acao btn btn-link p-0">Sair</button>
+            </form>
           </div>
         </div>
       </section>
@@ -132,23 +150,17 @@ $cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QU
       <h2>Comentários</h2>
 
       <div class="lista-cards">
-        <article class="card-item">
-          <h3>Praça Central</h3>
-          <p>Local com boa acessibilidade, rampa bem posicionada e calçada em boas condições.</p>
-          <span class="meta-card">Comentado em 12/03/2026</span>
-        </article>
-
-        <article class="card-item">
-          <h3>Terminal Rodoviário</h3>
-          <p>O acesso principal é bom, mas alguns pontos precisam de melhor sinalização tátil.</p>
-          <span class="meta-card">Comentado em 10/03/2026</span>
-        </article>
-
-        <article class="card-item">
-          <h3>Biblioteca Municipal</h3>
-          <p>Espaço acessível, com entrada facilitada e circulação interna adequada.</p>
-          <span class="meta-card">Comentado em 08/03/2026</span>
-        </article>
+        <?php if (!$locaisUsuario): ?>
+          <p>Você ainda não publicou comentários.</p>
+        <?php else: ?>
+          <?php foreach ($locaisUsuario as $local): ?>
+            <article class="card-item">
+              <h3><?= escapar($local['nome']) ?></h3>
+              <p><?= escapar($local['comentario']) ?></p>
+              <span class="meta-card">Comentado em <?= date('d/m/Y', strtotime($local['data_cadastro'])) ?></span>
+            </article>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </div>
     </section>
 
@@ -157,23 +169,20 @@ $cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QU
       <h2>Locais adicionados por você</h2>
 
       <div class="lista-cards">
-        <article class="card-item">
-          <h3>Hospital Municipal</h3>
-          <p>Adicionado com informações sobre elevadores, rampas e vagas acessíveis.</p>
-          <span class="meta-card">Adicionado em 09/03/2026</span>
-        </article>
-
-        <article class="card-item">
-          <h3>Parque da Cidade</h3>
-          <p>Mapeamento de trilhas acessíveis, banheiros adaptados e entrada principal.</p>
-          <span class="meta-card">Adicionado em 05/03/2026</span>
-        </article>
-
-        <article class="card-item">
-          <h3>Centro Cultural</h3>
-          <p>Informações sobre acesso para cadeirantes, piso tátil e estrutura interna.</p>
-          <span class="meta-card">Adicionado em 02/03/2026</span>
-        </article>
+        <?php if (!$locaisUsuario): ?>
+          <p>Você ainda não adicionou locais.</p>
+        <?php else: ?>
+          <?php foreach ($locaisUsuario as $local): ?>
+            <?php $recursos = json_decode($local['recursos'], true) ?: []; ?>
+            <article class="card-item">
+              <h3><?= escapar($local['nome']) ?></h3>
+              <p><?= escapar($recursos ? implode(', ', $recursos) : 'Recursos não informados') ?></p>
+              <span class="meta-card">
+                Adicionado em <?= date('d/m/Y', strtotime($local['data_cadastro'])) ?> — <?= escapar($local['status']) ?>
+              </span>
+            </article>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </div>
     </section>
 

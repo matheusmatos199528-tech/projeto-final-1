@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config/session.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: TelaUsuario.php');
+    exit;
+}
+
+exigirCsrf();
+
 $_SESSION = [];
 
 if (ini_get('session.use_cookies')) {
