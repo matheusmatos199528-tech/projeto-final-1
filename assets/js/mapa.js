@@ -55,7 +55,7 @@ function renderizar(listaLocais = locais) {
 
 async function carregarLocais() {
   try {
-    const resposta = await fetch('locais.php', { headers: { Accept: 'application/json' } });
+    const resposta = await fetch('../api/locais.php', { headers: { Accept: 'application/json' } });
     if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
     const dados = await resposta.json();
     locais = Array.isArray(dados.locais) ? dados.locais : [];
@@ -114,7 +114,7 @@ document.getElementById('formLocal').addEventListener('submit', async function (
     };
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    const salvamento = await fetch('locais.php', {
+    const salvamento = await fetch('../api/locais.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
 <?php
 
 // Mantido para compatibilidade com arquivos antigos.
-require_once __DIR__ . '/config/conn.php';
+require_once __DIR__ . '/conn.php';

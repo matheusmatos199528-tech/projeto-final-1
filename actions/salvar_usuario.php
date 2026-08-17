@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/config/session.php';
+require_once dirname(__DIR__) . '/config/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: cadastro.php');
+    header('Location: ../pages/cadastro.php');
     exit;
 }
 
 exigirCsrf();
 
-require_once __DIR__ . '/config/conn.php';
+require_once dirname(__DIR__) . '/config/conn.php';
 
 function voltarComErro(string $mensagem): never
 {
@@ -20,7 +20,7 @@ function voltarComErro(string $mensagem): never
         JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
     );
 
-    echo "<script>alert({$mensagemJs}); window.location.href = 'cadastro.php';</script>";
+    echo "<script>alert({$mensagemJs}); window.location.href = '../pages/cadastro.php';</script>";
     exit;
 }
 
@@ -128,4 +128,4 @@ try {
 $stmt->close();
 $con->close();
 
-echo "<script>alert('Cadastro realizado com sucesso!'); window.location.href = 'login.php';</script>";
+echo "<script>alert('Cadastro realizado com sucesso!'); window.location.href = '../pages/login.php';</script>";

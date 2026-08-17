@@ -16,7 +16,7 @@ Projeto web colaborativo para consulta e cadastro de informações sobre acessib
 1. Coloque o projeto dentro do `htdocs` do XAMPP.
 2. Execute `composer install`.
 3. Copie `.env.example` para `.env` e ajuste somente as credenciais locais.
-4. Importe `bd/inclucity_db.sql` pelo phpMyAdmin. O script cria o banco `inclucity_db` e as tabelas `usuarios` e `locais`.
+4. Importe `database/inclucity_db.sql` pelo phpMyAdmin. O script cria o banco `inclucity_db` e as tabelas `usuarios` e `locais`.
 5. Inicie Apache e MySQL e abra a pasta do projeto pelo `localhost`.
 
 O arquivo `.env` não deve ser enviado ao Git. O Apache também bloqueia seu acesso direto, assim como o dump SQL e os arquivos do Composer.
@@ -47,10 +47,13 @@ O servidor PHP precisa estar configurado para enviar e-mail. Para desenvolviment
 
 ```text
 assets/                 CSS, JavaScript e imagens
-bd/inclucity_db.sql     Estrutura do banco
+actions/                Processamento de formulários e logout
+api/                    Endpoints JSON
+database/               Estrutura e scripts do banco
+pages/                  Páginas acessadas pelo navegador
 config/conn.php         Conexão via variáveis de ambiente
 config/session.php      Sessão e proteção CSRF
-locais.php              API JSON de consulta e cadastro de locais
+index.php               Entrada da aplicação
 ```
 
 ## Segurança

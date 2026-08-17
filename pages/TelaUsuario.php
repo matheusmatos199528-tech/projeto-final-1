@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/config/session.php';
-require_once __DIR__ . '/config/conn.php';
+require_once dirname(__DIR__) . '/config/session.php';
+require_once dirname(__DIR__) . '/config/conn.php';
 
 if (!isset($_SESSION['usuario_id'])) {
   header('Location: login.php');
@@ -39,7 +39,7 @@ function escapar(string $valor): string
   <!-- ICONES -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <link rel="stylesheet" href="./assets/css/telaUsuario.css">
+  <link rel="stylesheet" href="../assets/css/telaUsuario.css">
 </head>
 
 <body onload="mudarposition()">
@@ -49,7 +49,7 @@ function escapar(string $valor): string
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="TelaInicial.php">
-        <img src="./assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
+        <img src="../assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar"
@@ -103,7 +103,7 @@ function escapar(string $valor): string
 
       <section class="bloco perfil-usuario" id="menuUsuario">
         <div class="foto-usuario">
-          <img src="./assets/img/—Pngtree—avatar bussinesman man profile icon_7268049.png" alt="Foto do usuário">
+          <img src="../assets/img/—Pngtree—avatar bussinesman man profile icon_7268049.png" alt="Foto do usuário">
         </div>
 
         <div class="dados-usuario">
@@ -136,7 +136,7 @@ function escapar(string $valor): string
 
           <div class="linha-info">
             <span class="label">Sessão:</span>
-            <form action="logout.php" method="POST" class="valor">
+            <form action="../actions/logout.php" method="POST" class="valor">
               <input type="hidden" name="csrf_token" value="<?= escapar(tokenCsrf()) ?>">
               <button type="submit" class="link-acao btn btn-link p-0">Sair</button>
             </form>
@@ -235,9 +235,9 @@ function escapar(string $valor): string
     </div>
   </footer>
 
-  <script src="./assets/js/Telausuario.script.js"></script>
+  <script src="../assets/js/Telausuario.script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./assets/js/telainicial.js"></script>
+  <script src="../assets/js/telainicial.js"></script>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>

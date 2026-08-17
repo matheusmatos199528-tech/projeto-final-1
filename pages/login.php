@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/config/session.php'; ?>
+<?php require_once dirname(__DIR__) . '/config/session.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,7 +8,7 @@
   <title>tela de login </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/css/login.style.css">
+  <link rel="stylesheet" href="../assets/css/login.style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -18,8 +18,8 @@
 <body onload="mudarposition()">
 
   <div class="container">
-    <img class="login-img" src="./assets/img/Imagem1.png " alt="logotipo do login">
-    <form class="form" action="autenticar.php" method="POST">
+    <img class="login-img" src="../assets/img/Imagem1.png " alt="logotipo do login">
+    <form class="form" action="../actions/autenticar.php" method="POST">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf(), ENT_QUOTES, 'UTF-8') ?>">
       <input 
      placeholder="E-mail ou CPF" 
@@ -84,11 +84,11 @@
     <span class="agreement"><a href="#">Leia o contrato de licença do usuario</a></span>
   </div>
 
-  <script src="./assets/js/login.js"></script>
+  <script src="../assets/js/login.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-    <script src="./assets/js/telainicial.js"></script>
+    <script src="../assets/js/telainicial.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>

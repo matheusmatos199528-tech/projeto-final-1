@@ -13,7 +13,7 @@
 
   <!-- ICONES -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="./assets/css/telainicial.css">
+  <link rel="stylesheet" href="../assets/css/telainicial.css">
 </head>
 
 
@@ -26,7 +26,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="TelaInicial.php">
-        <img src="./assets/img/Imagem_logo40up.webp" alt="IncluCity" class="logotipo">
+        <img src="../assets/img/Imagem_logo40up.webp" alt="IncluCity" class="logotipo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar"
@@ -239,7 +239,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script src="./assets/js/telainicial.js"></script>
+  <script src="../assets/js/telainicial.js"></script>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>

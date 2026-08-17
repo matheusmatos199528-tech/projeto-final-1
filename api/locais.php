@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/config/session.php';
-require_once __DIR__ . '/config/conn.php';
+require_once dirname(__DIR__) . '/config/session.php';
+require_once dirname(__DIR__) . '/config/conn.php';
 
 header('Content-Type: application/json; charset=UTF-8');
 
