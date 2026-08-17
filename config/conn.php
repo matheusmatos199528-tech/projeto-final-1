@@ -2,15 +2,22 @@
 
 declare(strict_types=1);
 
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
 /*
  * Conexão centralizada com o banco de dados.
  * Em produção, defina estas credenciais no ambiente do servidor.
  */
-$servidor = getenv('DB_HOST') ?: 'localhost';
-$porta = (int) (getenv('DB_PORT') ?: 3306);
-$usuario = getenv('DB_USER') ?: 'root';
-$senha = getenv('DB_PASSWORD') ?: '';
-$banco = getenv('DB_NAME') ?: 'inclucity_db';
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
+$servidor = $_ENV['DB_HOST'];
+$porta = (int) $_ENV['DB_PORT'];
+$banco = $_ENV['DB_NAME'];
+$usuario = $_ENV['DB_USER'];
+$senha = $_ENV['DB_PASSWORD'];
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
