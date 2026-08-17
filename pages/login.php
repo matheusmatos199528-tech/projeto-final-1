@@ -18,7 +18,7 @@
 <body onload="mudarposition()">
 
   <div class="container">
-    <img class="login-img" src="../assets/img/Imagem1.png " alt="logotipo do login">
+    <img class="login-img" src="../assets/img/Imagem1.png" alt="logotipo do login">
     <form class="form" action="../actions/autenticar.php" method="POST">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(tokenCsrf(), ENT_QUOTES, 'UTF-8') ?>">
       <input 
