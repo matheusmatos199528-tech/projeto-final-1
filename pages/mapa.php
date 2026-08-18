@@ -63,14 +63,55 @@
 
       <select id="filtroCategoria" class="form-select mb-2" onchange="filtrar()">
         <option value="todos">Todas as categorias</option>
-        <option value="Restaurante">Restaurante</option><option value="Hospital">Hospital</option>
-        <option value="Escola">Escola</option><option value="Parque">Parque</option><option value="Comércio">Comércio</option>
+        <option value="Restaurante">Restaurante</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Mercado">Mercado</option>
+        <option value="Hospital">Hospital</option>
+        <option value="Clínica">Clínica</option>
+        <option value="Farmácia">Farmácia</option>
+        <option value="Escola">Escola</option>
+        <option value="Faculdade">Faculdade</option>
+        <option value="Instituição/serviço">Instituição ou serviço</option>
+        <option value="Órgão público">Órgão público</option>
+        <option value="Igreja">Igreja ou espaço religioso</option>
+        <option value="Parque">Parque</option>
+        <option value="Praça">Praça</option>
+        <option value="Hotel">Hotel ou hospedagem</option>
+        <option value="Transporte público">Transporte público</option>
+        <option value="Comércio">Comércio</option>
+        <option value="Espaço cultural">Espaço cultural</option>
+        <option value="Evento">Evento</option>
+        <option value="Outro">Outro</option>
+      </select>
+
+      <select id="filtroDeficiencia" class="form-select mb-2" onchange="filtrar()">
+        <option value="todos">Todas as deficiências</option>
+        <option value="fisica">Deficiência física ou mobilidade reduzida</option>
+        <option value="visual">Deficiência visual</option>
+        <option value="auditiva">Deficiência auditiva</option>
+        <option value="cognitiva">Deficiência intelectual, cognitiva ou psicossocial</option>
       </select>
 
       <select id="filtroRecurso" class="form-select mb-3" onchange="filtrar()">
-        <option value="todos">Todos os recursos</option><option value="Rampa de acesso">Rampa</option>
-        <option value="Banheiro acessível">Banheiro acessível</option><option value="Piso tátil">Piso tátil</option>
-        <option value="Libras">Libras</option><option value="Vaga acessível">Vaga acessível</option>
+        <option value="todos">Todos os recursos</option>
+        <option value="Banheiro acessível">Banheiro acessível</option>
+        <option value="Rampa de acesso">Rampa de acesso</option>
+        <option value="Elevador acessível">Elevador acessível</option>
+        <option value="Piso tátil">Piso tátil</option>
+        <option value="Entrada acessível">Entrada acessível</option>
+        <option value="Vaga acessível">Vaga acessível</option>
+        <option value="Sala de conforto">Sala de conforto</option>
+        <option value="Espaço para cadeira de rodas">Espaço para cadeira de rodas</option>
+        <option value="Atendimento prioritário">Atendimento prioritário</option>
+        <option value="Balcão acessível">Balcão acessível</option>
+        <option value="Corrimão">Corrimão</option>
+        <option value="Sinalização acessível">Sinalização acessível</option>
+        <option value="Braile">Braile</option>
+        <option value="Libras">Atendimento em Libras</option>
+        <option value="Audiodescrição">Audiodescrição</option>
+        <option value="Comunicação acessível">Comunicação acessível</option>
+        <option value="Cão-guia permitido">Cão-guia permitido</option>
+        <option value="Outro">Outro recurso</option>
       </select>
 
       <div id="listaLocais"></div>
@@ -125,7 +166,7 @@
 
       <fieldset><legend>Tipo de local</legend><p>Selecione uma ou mais categorias.</p>
         <div class="chips" id="categorias">
-          <?php foreach (['Restaurante','Shopping','Mercado','Hospital','Clínica','Farmácia','Escola','Faculdade','Órgão público','Igreja','Parque','Praça','Hotel','Transporte público','Comércio','Espaço cultural','Evento','Outro'] as $i => $categoria): ?>
+          <?php foreach (['Restaurante','Shopping','Mercado','Hospital','Clínica','Farmácia','Escola','Faculdade','Instituição/serviço','Órgão público','Igreja','Parque','Praça','Hotel','Transporte público','Comércio','Espaço cultural','Evento','Outro'] as $i => $categoria): ?>
             <label class="chip"><input type="checkbox" name="categorias[]" value="<?= htmlspecialchars($categoria) ?>"><span><?= htmlspecialchars($categoria) ?></span></label>
           <?php endforeach; ?>
         </div>
@@ -215,7 +256,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="../assets/js/mapa.js"></script>
+  <script src="../assets/js/mapa.js?v=2"></script>
   <script src="../assets/js/telainicial.js"></script>
   
 <div vw class="enabled">

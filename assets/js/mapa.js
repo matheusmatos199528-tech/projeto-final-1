@@ -53,8 +53,25 @@ async function carregarLocais() {
 
 function filtrar() {
   const categoria = document.getElementById('filtroCategoria').value;
+  const deficiencia = document.getElementById('filtroDeficiencia').value;
   const recurso = document.getElementById('filtroRecurso').value;
-  renderizar(locais.filter(local => (categoria === 'todos' || local.categorias.includes(categoria)) && (recurso === 'todos' || local.recursos.includes(recurso))));
+
+  const recursosPorDeficiencia = {
+    fisica: ['Banheiro acessível', 'Rampa de acesso', 'Elevador acessível', 'Entrada acessível', 'Vaga acessível', 'Espaço para cadeira de rodas', 'Atendimento prioritário', 'Balcão acessível', 'Corrimão'],
+    visual: ['Piso tátil', 'Sinalização acessível', 'Braile', 'Audiodescrição', 'Comunicação acessível', 'Cão-guia permitido'],
+    auditiva: ['Libras', 'Sinalização acessível', 'Comunicação acessível'],
+    cognitiva: ['Sala de conforto', 'Atendimento prioritário', 'Sinalização acessível', 'Comunicação acessível']
+  };
+
+  renderizar(locais.filter(local => {
+    const correspondeCategoria = categoria === 'todos' || local.categorias.includes(categoria);
+    const correspondeRecurso = recurso === 'todos' || local.recursos.includes(recurso);
+    const recursosRelacionados = recursosPorDeficiencia[deficiencia] || [];
+    const correspondeDeficiencia = deficiencia === 'todos'
+      || local.recursos.some(item => recursosRelacionados.includes(item));
+
+    return correspondeCategoria && correspondeRecurso && correspondeDeficiencia;
+  }));
 }
 window.filtrar = filtrar;
 
@@ -140,4 +157,3 @@ formulario.addEventListener('submit', async evento => {
 
 document.getElementById('btnFecharConfirmacao').addEventListener('click', () => document.getElementById('confirmacaoSolicitacao').classList.remove('ativa'));
 carregarLocais();
-
