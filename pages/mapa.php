@@ -87,12 +87,13 @@
     </div>
 
     <!-- MAPA -->
-    <div id="map"></div>
+    <div class="mapa-area">
+      <div id="map"></div>
+      <button type="button" id="btnMenuMapa" class="menu-hamburguer" aria-label="Abrir menu do mapa" aria-expanded="false">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
-
-  <button type="button" id="btnMenuMapa" class="menu-hamburguer" aria-label="Abrir menu do mapa" aria-expanded="false">
-    <i class="fa-solid fa-bars" aria-hidden="true"></i>
-  </button>
   <aside id="menuMapa" class="menu-mapa" aria-hidden="true">
     <button type="button" id="btnFecharMenu" class="menu-fechar" aria-label="Fechar menu">&times;</button>
     <h2>Contribua com o mapa</h2>
