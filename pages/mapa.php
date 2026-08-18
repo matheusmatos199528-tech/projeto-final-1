@@ -1,17 +1,15 @@
-<?php require_once dirname(__DIR__) . '/config/session.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="<?= htmlspecialchars(tokenCsrf(), ENT_QUOTES, 'UTF-8') ?>">
   <title>Mapa de Acessibilidade - IncluCity</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../assets/css/mapa.css">
+  <link rel="stylesheet" href="./assets/css/mapa.css">
 </head>
 
 <body onload="mudarposition()">
@@ -20,7 +18,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="TelaInicial.php">
-        <img src="../assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
+        <img src="./assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar">
@@ -101,6 +99,7 @@
     </button>
   </aside>
 
+<<<<<<< HEAD
   <div id="formAdicionarLocal" class="modal-form" role="dialog" aria-modal="true" aria-labelledby="tituloSolicitacao">
     <form id="formLocal" class="form-accessible" enctype="multipart/form-data">
       <button type="button" id="btnFechar" class="btn-fechar" aria-label="Fechar formulário">&times;</button>
@@ -117,17 +116,91 @@
           <label class="campo">Cidade<input name="cidade" id="cidade" required maxlength="100"></label>
           <label class="campo">Estado<input name="estado" id="estado" required maxlength="2" pattern="[A-Za-z]{2}" placeholder="SP"></label>
           <label class="campo">CEP<input name="cep" id="cep" required inputmode="numeric" maxlength="9" placeholder="00000-000"></label>
+=======
+       <!--<button type="button" id="btnFechar" class="btn-fechar">&times;</button>
+      <h3>Adicionar Local Acessível</h3>-->
+
+      <!-- Nome -->
+      <input type="text" id="nome" placeholder="Nome do local" required minlength="3">
+
+      <!-- Tipo -->
+      <select id="tipoLocal" required>
+        <option value="">Tipo de local</option>
+        <option value="restaurante">Restaurante</option>
+        <option value="loja">Loja</option>
+        <option value="shopping">Shopping</option>
+        <option value="hospital">Hospital</option>
+        <option value="outro">Outro</option>
+      </select>
+
+      <!-- Endereço -->
+      <input type="text" id="endereco" placeholder="Endereço completo" required>
+
+      <!-- Tipo de acessibilidade -->
+      <select id="deficiencia" required>
+        <option value="">Tipo de acessibilidade principal</option>
+        <option value="fisica">Física</option>
+        <option value="visual">Visual</option>
+        <option value="auditiva">Auditiva</option>
+        <option value="intelectual">Intelectual</option>
+        <option value="todas">Atende todas</option>
+      </select>
+
+      <h4>Recursos de Acessibilidade</h4>
+
+      <style>
+        .checkbox-group {
+          display: flex;
+        }
+
+        #rampa {
+          width: 50px;
+        }
+      </style>
+
+      <div class="checkbox-group">
+
+        <div class="col-6 d-flex flex-column">
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="rampa" name="recursos[]" value="rampa">
+            <label for="rampa">Possui rampa de acesso</label>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="elevador" name="recursos[]" value="elevador">
+            <label for="elevador">Possui elevador</label>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="banheiro-acessivel" name="recursos[]" value="banheiro-acessivel">
+            <label for="banheiro-acessivel">Banheiro acessível</label>
+          </div>
+>>>>>>> 744790effe840190bc9ac42abe3877c2f9ac0bd9
         </div>
         <input type="hidden" name="latitude" id="latitude"><input type="hidden" name="longitude" id="longitude">
         <button type="button" id="btnSelecionarMapa" class="btn-selecionar-mapa"><i class="fa-solid fa-map-pin"></i> Selecionar endereço diretamente no mapa</button>
         <p id="localizacaoStatus" class="status-localizacao" role="status">Localização ainda não selecionada.</p>
       </fieldset>
 
+<<<<<<< HEAD
       <fieldset><legend>Tipo de local</legend><p>Selecione uma ou mais categorias.</p>
         <div class="chips" id="categorias">
           <?php foreach (['Restaurante','Shopping','Mercado','Hospital','Clínica','Farmácia','Escola','Faculdade','Órgão público','Igreja','Parque','Praça','Hotel','Transporte público','Comércio','Espaço cultural','Evento','Outro'] as $i => $categoria): ?>
             <label class="chip"><input type="checkbox" name="categorias[]" value="<?= htmlspecialchars($categoria) ?>"><span><?= htmlspecialchars($categoria) ?></span></label>
           <?php endforeach; ?>
+=======
+        <div class="col-6 d-flex flex-column">
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="piso-tatil" name="recursos[]" value="piso-tatil">
+            <label for="piso-tatil">Possui piso tátil</label>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="vaga-acessivel" name="recursos[]" value="vaga-acessivel">
+            <label for="vaga-acessivel">Possui vaga acessível</label>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="libras" name="recursos[]" value="libras">
+            <label for="libras">Atendimento em Libras</label>
+          </div>
+>>>>>>> 744790effe840190bc9ac42abe3877c2f9ac0bd9
         </div>
         <label id="campoOutraCategoria" class="campo condicional">Especifique a categoria<input name="outra_categoria" id="outraCategoria" maxlength="100"></label>
       </fieldset>
@@ -153,6 +226,7 @@
         <label class="campo"><textarea name="observacoes" id="observacoes" maxlength="2000" placeholder="Conte algo importante sobre a acessibilidade desse local…"></textarea></label>
       </fieldset>
 
+<<<<<<< HEAD
       <fieldset><legend>Informações adicionais <small>(opcional)</small></legend>
         <div class="form-grid">
           <label class="campo">Site<input type="url" name="site" id="site" placeholder="https://"></label>
@@ -161,6 +235,30 @@
           <label class="campo">Horário de funcionamento<input name="horario_funcionamento" id="horarioFuncionamento" maxlength="255"></label>
         </div>
       </fieldset>
+=======
+      <!-- Avaliação -->
+      <select id="avaliacao" required>
+        <option value="">Avaliação geral</option>
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="2">⭐⭐</option>
+        <option value="1">⭐</option>
+      </select>
+
+      <!-- Comentário -->
+      <textarea id="comentario" placeholder="Descreva sua experiência no local..." required minlength="10"></textarea>
+
+      <!-- Fotos -->
+      <input type="file" id="foto" accept="image/*" multiple required>
+
+      <small>Envie fotos que comprovem a acessibilidade do local</small>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="button" id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+      </div>
+>>>>>>> 744790effe840190bc9ac42abe3877c2f9ac0bd9
 
       <label class="declaracao"><input type="checkbox" name="declaracao" value="1" required> Declaro que as informações fornecidas foram verificadas por mim e correspondem ao que encontrei no local.</label>
       <p class="aviso-envio">O envio desta solicitação não garante a publicação do local. As informações serão avaliadas pela equipe responsável pelo mapa.</p>
@@ -215,8 +313,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="../assets/js/mapa.js"></script>
-  <script src="../assets/js/telainicial.js"></script>
+  <script src="./assets/js/mapa.js"></script>
+  <script src="./assets/js/telainicial.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
@@ -234,7 +332,6 @@
 <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
-      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 

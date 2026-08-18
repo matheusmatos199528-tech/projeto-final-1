@@ -1,7 +1,8 @@
 <?php
 
-require_once dirname(__DIR__) . '/config/session.php';
-require_once dirname(__DIR__) . '/config/conn.php';
+require_once __DIR__ . '/config/session.php';
+
+require_once __DIR__ . '/config/conn.php';
 
 
 /*
@@ -12,20 +13,13 @@ require_once dirname(__DIR__) . '/config/conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
-    header("Location: ../pages/login.php");
+    header("Location: login.php");
     exit;
 }
 
-exigirCsrf();
-
-$tentativasLogin = array_values(array_filter(
-    $_SESSION['tentativas_login'] ?? [],
-    static fn (int $instante): bool => $instante > time() - 900
-));
-
-if (count($tentativasLogin) >= 5) {
-    http_response_code(429);
-    exit('Muitas tentativas de login. Aguarde 15 minutos e tente novamente.');
+if (!csrfValido($_POST['csrf_token'] ?? null)) {
+    http_response_code(403);
+    exit('Solicitação inválida. Atualize a página e tente novamente.');
 }
 
 
@@ -35,9 +29,8 @@ if (count($tentativasLogin) >= 5) {
 |--------------------------------------------------------------------------
 */
 
-$login = trim((string) ($_POST["login"] ?? ""));
+$login = trim($_POST["login"] ?? "");
 $senha = $_POST["senha"] ?? "";
-$cpfSemMascara = preg_replace('/\D/', '', $login) ?? '';
 
 
 /*
@@ -50,7 +43,7 @@ if ($login === "" || $senha === "") {
 
     echo "<script>
         alert('Preencha o usuário e a senha.');
-        window.location.href = '../pages/login.php';
+        window.location.href = 'login.php';
     </script>";
 
     exit;
@@ -65,12 +58,11 @@ if ($login === "" || $senha === "") {
 
 $sql = "SELECT id, nome, email, celular, cpf, senha
         FROM usuarios
-        WHERE email = ? OR REPLACE(REPLACE(cpf, '.', ''), '-', '') = ?
-        LIMIT 1";
+        WHERE email = ? OR cpf = ?";
 
 $stmt = $con->prepare($sql);
 
-$stmt->bind_param("ss", $login, $cpfSemMascara);
+$stmt->bind_param("ss", $login, $login);
 
 $stmt->execute();
 
@@ -85,12 +77,9 @@ $resultado = $stmt->get_result();
 
 if ($resultado->num_rows === 0) {
 
-    $tentativasLogin[] = time();
-    $_SESSION['tentativas_login'] = $tentativasLogin;
-
     echo "<script>
         alert('E-mail, CPF ou senha incorretos.');
-        window.location.href = '../pages/login.php';
+        window.location.href = 'login.php';
     </script>";
 
     $stmt->close();
@@ -117,12 +106,9 @@ $usuario = $resultado->fetch_assoc();
 
 if (!password_verify($senha, $usuario["senha"])) {
 
-    $tentativasLogin[] = time();
-    $_SESSION['tentativas_login'] = $tentativasLogin;
-
     echo "<script>
         alert('E-mail, CPF ou senha incorretos.');
-        window.location.href = '../pages/login.php';
+        window.location.href = 'login.php';
     </script>";
 
     $stmt->close();
@@ -138,13 +124,12 @@ if (!password_verify($senha, $usuario["senha"])) {
 |--------------------------------------------------------------------------
 */
 
+session_regenerate_id(true);
 $_SESSION["usuario_id"] = $usuario["id"];
 $_SESSION["usuario_nome"] = $usuario["nome"];
 $_SESSION["usuario_email"] = $usuario["email"];
 $_SESSION["usuario_celular"] = $usuario["celular"];
 $_SESSION["usuario_cpf"] = $usuario["cpf"];
-unset($_SESSION['tentativas_login']);
-session_regenerate_id(true);
 
 
 /*
@@ -156,7 +141,7 @@ session_regenerate_id(true);
 $stmt->close();
 $con->close();
 
-header("Location: ../pages/TelaUsuario.php");
+header("Location: TelaUsuario.php");
 exit;
 
 ?>

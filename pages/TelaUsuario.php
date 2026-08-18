@@ -1,8 +1,7 @@
 <?php
-require_once dirname(__DIR__) . '/config/session.php';
-require_once dirname(__DIR__) . '/config/conn.php';
+require_once __DIR__ . '/config/session.php';
 
-if (!isset($_SESSION['usuario_id'])) {
+if (empty($_SESSION['usuario_id'])) {
   header('Location: login.php');
   exit;
 }
@@ -10,6 +9,7 @@ if (!isset($_SESSION['usuario_id'])) {
 $nomeUsuario = htmlspecialchars((string) ($_SESSION['usuario_nome'] ?? ''), ENT_QUOTES, 'UTF-8');
 $emailUsuario = htmlspecialchars((string) ($_SESSION['usuario_email'] ?? ''), ENT_QUOTES, 'UTF-8');
 $cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QUOTES, 'UTF-8');
+<<<<<<< HEAD
 $usuarioId = (int) $_SESSION['usuario_id'];
 $stmtLocais = $con->prepare(
   'SELECT nome, COALESCE(observacoes, "") AS comentario, recursos, status, data_cadastro
@@ -24,6 +24,8 @@ function escapar(string $valor): string
 {
   return htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
 }
+=======
+>>>>>>> 744790effe840190bc9ac42abe3877c2f9ac0bd9
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -39,7 +41,7 @@ function escapar(string $valor): string
   <!-- ICONES -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <link rel="stylesheet" href="../assets/css/telaUsuario.css">
+  <link rel="stylesheet" href="./assets/css/telaUsuario.css">
 </head>
 
 <body onload="mudarposition()">
@@ -49,7 +51,7 @@ function escapar(string $valor): string
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="TelaInicial.php">
-        <img src="../assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
+        <img src="./assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar"
@@ -103,7 +105,7 @@ function escapar(string $valor): string
 
       <section class="bloco perfil-usuario" id="menuUsuario">
         <div class="foto-usuario">
-          <img src="../assets/img/—Pngtree—avatar bussinesman man profile icon_7268049.png" alt="Foto do usuário">
+          <img src="./assets/img/—Pngtree—avatar bussinesman man profile icon_7268049.png" alt="Foto do usuário">
         </div>
 
         <div class="dados-usuario">
@@ -136,10 +138,7 @@ function escapar(string $valor): string
 
           <div class="linha-info">
             <span class="label">Sessão:</span>
-            <form action="../actions/logout.php" method="POST" class="valor">
-              <input type="hidden" name="csrf_token" value="<?= escapar(tokenCsrf()) ?>">
-              <button type="submit" class="link-acao btn btn-link p-0">Sair</button>
-            </form>
+            <a href="logout.php" class="valor link-acao">Sair</a>
           </div>
         </div>
       </section>
@@ -150,17 +149,23 @@ function escapar(string $valor): string
       <h2>Comentários</h2>
 
       <div class="lista-cards">
-        <?php if (!$locaisUsuario): ?>
-          <p>Você ainda não publicou comentários.</p>
-        <?php else: ?>
-          <?php foreach ($locaisUsuario as $local): ?>
-            <article class="card-item">
-              <h3><?= escapar($local['nome']) ?></h3>
-              <p><?= escapar($local['comentario']) ?></p>
-              <span class="meta-card">Comentado em <?= date('d/m/Y', strtotime($local['data_cadastro'])) ?></span>
-            </article>
-          <?php endforeach; ?>
-        <?php endif; ?>
+        <article class="card-item">
+          <h3>Praça Central</h3>
+          <p>Local com boa acessibilidade, rampa bem posicionada e calçada em boas condições.</p>
+          <span class="meta-card">Comentado em 12/03/2026</span>
+        </article>
+
+        <article class="card-item">
+          <h3>Terminal Rodoviário</h3>
+          <p>O acesso principal é bom, mas alguns pontos precisam de melhor sinalização tátil.</p>
+          <span class="meta-card">Comentado em 10/03/2026</span>
+        </article>
+
+        <article class="card-item">
+          <h3>Biblioteca Municipal</h3>
+          <p>Espaço acessível, com entrada facilitada e circulação interna adequada.</p>
+          <span class="meta-card">Comentado em 08/03/2026</span>
+        </article>
       </div>
     </section>
 
@@ -169,20 +174,23 @@ function escapar(string $valor): string
       <h2>Locais adicionados por você</h2>
 
       <div class="lista-cards">
-        <?php if (!$locaisUsuario): ?>
-          <p>Você ainda não adicionou locais.</p>
-        <?php else: ?>
-          <?php foreach ($locaisUsuario as $local): ?>
-            <?php $recursos = json_decode($local['recursos'], true) ?: []; ?>
-            <article class="card-item">
-              <h3><?= escapar($local['nome']) ?></h3>
-              <p><?= escapar($recursos ? implode(', ', $recursos) : 'Recursos não informados') ?></p>
-              <span class="meta-card">
-                Adicionado em <?= date('d/m/Y', strtotime($local['data_cadastro'])) ?> — <?= escapar($local['status']) ?>
-              </span>
-            </article>
-          <?php endforeach; ?>
-        <?php endif; ?>
+        <article class="card-item">
+          <h3>Hospital Municipal</h3>
+          <p>Adicionado com informações sobre elevadores, rampas e vagas acessíveis.</p>
+          <span class="meta-card">Adicionado em 09/03/2026</span>
+        </article>
+
+        <article class="card-item">
+          <h3>Parque da Cidade</h3>
+          <p>Mapeamento de trilhas acessíveis, banheiros adaptados e entrada principal.</p>
+          <span class="meta-card">Adicionado em 05/03/2026</span>
+        </article>
+
+        <article class="card-item">
+          <h3>Centro Cultural</h3>
+          <p>Informações sobre acesso para cadeirantes, piso tátil e estrutura interna.</p>
+          <span class="meta-card">Adicionado em 02/03/2026</span>
+        </article>
       </div>
     </section>
 
@@ -235,9 +243,9 @@ function escapar(string $valor): string
     </div>
   </footer>
 
-  <script src="../assets/js/Telausuario.script.js"></script>
+  <script src="./assets/js/Telausuario.script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/telainicial.js"></script>
+  <script src="./assets/js/telainicial.js"></script>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
@@ -255,7 +263,6 @@ function escapar(string $valor): string
   <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
-      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px";

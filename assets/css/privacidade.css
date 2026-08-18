@@ -31,7 +31,6 @@ h1 {
   margin-bottom: 25px;
 }
 
- HEAD
 /* ===== CONTEÚDO ===== */
 .conteudo-termos {
   margin-bottom: 30px;
@@ -165,12 +164,12 @@ a{
     text-decoration: none;
 }
 
-a hover{
+a:hover{
     text-decoration: underline;
 }
 
 @media(max-width:768px){
-    .container{
+    .container-termos{
         margin: 20px;
         padding: 25px;
     }

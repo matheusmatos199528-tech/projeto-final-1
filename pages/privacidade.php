@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>privacidade</title>
-    <link rel="stylesheet" href="../assets/css/privacidade.css">
+    <link rel="stylesheet" href="./assets/css/privacidade.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <main class="container-termos">
+
+        <h1>Política de Privacidade</h1>
 
         <h2>1. Apresentação</h2>
         <p>
@@ -108,7 +110,7 @@
         <p>Data: //______  Versão: 1.0 </p>
 
        
-    </div>
+    </main>
 
 
 
