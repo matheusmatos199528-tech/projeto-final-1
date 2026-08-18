@@ -39,8 +39,9 @@ O servidor PHP precisa estar configurado para enviar e-mail. Para desenvolviment
 - login por e-mail ou CPF, sessão segura e logout;
 - proteção CSRF e limite de tentativas nos fluxos sensíveis;
 - recuperação e alteração de senha;
-- mapa com geocodificação, filtros e cadastro de locais;
-- locais, comentários e recursos persistidos no banco e associados ao usuário;
+- mapa com filtros e formulário colaborativo acessado por menu hambúrguer;
+- solicitações com endereço, coordenadas, categorias, recursos, fotos e informações adicionais;
+- moderação por status; somente solicitações aprovadas aparecem publicamente no mapa;
 - painel autenticado com dados e publicações do usuário.
 
 ## Estrutura principal

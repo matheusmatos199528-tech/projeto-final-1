@@ -56,21 +56,17 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
       <h3>Mapa Acessível</h3>
-      <button id="btnAdicionarLocal" class="btn btn-success mb-3">+ Adicionar Local</button>
 
-      <select id="filtroDeficiencia" class="form-select mb-2" onchange="filtrar()">
-        <option value="todos">Tipo de deficiência</option>
-        <option value="fisica">Física</option>
-        <option value="visual">Visual</option>
-        <option value="auditiva">Auditiva</option>
-        <option value="intelectual">Intelectual</option>
+      <select id="filtroCategoria" class="form-select mb-2" onchange="filtrar()">
+        <option value="todos">Todas as categorias</option>
+        <option value="Restaurante">Restaurante</option><option value="Hospital">Hospital</option>
+        <option value="Escola">Escola</option><option value="Parque">Parque</option><option value="Comércio">Comércio</option>
       </select>
 
-      <select id="filtroAvaliacao" class="form-select mb-3" onchange="filtrar()">
-        <option value="todos">Avaliação</option>
-        <option value="5">⭐⭐⭐⭐⭐</option>
-        <option value="4">⭐⭐⭐⭐</option>
-        <option value="3">⭐⭐⭐</option>
+      <select id="filtroRecurso" class="form-select mb-3" onchange="filtrar()">
+        <option value="todos">Todos os recursos</option><option value="Rampa de acesso">Rampa</option>
+        <option value="Banheiro acessível">Banheiro acessível</option><option value="Piso tátil">Piso tátil</option>
+        <option value="Libras">Libras</option><option value="Vaga acessível">Vaga acessível</option>
       </select>
 
       <div id="listaLocais"></div>
@@ -94,106 +90,87 @@
     <div id="map"></div>
   </div>
 
-  <!-- MODAL -->
-  <div id="formAdicionarLocal" class="modal-form">
-    <form id="formLocal" class="form-accessible">
+  <button type="button" id="btnMenuMapa" class="menu-hamburguer" aria-label="Abrir menu do mapa" aria-expanded="false">
+    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+  </button>
+  <aside id="menuMapa" class="menu-mapa" aria-hidden="true">
+    <button type="button" id="btnFecharMenu" class="menu-fechar" aria-label="Fechar menu">&times;</button>
+    <h2>Contribua com o mapa</h2>
+    <button type="button" id="btnAdicionarLocal" class="menu-opcao">
+      <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Sugerir um novo local
+    </button>
+  </aside>
 
-      <button type="button" id="btnFechar" class="btn-fechar" aria-label="Fechar">&times;</button>
-      <h3>Adicionar Local Acessível</h3>
+  <div id="formAdicionarLocal" class="modal-form" role="dialog" aria-modal="true" aria-labelledby="tituloSolicitacao">
+    <form id="formLocal" class="form-accessible" enctype="multipart/form-data">
+      <button type="button" id="btnFechar" class="btn-fechar" aria-label="Fechar formulário">&times;</button>
+      <h3 id="tituloSolicitacao">Sugerir um novo local</h3>
+      <p class="form-intro">Conhece um lugar que deveria estar no nosso mapa? Envie as informações e fotos do local. Nossa equipe irá analisar a solicitação antes de publicá-la.</p>
 
-      <!-- Nome -->
-      <input type="text" id="nome" placeholder="Nome do local" required minlength="3">
-
-      <!-- Tipo -->
-      <select id="tipoLocal" required>
-        <option value="">Tipo de local</option>
-        <option value="restaurante">Restaurante</option>
-        <option value="loja">Loja</option>
-        <option value="shopping">Shopping</option>
-        <option value="hospital">Hospital</option>
-        <option value="outro">Outro</option>
-      </select>
-
-      <!-- Endereço -->
-      <input type="text" id="endereco" placeholder="Endereço completo" required>
-
-      <!-- Tipo de acessibilidade -->
-      <select id="deficiencia" required>
-        <option value="">Tipo de acessibilidade principal</option>
-        <option value="fisica">Física</option>
-        <option value="visual">Visual</option>
-        <option value="auditiva">Auditiva</option>
-        <option value="intelectual">Intelectual</option>
-        <option value="todas">Atende todas</option>
-      </select>
-
-      <h4>Recursos de Acessibilidade</h4>
-
-      <style>
-        .checkbox-group {
-          display: flex;
-        }
-
-        .checkbox-group input {
-          width: 50px;
-        }
-      </style>
-
-      <div class="checkbox-group">
-
-        <div class="col-6 d-flex flex-column">
-          <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa" name="recursos" value="Rampa de acesso">
-            <label for="rampa">Possui rampa de acesso</label>
-          </div>
-          <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="elevador" name="recursos" value="Elevador acessível">
-            <label for="elevador">Elevador acessível</label>
-          </div>
-          <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="banheiro" name="recursos" value="Banheiro acessível">
-            <label for="banheiro">Banheiro acessível</label>
-          </div>
+      <fieldset><legend>Sobre o local</legend>
+        <div class="form-grid">
+          <label class="campo campo-largo">Nome do estabelecimento/local<input name="nome" id="nome" required minlength="3" maxlength="150"></label>
+          <label class="campo campo-largo">Endereço completo<input name="endereco" id="endereco" required maxlength="255"></label>
+          <label class="campo">Número<input name="numero" id="numero" required maxlength="20"></label>
+          <label class="campo">Complemento<input name="complemento" id="complemento" maxlength="100"></label>
+          <label class="campo">Bairro<input name="bairro" id="bairro" required maxlength="100"></label>
+          <label class="campo">Cidade<input name="cidade" id="cidade" required maxlength="100"></label>
+          <label class="campo">Estado<input name="estado" id="estado" required maxlength="2" pattern="[A-Za-z]{2}" placeholder="SP"></label>
+          <label class="campo">CEP<input name="cep" id="cep" required inputmode="numeric" maxlength="9" placeholder="00000-000"></label>
         </div>
+        <input type="hidden" name="latitude" id="latitude"><input type="hidden" name="longitude" id="longitude">
+        <button type="button" id="btnSelecionarMapa" class="btn-selecionar-mapa"><i class="fa-solid fa-map-pin"></i> Selecionar endereço diretamente no mapa</button>
+        <p id="localizacaoStatus" class="status-localizacao" role="status">Localização ainda não selecionada.</p>
+      </fieldset>
 
-        <div class="col-6 d-flex flex-column">
-          <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="pisoTatil" name="recursos" value="Piso tátil">
-            <label for="pisoTatil">Piso tátil</label>
-          </div>
-          <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="libras" name="recursos" value="Atendimento em Libras">
-            <label for="libras">Atendimento em Libras</label>
-          </div>
-          <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="vaga" name="recursos" value="Vaga reservada">
-            <label for="vaga">Vaga reservada</label>
-          </div>
+      <fieldset><legend>Tipo de local</legend><p>Selecione uma ou mais categorias.</p>
+        <div class="chips" id="categorias">
+          <?php foreach (['Restaurante','Shopping','Mercado','Hospital','Clínica','Farmácia','Escola','Faculdade','Órgão público','Igreja','Parque','Praça','Hotel','Transporte público','Comércio','Espaço cultural','Evento','Outro'] as $i => $categoria): ?>
+            <label class="chip"><input type="checkbox" name="categorias[]" value="<?= htmlspecialchars($categoria) ?>"><span><?= htmlspecialchars($categoria) ?></span></label>
+          <?php endforeach; ?>
         </div>
+        <label id="campoOutraCategoria" class="campo condicional">Especifique a categoria<input name="outra_categoria" id="outraCategoria" maxlength="100"></label>
+      </fieldset>
 
+      <fieldset><legend>Quais recursos de acessibilidade esse local possui?</legend>
+        <p>Marque apenas os recursos que você conseguiu verificar presencialmente.</p>
+        <div class="chips" id="recursos">
+          <?php foreach (['Banheiro acessível','Rampa de acesso','Elevador acessível','Piso tátil','Entrada acessível','Vaga acessível','Sala de conforto','Espaço para cadeira de rodas','Atendimento prioritário','Balcão acessível','Corrimão','Sinalização acessível','Braile','Libras','Audiodescrição','Comunicação acessível','Cão-guia permitido','Outro'] as $recurso): ?>
+            <label class="chip"><input type="checkbox" name="recursos[]" value="<?= htmlspecialchars($recurso) ?>"><span><?= htmlspecialchars($recurso) ?></span></label>
+          <?php endforeach; ?>
+        </div>
+        <label id="campoOutroRecurso" class="campo condicional">Especifique o recurso<input name="outro_recurso" id="outroRecurso" maxlength="150"></label>
+      </fieldset>
 
+      <fieldset><legend>Comprove a acessibilidade do local</legend>
+        <p>Adicione fotos da entrada, rampa, banheiro, piso tátil, vaga, elevador, sinalização ou outros recursos.</p>
+        <label class="botao-fotos"><i class="fa-solid fa-camera"></i> Adicionar fotos<input type="file" name="fotos[]" id="fotos" accept="image/jpeg,image/png,image/webp" multiple required></label>
+        <div id="previewFotos" class="preview-fotos" aria-live="polite"></div>
+        <small>Envie de 1 a 8 fotos, com até 5 MB cada. Evite fotos com dados pessoais de outras pessoas.</small>
+      </fieldset>
 
-      </div>
+      <fieldset><legend>Observações</legend>
+        <label class="campo"><textarea name="observacoes" id="observacoes" maxlength="2000" placeholder="Conte algo importante sobre a acessibilidade desse local…"></textarea></label>
+      </fieldset>
 
-      <!-- Avaliação -->
-      <select id="avaliacao" required>
-        <option value="">Avaliação geral</option>
-        <option value="5">⭐⭐⭐⭐⭐</option>
-        <option value="4">⭐⭐⭐⭐</option>
-        <option value="3">⭐⭐⭐</option>
-        <option value="2">⭐⭐</option>
-        <option value="1">⭐</option>
-      </select>
+      <fieldset><legend>Informações adicionais <small>(opcional)</small></legend>
+        <div class="form-grid">
+          <label class="campo">Site<input type="url" name="site" id="site" placeholder="https://"></label>
+          <label class="campo">Instagram<input name="instagram" id="instagram" maxlength="100" placeholder="@perfil"></label>
+          <label class="campo">Telefone<input name="telefone" id="telefone" maxlength="30"></label>
+          <label class="campo">Horário de funcionamento<input name="horario_funcionamento" id="horarioFuncionamento" maxlength="255"></label>
+        </div>
+      </fieldset>
 
-      <!-- Comentário -->
-      <textarea id="comentario" placeholder="Descreva sua experiência no local..." required minlength="10"></textarea>
-
-      <div class="form-buttons">
-        <button type="submit" class="btn btn-success">Salvar</button>
-        <button type="button" id="btnCancelar" class="btn btn-secondary">Cancelar</button>
-      </div>
-
+      <label class="declaracao"><input type="checkbox" name="declaracao" value="1" required> Declaro que as informações fornecidas foram verificadas por mim e correspondem ao que encontrei no local.</label>
+      <p class="aviso-envio">O envio desta solicitação não garante a publicação do local. As informações serão avaliadas pela equipe responsável pelo mapa.</p>
+      <div id="erroFormulario" class="erro-formulario" role="alert"></div>
+      <div class="form-buttons"><button type="submit" class="btn-enviar">Enviar solicitação</button><button type="button" id="btnCancelar" class="btn-cancelar">Cancelar</button></div>
     </form>
+  </div>
+
+  <div id="confirmacaoSolicitacao" class="modal-confirmacao" role="dialog" aria-modal="true" aria-labelledby="tituloConfirmacao">
+    <div><h2 id="tituloConfirmacao">Solicitação enviada com sucesso! 💙</h2><p>Obrigado por contribuir com o nosso mapa. Nossa equipe irá analisar as informações e as evidências enviadas. Se a solicitação for aprovada, o local será adicionado ao mapa.</p><button type="button" id="btnFecharConfirmacao">Entendi</button></div>
   </div>
 
   <!-- FOOTER -->

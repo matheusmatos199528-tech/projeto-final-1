@@ -1,13 +1,17 @@
 const map = L.map('map').setView([-23.2237, -45.9009], 13);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
 setTimeout(() => map.invalidateSize(), 300);
 window.addEventListener('resize', () => map.invalidateSize());
 
 let locais = [];
 let marcadores = [];
+let marcadorSelecao = null;
+let selecionandoNoMapa = false;
+
+const modal = document.getElementById('formAdicionarLocal');
+const formulario = document.getElementById('formLocal');
+const menu = document.getElementById('menuMapa');
+const erroFormulario = document.getElementById('erroFormulario');
 
 function escaparHtml(valor) {
   const elemento = document.createElement('div');
@@ -16,129 +20,123 @@ function escaparHtml(valor) {
 }
 
 function conteudoLocal(local) {
-  const recursos = Array.isArray(local.recursos) && local.recursos.length
-    ? local.recursos.join(', ')
-    : 'Recursos não informados';
-  const comentario = local.comentario ? `<br>${escaparHtml(local.comentario)}` : '';
-  return `<strong>${escaparHtml(local.nome)}</strong><br>${Number(local.avaliacao)} ⭐<br>${escaparHtml(recursos)}${comentario}`;
+  return `<strong>${escaparHtml(local.nome)}</strong><br>${escaparHtml(local.endereco)}, ${escaparHtml(local.numero)}<br>${local.recursos.map(escaparHtml).join(', ')}`;
 }
 
-function adicionarItem(container, local, marker) {
-  const item = document.createElement('button');
-  item.type = 'button';
-  item.className = 'local';
-
-  const titulo = document.createElement('strong');
-  titulo.textContent = local.nome;
-  const detalhes = document.createElement('span');
-  detalhes.textContent = ` — ${Number(local.avaliacao)} ⭐`;
-  item.append(titulo, detalhes);
-  item.addEventListener('click', () => {
-    map.setView([local.lat, local.lng], 16);
-    marker.openPopup();
-  });
-  container.appendChild(item);
-}
-
-function renderizar(listaLocais = locais) {
-  const lista = document.getElementById('listaLocais');
-  lista.replaceChildren();
-  marcadores.forEach(marker => map.removeLayer(marker));
+function renderizar(lista = locais) {
+  const container = document.getElementById('listaLocais');
+  container.replaceChildren();
+  marcadores.forEach(marcador => map.removeLayer(marcador));
   marcadores = [];
-
-  listaLocais.forEach(local => {
-    const marker = L.marker([local.lat, local.lng]).addTo(map).bindPopup(conteudoLocal(local));
-    marcadores.push(marker);
-    adicionarItem(lista, local, marker);
+  lista.forEach(local => {
+    const marcador = L.marker([local.lat, local.lng]).addTo(map).bindPopup(conteudoLocal(local));
+    marcadores.push(marcador);
+    const item = document.createElement('button');
+    item.type = 'button'; item.className = 'local';
+    item.textContent = `${local.nome} — ${local.categorias.join(', ')}`;
+    item.addEventListener('click', () => { map.setView([local.lat, local.lng], 16); marcador.openPopup(); });
+    container.appendChild(item);
   });
+  if (!lista.length) container.textContent = 'Nenhum local aprovado encontrado.';
 }
 
 async function carregarLocais() {
   try {
     const resposta = await fetch('../api/locais.php', { headers: { Accept: 'application/json' } });
-    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-    const dados = await resposta.json();
-    locais = Array.isArray(dados.locais) ? dados.locais : [];
+    if (!resposta.ok) throw new Error('Não foi possível carregar os locais.');
+    locais = (await resposta.json()).locais || [];
     renderizar();
   } catch (erro) {
-    console.error('Erro ao carregar locais:', erro);
-    document.getElementById('listaLocais').textContent = 'Não foi possível carregar os locais.';
+    document.getElementById('listaLocais').textContent = erro.message;
   }
 }
 
 function filtrar() {
-  const tipo = document.getElementById('filtroDeficiencia').value;
-  const avaliacao = document.getElementById('filtroAvaliacao').value;
-  renderizar(locais.filter(local =>
-    (tipo === 'todos' || local.deficiencia === tipo) &&
-    (avaliacao === 'todos' || Number(local.avaliacao) >= Number(avaliacao))
-  ));
+  const categoria = document.getElementById('filtroCategoria').value;
+  const recurso = document.getElementById('filtroRecurso').value;
+  renderizar(locais.filter(local => (categoria === 'todos' || local.categorias.includes(categoria)) && (recurso === 'todos' || local.recursos.includes(recurso))));
 }
-
 window.filtrar = filtrar;
 
-const modal = document.getElementById('formAdicionarLocal');
-document.getElementById('btnAdicionarLocal').addEventListener('click', () => { modal.style.display = 'flex'; });
-document.getElementById('btnCancelar').addEventListener('click', () => { modal.style.display = 'none'; });
-document.getElementById('btnFechar').addEventListener('click', () => { modal.style.display = 'none'; });
-modal.addEventListener('click', evento => {
-  if (evento.target === modal) modal.style.display = 'none';
+function alternarMenu(aberto) {
+  menu.classList.toggle('aberto', aberto); menu.setAttribute('aria-hidden', String(!aberto));
+  document.getElementById('btnMenuMapa').setAttribute('aria-expanded', String(aberto));
+}
+document.getElementById('btnMenuMapa').addEventListener('click', () => alternarMenu(true));
+document.getElementById('btnFecharMenu').addEventListener('click', () => alternarMenu(false));
+document.getElementById('btnAdicionarLocal').addEventListener('click', () => { alternarMenu(false); modal.style.display = 'flex'; document.getElementById('nome').focus(); });
+
+function fecharFormulario() { modal.style.display = 'none'; selecionandoNoMapa = false; document.body.classList.remove('selecao-mapa'); }
+document.getElementById('btnFechar').addEventListener('click', fecharFormulario);
+document.getElementById('btnCancelar').addEventListener('click', fecharFormulario);
+modal.addEventListener('click', evento => { if (evento.target === modal) fecharFormulario(); });
+
+function controlarOutro(nome, campoId, inputId) {
+  document.querySelectorAll(`input[name="${nome}[]"]`).forEach(input => input.addEventListener('change', () => {
+    const ativo = [...document.querySelectorAll(`input[name="${nome}[]"]:checked`)].some(item => item.value === 'Outro');
+    document.getElementById(campoId).classList.toggle('visivel', ativo);
+    document.getElementById(inputId).required = ativo;
+  }));
+}
+controlarOutro('categorias', 'campoOutraCategoria', 'outraCategoria');
+controlarOutro('recursos', 'campoOutroRecurso', 'outroRecurso');
+
+document.getElementById('btnSelecionarMapa').addEventListener('click', () => {
+  selecionandoNoMapa = true; modal.style.display = 'none'; document.body.classList.add('selecao-mapa');
+  document.getElementById('localizacaoStatus').textContent = 'Clique no ponto exato do mapa.';
+});
+map.on('click', evento => {
+  if (!selecionandoNoMapa) return;
+  selecionandoNoMapa = false; document.body.classList.remove('selecao-mapa');
+  if (marcadorSelecao) map.removeLayer(marcadorSelecao);
+  marcadorSelecao = L.marker(evento.latlng).addTo(map).bindPopup('Local selecionado').openPopup();
+  document.getElementById('latitude').value = evento.latlng.lat.toFixed(7);
+  document.getElementById('longitude').value = evento.latlng.lng.toFixed(7);
+  const status = document.getElementById('localizacaoStatus'); status.textContent = 'Localização selecionada no mapa.'; status.classList.add('ok');
+  modal.style.display = 'flex';
 });
 
-document.getElementById('formLocal').addEventListener('submit', async function (evento) {
-  evento.preventDefault();
-  const nome = document.getElementById('nome').value.trim();
-  const endereco = document.getElementById('endereco').value.trim();
-  const recursos = [...document.querySelectorAll('input[name="recursos"]:checked')].map(campo => campo.value);
+document.getElementById('fotos').addEventListener('change', evento => {
+  const preview = document.getElementById('previewFotos'); preview.replaceChildren();
+  const arquivos = [...evento.target.files];
+  if (arquivos.length > 8) { erroFormulario.textContent = 'Selecione no máximo 8 fotos.'; evento.target.value = ''; return; }
+  erroFormulario.textContent = '';
+  arquivos.forEach((arquivo, indice) => {
+    if (arquivo.size > 5 * 1024 * 1024) { erroFormulario.textContent = 'Cada foto deve ter no máximo 5 MB.'; return; }
+    const figura = document.createElement('figure'); const imagem = document.createElement('img');
+    imagem.src = URL.createObjectURL(arquivo); imagem.alt = `Prévia da foto ${indice + 1}`;
+    imagem.addEventListener('load', () => URL.revokeObjectURL(imagem.src), { once: true }); figura.appendChild(imagem); preview.appendChild(figura);
+  });
+});
 
+async function geocodificarEndereco() {
+  const partes = ['endereco', 'numero', 'bairro', 'cidade', 'estado', 'cep'].map(id => document.getElementById(id).value.trim()).filter(Boolean);
+  const resposta = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&q=${encodeURIComponent(partes.join(', '))}`);
+  if (!resposta.ok) throw new Error('Não foi possível consultar o endereço.');
+  const dados = await resposta.json();
+  if (!dados.length) throw new Error('Endereço não encontrado. Selecione o ponto diretamente no mapa.');
+  return { latitude: dados[0].lat, longitude: dados[0].lon };
+}
+
+formulario.addEventListener('submit', async evento => {
+  evento.preventDefault(); erroFormulario.textContent = '';
+  const categorias = formulario.querySelectorAll('input[name="categorias[]"]:checked');
+  const recursos = formulario.querySelectorAll('input[name="recursos[]"]:checked');
+  if (!categorias.length || !recursos.length) { erroFormulario.textContent = 'Selecione ao menos uma categoria e um recurso de acessibilidade.'; return; }
+  const botao = formulario.querySelector('.btn-enviar'); botao.disabled = true; botao.textContent = 'Enviando…';
   try {
-    const resposta = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(endereco)}`);
-    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-    const dados = await resposta.json();
-    if (!dados.length) {
-      alert('Endereço não encontrado. Informe um endereço mais completo.');
-      return;
+    if (!document.getElementById('latitude').value) {
+      const coordenadas = await geocodificarEndereco(); document.getElementById('latitude').value = coordenadas.latitude; document.getElementById('longitude').value = coordenadas.longitude;
     }
-
-    const novoLocal = {
-      nome,
-      tipo: document.getElementById('tipoLocal').value,
-      endereco,
-      lat: Number(dados[0].lat),
-      lng: Number(dados[0].lon),
-      deficiencia: document.getElementById('deficiencia').value,
-      avaliacao: Number(document.getElementById('avaliacao').value),
-      comentario: document.getElementById('comentario').value.trim(),
-      recursos,
-      status: 'pendente'
-    };
-
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    const salvamento = await fetch('../api/locais.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'X-CSRF-Token': csrfToken
-      },
-      body: JSON.stringify(novoLocal)
-    });
-    const resultado = await salvamento.json();
-    if (salvamento.status === 401) {
-      alert(resultado.erro);
-      window.location.href = 'login.php';
-      return;
-    }
-    if (!salvamento.ok) throw new Error(resultado.erro || 'Falha ao salvar o local.');
-
-    await carregarLocais();
-    alert('Local adicionado ao banco de dados!');
-    modal.style.display = 'none';
-    this.reset();
-  } catch (erro) {
-    console.error('Erro ao localizar endereço:', erro);
-    alert(erro.message || 'Não foi possível concluir a operação. Tente novamente.');
-  }
+    const dados = new FormData(formulario);
+    const resposta = await fetch('../api/locais.php', { method: 'POST', headers: { 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content }, body: dados });
+    const resultado = await resposta.json(); if (!resposta.ok) throw new Error(resultado.erro || 'Falha ao enviar solicitação.');
+    fecharFormulario(); formulario.reset(); document.getElementById('previewFotos').replaceChildren(); document.getElementById('confirmacaoSolicitacao').classList.add('ativa');
+    document.getElementById('localizacaoStatus').textContent = 'Localização ainda não selecionada.';
+    if (marcadorSelecao) { map.removeLayer(marcadorSelecao); marcadorSelecao = null; }
+  } catch (erro) { erroFormulario.textContent = erro.message; }
+  finally { botao.disabled = false; botao.textContent = 'Enviar solicitação'; }
 });
 
+document.getElementById('btnFecharConfirmacao').addEventListener('click', () => document.getElementById('confirmacaoSolicitacao').classList.remove('ativa'));
 carregarLocais();

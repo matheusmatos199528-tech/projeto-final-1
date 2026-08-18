@@ -47,22 +47,41 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 CREATE TABLE IF NOT EXISTS `locais` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id` int(11) NOT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
   `nome` varchar(150) NOT NULL,
-  `tipo` varchar(30) NOT NULL,
   `endereco` varchar(255) NOT NULL,
+  `numero` varchar(20) NOT NULL,
+  `complemento` varchar(100) DEFAULT NULL,
+  `bairro` varchar(100) NOT NULL,
+  `cidade` varchar(100) NOT NULL,
+  `estado` char(2) NOT NULL,
+  `cep` char(8) NOT NULL,
   `latitude` decimal(10,7) NOT NULL,
   `longitude` decimal(10,7) NOT NULL,
-  `deficiencia` varchar(30) NOT NULL,
-  `avaliacao` tinyint unsigned NOT NULL,
-  `comentario` varchar(1000) NOT NULL,
+  `categorias` longtext NOT NULL,
+  `outra_categoria` varchar(100) DEFAULT NULL,
   `recursos` longtext NOT NULL,
-  `status` enum('pendente','aprovado','recusado') NOT NULL DEFAULT 'pendente',
+  `outro_recurso` varchar(150) DEFAULT NULL,
+  `observacoes` varchar(2000) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `instagram` varchar(100) DEFAULT NULL,
+  `telefone` varchar(30) DEFAULT NULL,
+  `horario_funcionamento` varchar(255) DEFAULT NULL,
+  `status` enum('pendente','em_analise','aprovado','reprovado','mais_informacoes') NOT NULL DEFAULT 'pendente',
   `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `idx_locais_usuario` (`usuario_id`),
-  CONSTRAINT `fk_locais_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `chk_locais_avaliacao` CHECK (`avaliacao` BETWEEN 1 AND 5)
+  CONSTRAINT `fk_locais_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `local_fotos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `local_id` int(11) NOT NULL,
+  `arquivo` varchar(255) NOT NULL,
+  `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `idx_fotos_local` (`local_id`),
+  CONSTRAINT `fk_fotos_local` FOREIGN KEY (`local_id`) REFERENCES `locais` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;

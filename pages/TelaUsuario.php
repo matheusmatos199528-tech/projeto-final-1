@@ -12,7 +12,7 @@ $emailUsuario = htmlspecialchars((string) ($_SESSION['usuario_email'] ?? ''), EN
 $cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QUOTES, 'UTF-8');
 $usuarioId = (int) $_SESSION['usuario_id'];
 $stmtLocais = $con->prepare(
-  'SELECT nome, comentario, recursos, status, data_cadastro
+  'SELECT nome, COALESCE(observacoes, "") AS comentario, recursos, status, data_cadastro
    FROM locais WHERE usuario_id = ? ORDER BY data_cadastro DESC'
 );
 $stmtLocais->bind_param('i', $usuarioId);

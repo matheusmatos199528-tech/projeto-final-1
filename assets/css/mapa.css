@@ -506,3 +506,56 @@ body {
   }
 
 }
+
+/* Menu colaborativo e formulário de solicitação */
+.menu-hamburguer { position: fixed; left: 18px; top: 105px; z-index: 1200; width: 48px; height: 48px; border: 0; border-radius: 50%; background: #0f6b55; color: #fff; font-size: 1.25rem; box-shadow: 0 5px 18px #0004; }
+.menu-mapa { position: fixed; left: 0; top: 0; z-index: 1300; width: min(340px, 88vw); height: 100vh; padding: 90px 24px 24px; background: #fff; box-shadow: 8px 0 30px #0003; transform: translateX(-105%); transition: transform .25s ease; }
+.menu-mapa.aberto { transform: translateX(0); }
+.menu-fechar { position: absolute; top: 18px; right: 20px; border: 0; background: transparent; font-size: 2rem; }
+.menu-mapa h2 { font-size: 1.35rem; color: #173f35; margin-bottom: 24px; }
+.menu-opcao { width: 100%; padding: 15px; border: 0; border-radius: 10px; background: #e6f5ef; color: #0b513f; text-align: left; font-weight: 700; }
+.modal-form { padding: 18px; align-items: center; }
+.form-accessible { max-width: 980px; height: min(94vh, 980px); padding: 34px; border-radius: 16px; }
+.form-accessible h3 { color: #173f35; font-size: 1.8rem; }
+.form-intro { margin: 0 auto 28px; max-width: 760px; text-align: center; color: #475b55; }
+.form-accessible fieldset { border: 1px solid #d8e5e0; border-radius: 12px; padding: 20px; margin: 0 0 22px; }
+.form-accessible legend { float: none; width: auto; padding: 0 8px; font-size: 1.15rem; font-weight: 700; color: #173f35; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.campo { display: flex; flex-direction: column; gap: 6px; color: #294c43; font-weight: 600; }
+.campo-largo { grid-column: 1 / -1; }
+.form-accessible .campo input, .form-accessible .campo textarea { margin: 0; font-weight: 400; }
+.chips { display: flex; flex-wrap: wrap; gap: 9px; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span { display: block; padding: 9px 13px; border: 1px solid #9bb8ae; border-radius: 999px; color: #244d42; cursor: pointer; transition: .15s; }
+.chip input:checked + span { background: #0f6b55; border-color: #0f6b55; color: #fff; box-shadow: 0 0 0 3px #0f6b5522; }
+.chip input:focus-visible + span { outline: 3px solid #f5b942; outline-offset: 2px; }
+.condicional { display: none; margin-top: 14px; }
+.condicional.visivel { display: flex; }
+.btn-selecionar-mapa, .botao-fotos { display: inline-flex; gap: 8px; align-items: center; margin-top: 14px; padding: 11px 15px; border: 1px solid #0f6b55; border-radius: 8px; background: #fff; color: #0f6b55; font-weight: 700; cursor: pointer; }
+.botao-fotos input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.status-localizacao { margin: 10px 0 0; color: #596b66; }
+.status-localizacao.ok { color: #087443; font-weight: 700; }
+.preview-fotos { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin: 14px 0; }
+.preview-fotos figure { margin: 0; position: relative; }
+.preview-fotos img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid #ccd9d5; }
+.declaracao { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; }
+.form-accessible .declaracao input { width: 20px; height: 20px; flex: 0 0 auto; }
+.aviso-envio { padding: 12px; border-left: 4px solid #e8a317; background: #fff8e6; }
+.erro-formulario { min-height: 24px; color: #a31515; font-weight: 700; }
+.form-buttons { display: flex; gap: 12px; justify-content: flex-end; }
+.btn-enviar, .btn-cancelar { padding: 12px 20px; border-radius: 8px; font-weight: 700; }
+.btn-enviar { border: 0; background: #0f6b55; color: #fff; }
+.btn-cancelar { border: 1px solid #879b95; background: #fff; color: #344c45; }
+.modal-confirmacao { display: none; position: fixed; inset: 0; z-index: 10000; place-items: center; padding: 20px; background: #0009; }
+.modal-confirmacao.ativa { display: grid; }
+.modal-confirmacao > div { max-width: 560px; padding: 32px; border-radius: 16px; background: #fff; text-align: center; }
+.modal-confirmacao button { padding: 11px 24px; border: 0; border-radius: 8px; background: #0f6b55; color: #fff; font-weight: 700; }
+body.selecao-mapa #map { cursor: crosshair; outline: 5px solid #f5b942; outline-offset: -5px; }
+
+@media (max-width: 700px) {
+  .form-accessible { width: 100%; height: 96vh; padding: 26px 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .campo-largo { grid-column: auto; }
+  .form-buttons { flex-direction: column; }
+  .btn-enviar, .btn-cancelar { width: 100%; }
+}
