@@ -1,20 +1,23 @@
 <?php
-require_once dirname(__DIR__) . '/config/session.php';
-require_once dirname(__DIR__) . '/config/conn.php';
+require_once __DIR__ . '/config/session.php';
+require_once "conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ../pages/nova.senha.php");
+    header("Location: nova.senha.php");
     exit;
 }
 
-exigirCsrf();
+if (!csrfValido($_POST['csrf_token'] ?? null)) {
+    http_response_code(403);
+    exit('Solicitação inválida. Atualize a página e tente novamente.');
+}
 
 $recuperacaoAutorizada = !empty($_SESSION["recuperacao_verificada"])
     && isset($_SESSION["email_recuperacao"]);
 $usuarioAutenticado = isset($_SESSION["usuario_id"], $_SESSION["usuario_email"]);
 
 if (!$recuperacaoAutorizada && !$usuarioAutenticado) {
-    header("Location: ../pages/esqueceu.senha.php");
+    header("Location: esqueceu.senha.php");
     exit;
 }
 
@@ -25,7 +28,7 @@ $novaSenha = $_POST["novaSenha"] ?? "";
 $confirmarNovaSenha = $_POST["confirmarNovaSenha"] ?? "";
 
 if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-]).{8,}$/', $novaSenha)) {
-    echo "<script>alert('A senha deve ter no mínimo 8 caracteres, com maiúscula, minúscula, número e símbolo.'); history.back();</script>";
+    echo "<script>alert('Use ao menos 8 caracteres, com maiúscula, minúscula, número e símbolo.'); history.back();</script>";
     exit;
 }
 
@@ -56,9 +59,10 @@ unset(
     $_SESSION["email_recuperacao"],
     $_SESSION["codigo_recuperacao_hash"],
     $_SESSION["codigo_recuperacao_expira"],
-    $_SESSION["recuperacao_verificada"]
+    $_SESSION["recuperacao_verificada"],
+    $_SESSION["tentativas_codigo"]
 );
 
-echo "<script>alert('Senha alterada com sucesso!'); window.location.href = '../pages/login.php';</script>";
+echo "<script>alert('Senha alterada com sucesso!'); window.location.href = 'login.php';</script>";
 exit;
 ?>

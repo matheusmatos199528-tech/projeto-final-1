@@ -1,17 +1,15 @@
-<?php require_once dirname(__DIR__) . '/config/session.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="<?= htmlspecialchars(tokenCsrf(), ENT_QUOTES, 'UTF-8') ?>">
   <title>Mapa de Acessibilidade - IncluCity</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../assets/css/mapa.css">
+  <link rel="stylesheet" href="./assets/css/mapa.css">
 </head>
 
 <body onload="mudarposition()">
@@ -20,7 +18,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="TelaInicial.php">
-        <img src="../assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
+        <img src="./assets/img/Imagem1.png" alt="IncluCity" class="logotipo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar">
@@ -98,8 +96,8 @@
   <div id="formAdicionarLocal" class="modal-form">
     <form id="formLocal" class="form-accessible">
 
-      <button type="button" id="btnFechar" class="btn-fechar" aria-label="Fechar">&times;</button>
-      <h3>Adicionar Local Acessível</h3>
+       <!--<button type="button" id="btnFechar" class="btn-fechar">&times;</button>
+      <h3>Adicionar Local Acessível</h3>-->
 
       <!-- Nome -->
       <input type="text" id="nome" placeholder="Nome do local" required minlength="3">
@@ -134,7 +132,7 @@
           display: flex;
         }
 
-        .checkbox-group input {
+        #rampa {
           width: 50px;
         }
       </style>
@@ -143,31 +141,31 @@
 
         <div class="col-6 d-flex flex-column">
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="rampa" name="recursos" value="Rampa de acesso">
+            <input type="checkbox" id="rampa" name="recursos[]" value="rampa">
             <label for="rampa">Possui rampa de acesso</label>
           </div>
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="elevador" name="recursos" value="Elevador acessível">
-            <label for="elevador">Elevador acessível</label>
+            <input type="checkbox" id="elevador" name="recursos[]" value="elevador">
+            <label for="elevador">Possui elevador</label>
           </div>
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="banheiro" name="recursos" value="Banheiro acessível">
-            <label for="banheiro">Banheiro acessível</label>
+            <input type="checkbox" id="banheiro-acessivel" name="recursos[]" value="banheiro-acessivel">
+            <label for="banheiro-acessivel">Banheiro acessível</label>
           </div>
         </div>
 
         <div class="col-6 d-flex flex-column">
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="pisoTatil" name="recursos" value="Piso tátil">
-            <label for="pisoTatil">Piso tátil</label>
+            <input type="checkbox" id="piso-tatil" name="recursos[]" value="piso-tatil">
+            <label for="piso-tatil">Possui piso tátil</label>
           </div>
           <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="libras" name="recursos" value="Atendimento em Libras">
+            <input type="checkbox" id="vaga-acessivel" name="recursos[]" value="vaga-acessivel">
+            <label for="vaga-acessivel">Possui vaga acessível</label>
+          </div>
+          <div class="mb-3 d-flex justify-content-start align-items-start">
+            <input type="checkbox" id="libras" name="recursos[]" value="libras">
             <label for="libras">Atendimento em Libras</label>
-          </div>
-          <div class="mb-3 d-flex justify-content-start align-items-start">
-            <input type="checkbox" id="vaga" name="recursos" value="Vaga reservada">
-            <label for="vaga">Vaga reservada</label>
           </div>
         </div>
 
@@ -187,6 +185,11 @@
 
       <!-- Comentário -->
       <textarea id="comentario" placeholder="Descreva sua experiência no local..." required minlength="10"></textarea>
+
+      <!-- Fotos -->
+      <input type="file" id="foto" accept="image/*" multiple required>
+
+      <small>Envie fotos que comprovem a acessibilidade do local</small>
 
       <div class="form-buttons">
         <button type="submit" class="btn btn-success">Salvar</button>
@@ -238,8 +241,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="../assets/js/mapa.js"></script>
-  <script src="../assets/js/telainicial.js"></script>
+  <script src="./assets/js/mapa.js"></script>
+  <script src="./assets/js/telainicial.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
@@ -257,7 +260,6 @@
 <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
-      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 

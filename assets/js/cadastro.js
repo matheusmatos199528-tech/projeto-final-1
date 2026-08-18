@@ -30,7 +30,6 @@ function verSenha(id){
       const nome = document.getElementById("nome").value.trim();
       const email = document.getElementById("email").value.trim();
       const celular = document.getElementById("celular").value.trim();
-      const cpf = document.getElementById("cpf").value.replace(/\D/g, "");
       const senha = document.getElementById("senha").value;
       const confirmarSenha = document.getElementById("confirmarSenha").value;
 
@@ -53,11 +52,6 @@ function verSenha(id){
         return false;
       }
 
-      if (!cpfValido(cpf)) {
-        mostrarModal("Digite um CPF válido.");
-        return false;
-      }
-
       if (!regexSenhaForte.test(senha)) {
         mostrarModal("A senha deve ter no mínimo 8 caracteres, incluindo maiúscula, minúscula, número e símbolo.");
         return false;
@@ -72,23 +66,6 @@ function verSenha(id){
     }
 
     // Máscara de celular
-    function cpfValido(cpf) {
-      if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
-
-      for (let tamanho = 9; tamanho < 11; tamanho++) {
-        let soma = 0;
-
-        for (let indice = 0; indice < tamanho; indice++) {
-          soma += Number(cpf[indice]) * ((tamanho + 1) - indice);
-        }
-
-        const digito = ((10 * soma) % 11) % 10;
-        if (Number(cpf[tamanho]) !== digito) return false;
-      }
-
-      return true;
-    }
-
     document.getElementById("celular").addEventListener("input", function(e) {
       let valor = e.target.value.replace(/\D/g, "");
 
@@ -104,13 +81,5 @@ function verSenha(id){
         valor = valor.replace(/^(\d*)/, "($1");
       }
 
-      e.target.value = valor;
-    });
-
-    document.getElementById("cpf").addEventListener("input", function(e) {
-      let valor = e.target.value.replace(/\D/g, "").slice(0, 11);
-      valor = valor.replace(/^(\d{3})(\d)/, "$1.$2");
-      valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
-      valor = valor.replace(/\.(\d{3})(\d)/, ".$1-$2");
       e.target.value = valor;
     });
