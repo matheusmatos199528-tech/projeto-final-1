@@ -8,7 +8,7 @@
   <title>tela de login </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/css/login.style.css">
+  <link rel="stylesheet" href="./assets/css/login.style.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -65,20 +65,16 @@
     <div class="social-account-container">
       <span class="title">Ou faça login com</span>
       <div class="social-accounts">
-        <button type="button" class="social-button google" aria-label="Entrar com Google" onclick="window.location.href='oauth.php?provider=google'">
-          <svg viewBox="0 0 488 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="svg">
-            <path
-              d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z">
-            </path>
+         <button type="button" class="social-button google" aria-label="Entrar com Google" onclick="window.location.href='oauth.php?provider=google'">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="svg" aria-hidden="true">
+            <path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.4-.18-2.07H12v3.92h5.38a4.6 4.6 0 0 1-2 3.02v2.54h3.24c1.9-1.75 2.98-4.33 2.98-7.41Z"/>
+            <path fill="#34A853" d="M12 22c2.7 0 4.98-.9 6.63-2.36l-3.24-2.54c-.9.6-2.05.96-3.39.96-2.61 0-4.82-1.76-5.61-4.13H3.04v2.62A10 10 0 0 0 12 22Z"/>
+            <path fill="#FBBC05" d="M6.39 13.93a6 6 0 0 1 0-3.86V7.45H3.04a10 10 0 0 0 0 9.1l3.35-2.62Z"/>
+            <path fill="#EA4335" d="M12 5.94c1.47 0 2.79.5 3.83 1.5l2.87-2.88A9.65 9.65 0 0 0 12 2a10 10 0 0 0-8.96 5.45l3.35 2.62C7.18 7.7 9.39 5.94 12 5.94Z"/>
           </svg>
+          <span class="google-text">Google</span>
         </button>
-        <button type="button" class="social-button microsoft" aria-label="Entrar com Microsoft" onclick="window.location.href='oauth.php?provider=microsoft'">
-  <svg viewBox="0 0 24 24" height="1em" xmlns="http://www.w3.org/2000/svg" class="svg">
-    <path 
-      d="M2 3l9-1v9H2V3zm11-1l9-1v10h-9V2zM2 13h9v9l-9-1v-8zm11 0h9v10l-9-1v-9z">
-    </path>
-  </svg>
-</button>
+        
       </div>
     </div>
     <span class="agreement"><a href="#">Leia o contrato de licença do usuario</a></span>
