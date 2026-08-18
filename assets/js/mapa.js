@@ -20,7 +20,9 @@ function escaparHtml(valor) {
 }
 
 function conteudoLocal(local) {
-  return `<strong>${escaparHtml(local.nome)}</strong><br>${escaparHtml(local.endereco)}, ${escaparHtml(local.numero)}<br>${local.recursos.map(escaparHtml).join(', ')}`;
+  const categorias = (local.categorias || []).map(escaparHtml).join(' • ');
+  const recursos = (local.recursos || []).map(escaparHtml).join(', ');
+  return `<div class="popup-local"><strong>${escaparHtml(local.nome)}</strong><span>${categorias}</span><p>${escaparHtml(local.endereco)}, ${escaparHtml(local.numero)} — ${escaparHtml(local.bairro)}</p><small><b>Recursos:</b> ${recursos}</small></div>`;
 }
 
 function renderizar(lista = locais) {
@@ -33,7 +35,17 @@ function renderizar(lista = locais) {
     marcadores.push(marcador);
     const item = document.createElement('button');
     item.type = 'button'; item.className = 'local';
-    item.textContent = `${local.nome} — ${local.categorias.join(', ')}`;
+    const categorias = local.categorias || [];
+    const recursos = local.recursos || [];
+    const recursosVisiveis = recursos.slice(0, 3);
+    const quantidadeRestante = recursos.length - recursosVisiveis.length;
+    item.innerHTML = `
+      <span class="local-categoria">${categorias.map(escaparHtml).join(' • ') || 'Local'}</span>
+      <strong class="local-nome">${escaparHtml(local.nome)}</strong>
+      <span class="local-endereco"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>${escaparHtml(local.bairro)} — ${escaparHtml(local.cidade)}</span>
+      <span class="local-recursos">${recursosVisiveis.map(recurso => `<span>${escaparHtml(recurso)}</span>`).join('')}${quantidadeRestante > 0 ? `<span>+${quantidadeRestante}</span>` : ''}</span>
+      <span class="local-acao">Ver no mapa <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>`;
+    item.setAttribute('aria-label', `Ver ${local.nome} no mapa`);
     item.addEventListener('click', () => { map.setView([local.lat, local.lng], 16); marcador.openPopup(); });
     container.appendChild(item);
   });

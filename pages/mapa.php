@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../assets/css/mapa.css?v=2">
+  <link rel="stylesheet" href="../assets/css/mapa.css?v=3">
 </head>
 
 <body onload="mudarposition()">
@@ -256,7 +256,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="../assets/js/mapa.js?v=2"></script>
+  <script src="../assets/js/mapa.js?v=3"></script>
   <script src="../assets/js/telainicial.js"></script>
   
 <div vw class="enabled">

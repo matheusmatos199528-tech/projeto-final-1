@@ -133,18 +133,32 @@ body {
 .container-principal {
   display: flex;
   height: calc(100vh - 75px);
-  padding: 10px; /* 🔥 adiciona isso */
-  gap: 10px; /* 🔥 espaço entre sidebar e mapa */
+  min-height: 520px;
+  padding: 12px;
+  gap: 12px;
+  overflow: hidden;
+  background: #eef4f2;
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
-  width: 300px;
-  min-width: 250px;
-  padding: 20px; /* mais espaço interno */
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  min-width: 280px;
+  min-height: 0;
+  padding: 20px;
+  overflow: hidden;
   background: #f9fafb;
-  border-radius: 10px; /* 🔥 deixa moderno */
+  border: 1px solid #dce9e4;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(23, 63, 53, .08);
 }
+
+.sidebar h3 { margin: 0 0 16px; color: #173f35; font-size: 1.35rem; }
+.sidebar .form-select { border-color: #cdded8; border-radius: 9px; font-size: .9rem; }
+.sidebar .form-select:focus { border-color: #0f6b55; box-shadow: 0 0 0 .2rem rgba(15, 107, 85, .14); }
+#listaLocais { flex: 1; min-height: 0; margin-top: 5px; padding: 2px 7px 10px 2px; overflow-y: auto; overscroll-behavior: contain; scrollbar-color: #8db5aa transparent; scrollbar-width: thin; }
 .hidden {
   display: none;
 }
@@ -164,17 +178,39 @@ body {
 
 /* ===== LOCAIS ===== */
 .local {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  border: 1px solid #dce9e4;
+  border-radius: 12px;
   background: white;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  color: #243b35;
+  text-align: left;
   cursor: pointer;
-  transition: 0.2s;
+  box-shadow: 0 3px 10px rgba(23, 63, 53, .06);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 
 .local:hover {
-  background: #e5f0ff;
+  transform: translateY(-2px);
+  border-color: #6fae9d;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(23, 63, 53, .12);
 }
+.local-categoria { margin-bottom: 7px; color: #0f6b55; font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.local-nome { max-width: 100%; margin-bottom: 6px; overflow-wrap: anywhere; color: #173f35; font-size: 1rem; line-height: 1.3; }
+.local-endereco { display: flex; align-items: center; gap: 6px; max-width: 100%; margin-bottom: 10px; color: #60736e; font-size: .8rem; overflow-wrap: anywhere; }
+.local-recursos { display: flex; flex-wrap: wrap; gap: 5px; max-width: 100%; }
+.local-recursos span { max-width: 100%; padding: 4px 7px; overflow: hidden; border-radius: 99px; background: #e7f4ef; color: #245e4f; font-size: .68rem; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+.local-acao { align-self: flex-end; margin-top: 11px; color: #0f6b55; font-size: .78rem; font-weight: 800; }
+.popup-local { max-width: 270px; overflow-wrap: anywhere; }
+.popup-local strong, .popup-local span { display: block; }
+.popup-local span { margin: 3px 0 8px; color: #0f6b55; font-size: .75rem; font-weight: 700; }
+.popup-local p, .popup-local small { margin: 0 0 7px; line-height: 1.4; }
 
 /* ===== MODAL ===== */
 .modal-form {
@@ -446,8 +482,13 @@ body {
 
   .container-principal {
     flex-direction: column;
-    height: auto; /* 🔥 importante */
+    height: auto;
+    min-height: 0;
+    overflow: visible;
   }
+
+  .sidebar { width: 100%; min-width: 0; max-height: none; overflow: visible; }
+  #listaLocais { flex: none; max-height: 45vh; }
 
   #map {
     height: 60vh;
