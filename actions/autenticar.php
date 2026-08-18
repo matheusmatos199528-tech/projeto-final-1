@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/config/session.php';
+require_once dirname(__DIR__) . '/config/session.php';
 
-require_once __DIR__ . '/config/conn.php';
+require_once dirname(__DIR__) . '/config/conn.php';
 
 
 /*
@@ -13,7 +13,7 @@ require_once __DIR__ . '/config/conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
-    header("Location: login.php");
+    header("Location: ../pages/login.php");
     exit;
 }
 
@@ -141,7 +141,7 @@ $_SESSION["usuario_cpf"] = $usuario["cpf"];
 $stmt->close();
 $con->close();
 
-header("Location: TelaUsuario.php");
+header("Location: ../pages/TelaUsuario.php");
 exit;
 
 ?>

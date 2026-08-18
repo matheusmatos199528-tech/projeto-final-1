@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/config/session.php'; ?>
+<?php require_once dirname(__DIR__) . '/config/session.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,7 +8,7 @@
   <title>Cadastrar-se </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/css/cadastro.style.css?v=3">
+  <link rel="stylesheet" href="../assets/css/cadastro.style.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -18,11 +18,11 @@
 <body onload="mudarposition()">
 
   <div class="container">
-    <img class="login-img" src="./assets/img/Imagem1.png" alt="logotipo do cadastro">
+    <img class="login-img" src="../assets/img/Imagem1.png" alt="logotipo do cadastro">
 
 
 
-    <form class="form" onsubmit="return validarFormulario()" action="salvar_usuario.php" method="POST">
+    <form class="form" onsubmit="return validarFormulario()" action="../actions/salvar_usuario.php" method="POST">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
     
     <div class="linha">
@@ -79,7 +79,7 @@
 
 
       <div class="social-accounts">
-        <button type="button" class="social-button google" aria-label="Entrar com Google" onclick="window.location.href='oauth.php?provider=google'">
+        <button type="button" class="social-button google" aria-label="Entrar com Google" onclick="window.location.href='../api/oauth.php?provider=google'">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="svg" aria-hidden="true">
             <path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.4-.18-2.07H12v3.92h5.38a4.6 4.6 0 0 1-2 3.02v2.54h3.24c1.9-1.75 2.98-4.33 2.98-7.41Z"/>
             <path fill="#34A853" d="M12 22c2.7 0 4.98-.9 6.63-2.36l-3.24-2.54c-.9.6-2.05.96-3.39.96-2.61 0-4.82-1.76-5.61-4.13H3.04v2.62A10 10 0 0 0 12 22Z"/>
@@ -97,11 +97,11 @@
     </span>
   </div>
 
-  <script src="./assets/js/cadastro.js"></script>
+  <script src="../assets/js/cadastro.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-    <script src="./assets/js/telainicial.js"></script>
+    <script src="../assets/js/telainicial.js"></script>
   
 <div vw class="enabled">
   <div vw-access-button class="active"></div>
@@ -119,6 +119,7 @@
 <script>
     function mudarposition() {
       let btnteste = document.querySelector(".asw-menu-btn")
+      if (!btnteste) return;
       btnteste.style.top = "315px";
       btnteste.style.width = "36px";
       btnteste.style.height = "36px"; 
