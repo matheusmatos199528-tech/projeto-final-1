@@ -14,17 +14,19 @@ $sql = "SELECT l.*, u.nome AS usuario_nome, u.email AS usuario_email,
         GROUP BY l.id
         ORDER BY FIELD(l.status, 'pendente', 'em_analise', 'mais_informacoes', 'aprovado', 'reprovado'), l.data_cadastro DESC";
 $locais = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+$usuarios = $con->query('SELECT id, nome, email, tipo_usuario, data_cadastro FROM usuarios ORDER BY nome, email')->fetch_all(MYSQLI_ASSOC);
 
 function e(string|null $valor): string
 {
     return htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
 }
 
-$contadores = array_fill_keys(['todos', 'pendente', 'aprovado', 'outros'], 0);
+$contadores = array_fill_keys(['todos', 'pendente', 'aprovado', 'reprovado', 'outros'], 0);
 foreach ($locais as $local) {
     $contadores['todos']++;
     if ($local['status'] === 'pendente') $contadores['pendente']++;
     elseif ($local['status'] === 'aprovado') $contadores['aprovado']++;
+    elseif ($local['status'] === 'reprovado') $contadores['reprovado']++;
     else $contadores['outros']++;
 }
 ?>
@@ -56,13 +58,13 @@ foreach ($locais as $local) {
       <article><span>Total</span><strong><?= $contadores['todos'] ?></strong></article>
       <article class="pendentes"><span>Pendentes</span><strong><?= $contadores['pendente'] ?></strong></article>
       <article class="aprovados"><span>Aprovados</span><strong><?= $contadores['aprovado'] ?></strong></article>
-      <article><span>Outros status</span><strong><?= $contadores['outros'] ?></strong></article>
+      <article class="recusados"><span>Recusados</span><strong><?= $contadores['reprovado'] ?></strong></article>
     </section>
 
     <section class="barra-filtros">
       <label><i class="fa-solid fa-magnifying-glass"></i><input id="buscaAdmin" type="search" placeholder="Buscar por nome, bairro ou cidade"></label>
       <select id="statusAdmin" aria-label="Filtrar por status">
-        <option value="todos">Todos os status</option><option value="pendente">Pendentes</option><option value="aprovado">Aprovados</option><option value="outros">Outros status</option>
+        <option value="todos">Todos os status</option><option value="pendente">Pendentes</option><option value="aprovado">Aprovados</option><option value="reprovado">Recusados</option><option value="outros">Outros status</option>
       </select>
     </section>
 
@@ -88,11 +90,28 @@ foreach ($locais as $local) {
           <?php if ($fotos): ?><div class="galeria"><?php foreach ($fotos as $foto): ?><a href="../<?= e($foto) ?>" target="_blank"><img src="../<?= e($foto) ?>" alt="Evidência enviada para <?= e($local['nome']) ?>"></a><?php endforeach; ?></div><?php endif; ?>
           <div class="acoes">
             <?php if ($local['status'] !== 'aprovado'): ?><button class="btn-aprovar" data-acao="aprovar"><i class="fa-solid fa-check"></i> Aprovar e publicar</button><?php endif; ?>
+            <?php if ($local['status'] !== 'reprovado'): ?><button class="btn-recusar" data-acao="recusar"><i class="fa-solid fa-ban"></i> Recusar</button><?php endif; ?>
             <button class="btn-excluir" data-acao="excluir"><i class="fa-regular fa-trash-can"></i> Excluir</button>
           </div>
         </article>
       <?php endforeach; ?>
       <p id="semResultados" class="sem-resultados" hidden>Nenhuma solicitação encontrada.</p>
+    </section>
+
+    <section class="usuarios-admin">
+      <div class="secao-titulo"><span class="rotulo">ACESSOS</span><h2>Administradores</h2><p>Escolha quais contas podem acessar este painel e moderar solicitações.</p></div>
+      <div class="tabela-usuarios">
+        <?php foreach ($usuarios as $usuario): ?>
+          <div class="usuario-linha" data-usuario-id="<?= (int) $usuario['id'] ?>">
+            <div class="usuario-avatar"><?= e(mb_strtoupper(mb_substr($usuario['nome'], 0, 1))) ?></div>
+            <div class="usuario-dados"><strong><?= e($usuario['nome']) ?></strong><span><?= e($usuario['email']) ?></span></div>
+            <select class="tipo-usuario" aria-label="Permissão de <?= e($usuario['nome']) ?>" <?= (int) $usuario['id'] === (int) $_SESSION['usuario_id'] ? 'disabled title="Sua própria permissão não pode ser removida"' : '' ?>>
+              <option value="usuario" <?= $usuario['tipo_usuario'] === 'usuario' ? 'selected' : '' ?>>Usuário</option>
+              <option value="admin" <?= $usuario['tipo_usuario'] === 'admin' ? 'selected' : '' ?>>Administrador</option>
+            </select>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </section>
   </main>
   <script src="../assets/js/admin.js?v=1"></script>

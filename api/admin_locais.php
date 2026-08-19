@@ -27,7 +27,7 @@ $dados = json_decode((string) file_get_contents('php://input'), true);
 $localId = filter_var($dados['id'] ?? null, FILTER_VALIDATE_INT);
 $acao = (string) ($dados['acao'] ?? '');
 
-if (!$localId || !in_array($acao, ['aprovar', 'excluir'], true)) {
+if (!$localId || !in_array($acao, ['aprovar', 'recusar', 'excluir'], true)) {
     responderAdmin(['erro' => 'Solicitação inválida.'], 422);
 }
 
@@ -47,6 +47,14 @@ if ($acao === 'aprovar') {
     $stmt->execute();
     $stmt->close();
     responderAdmin(['sucesso' => true, 'mensagem' => 'Local aprovado e publicado no mapa.']);
+}
+
+if ($acao === 'recusar') {
+    $stmt = $con->prepare("UPDATE locais SET status = 'reprovado' WHERE id = ?");
+    $stmt->bind_param('i', $localId);
+    $stmt->execute();
+    $stmt->close();
+    responderAdmin(['sucesso' => true, 'mensagem' => 'Solicitação recusada e retirada do mapa.']);
 }
 
 $stmt = $con->prepare('SELECT arquivo FROM local_fotos WHERE local_id = ?');
