@@ -162,7 +162,7 @@ if ($provedor === 'google' && empty($perfil['email_verified'])) {
 }
 
 try {
-    $stmt = $con->prepare('SELECT id, nome, email, celular, cpf FROM usuarios WHERE (oauth_provider = ? AND oauth_subject = ?) OR email = ? LIMIT 1');
+    $stmt = $con->prepare('SELECT id, nome, email, celular, cpf, tipo_usuario FROM usuarios WHERE (oauth_provider = ? AND oauth_subject = ?) OR email = ? LIMIT 1');
     $stmt->bind_param('sss', $provedor, $identificador, $email);
     $stmt->execute();
     $usuario = $stmt->get_result()->fetch_assoc();
@@ -177,7 +177,7 @@ try {
         $stmt = $con->prepare('INSERT INTO usuarios (nome, email, celular, cpf, senha, oauth_provider, oauth_subject) VALUES (?, ?, NULL, NULL, NULL, ?, ?)');
         $stmt->bind_param('ssss', $nome, $email, $provedor, $identificador);
         $stmt->execute();
-        $usuario = ['id' => $stmt->insert_id, 'nome' => $nome, 'email' => $email, 'celular' => '', 'cpf' => ''];
+        $usuario = ['id' => $stmt->insert_id, 'nome' => $nome, 'email' => $email, 'celular' => '', 'cpf' => '', 'tipo_usuario' => 'usuario'];
         $stmt->close();
     }
 } catch (mysqli_sql_exception $erro) {
@@ -192,7 +192,10 @@ $_SESSION['usuario_nome'] = $usuario['nome'];
 $_SESSION['usuario_email'] = $usuario['email'];
 $_SESSION['usuario_celular'] = $usuario['celular'] ?? '';
 $_SESSION['usuario_cpf'] = $usuario['cpf'] ?? '';
+$_SESSION['tipo_usuario'] = $usuario['tipo_usuario'] ?? 'usuario';
 
 $con->close();
-header('Location: ../pages/TelaUsuario.php');
+header(($usuario['tipo_usuario'] ?? 'usuario') === 'admin'
+    ? 'Location: ../pages/admin.php'
+    : 'Location: ../pages/TelaUsuario.php');
 exit;
