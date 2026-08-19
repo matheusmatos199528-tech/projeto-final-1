@@ -16,7 +16,7 @@ function filtrarSolicitacoes() {
   document.querySelectorAll('.solicitacao').forEach(card => {
     const correspondeBusca = normalizar(card.dataset.busca).includes(termo);
     const correspondeStatus = status === 'todos' || card.dataset.status === status
-      || (status === 'outros' && !['pendente', 'aprovado'].includes(card.dataset.status));
+      || (status === 'outros' && !['pendente', 'aprovado', 'reprovado'].includes(card.dataset.status));
     card.hidden = !(correspondeBusca && correspondeStatus);
     if (!card.hidden) visiveis++;
   });
@@ -37,9 +37,12 @@ document.getElementById('listaAdmin').addEventListener('click', async evento => 
   const card = botao.closest('.solicitacao');
   const acao = botao.dataset.acao;
   const nome = card.querySelector('h2').textContent;
-  const pergunta = acao === 'excluir'
-    ? `Excluir permanentemente a solicitação “${nome}”?`
-    : `Aprovar “${nome}” e publicar no mapa?`;
+  const perguntas = {
+    excluir: `Excluir permanentemente a solicitação “${nome}”?`,
+    recusar: `Recusar “${nome}” e impedir sua publicação no mapa?`,
+    aprovar: `Aprovar “${nome}” e publicar no mapa?`
+  };
+  const pergunta = perguntas[acao];
   if (!window.confirm(pergunta)) return;
 
   card.querySelectorAll('button').forEach(item => item.disabled = true);
@@ -54,9 +57,11 @@ document.getElementById('listaAdmin').addEventListener('click', async evento => 
     exibirMensagem(resultado.mensagem);
     if (acao === 'excluir') card.remove();
     else {
-      card.dataset.status = 'aprovado';
+      const novoStatus = acao === 'aprovar' ? 'aprovado' : 'reprovado';
+      card.dataset.status = novoStatus;
       const status = card.querySelector('.status');
-      status.className = 'status status-aprovado'; status.textContent = 'aprovado';
+      status.className = `status status-${novoStatus}`;
+      status.textContent = novoStatus;
       botao.remove();
       card.querySelectorAll('button').forEach(item => item.disabled = false);
     }
@@ -68,3 +73,33 @@ document.getElementById('listaAdmin').addEventListener('click', async evento => 
 });
 
 filtrarSolicitacoes();
+
+document.querySelectorAll('.tipo-usuario').forEach(select => {
+  select.dataset.valorAnterior = select.value;
+  select.addEventListener('change', async () => {
+    const linha = select.closest('.usuario-linha');
+    const tipo = select.value;
+    const descricao = tipo === 'admin' ? 'conceder acesso administrativo' : 'remover o acesso administrativo';
+    if (!window.confirm(`Deseja ${descricao} desta conta?`)) {
+      select.value = select.dataset.valorAnterior;
+      return;
+    }
+    select.disabled = true;
+    try {
+      const resposta = await fetch('../api/admin_usuarios.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
+        body: JSON.stringify({ id: Number(linha.dataset.usuarioId), tipo_usuario: tipo })
+      });
+      const resultado = await resposta.json();
+      if (!resposta.ok) throw new Error(resultado.erro || 'Não foi possível alterar a permissão.');
+      select.dataset.valorAnterior = tipo;
+      exibirMensagem(resultado.mensagem);
+    } catch (erro) {
+      select.value = select.dataset.valorAnterior;
+      exibirMensagem(erro.message, true);
+    } finally {
+      select.disabled = false;
+    }
+  });
+});
