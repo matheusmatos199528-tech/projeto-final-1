@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `celular` varchar(20) NOT NULL,
   `cpf` varchar(14) NOT NULL,
   `senha` varchar(255) NOT NULL,
+  `tipo_usuario` enum('usuario','admin') NOT NULL DEFAULT 'usuario',
   `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
