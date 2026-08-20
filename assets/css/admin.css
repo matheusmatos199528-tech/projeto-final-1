@@ -8,7 +8,7 @@ button, input, select { font: inherit; }
 .marca img { width: auto; height: 50px; object-fit: contain; }
 .navegacao-admin { display: flex; align-items: center; justify-content: flex-end; gap: 6px; min-width: 0; margin-left: auto; }
 .navegacao-admin a { padding: 10px 12px; border-radius: 10px; color: #1f2937; font-size: .9rem; white-space: nowrap; text-decoration: none; transition: background .2s, color .2s; }
-.navegacao-admin a:hover { background: rgba(15,81,124,.16); color: #0f517c; }
+.navegacao-admin a:hover { background: rgba(0,0,0,.2); color: #ffe600; }
 .navegacao-admin i { margin-right: 6px; }
 .admin-identidade { display: grid; flex: none; grid-template-columns: auto auto; align-items: center; min-width: 0; column-gap: 12px; font-size: .82rem; }
 .admin-identidade span { color: var(--muted); }.admin-identidade strong { grid-row: 2; }.admin-identidade form { grid-column: 2; grid-row: 1 / 3; }
