@@ -17,7 +17,7 @@ function responder(array $dados, int $status = 200): never
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $resultado = $con->query(
         "SELECT id, nome, endereco, numero, bairro, cidade, estado, latitude, longitude,
-                categorias, recursos, observacoes, site, instagram, telefone, horario_funcionamento
+                categorias, deficiencias, recursos, observacoes, site, instagram, telefone, horario_funcionamento
          FROM locais WHERE status = 'aprovado' ORDER BY data_cadastro DESC"
     );
     $locais = [];
@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $linha['lat'] = (float) $linha['latitude'];
         $linha['lng'] = (float) $linha['longitude'];
         $linha['categorias'] = json_decode($linha['categorias'], true) ?: [];
+        $linha['deficiencias'] = json_decode($linha['deficiencias'] ?? '[]', true) ?: [];
         $linha['recursos'] = json_decode($linha['recursos'], true) ?: [];
         unset($linha['latitude'], $linha['longitude']);
         $locais[] = $linha;
@@ -35,6 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     responder(['erro' => 'Método não permitido.'], 405);
+}
+
+if (!isset($_SESSION['usuario_id']) || (int) $_SESSION['usuario_id'] <= 0) {
+    responder(['erro' => 'Faça login para contribuir com o IncluCity.'], 401);
 }
 
 if (!csrfValido($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null)) {
@@ -52,6 +57,11 @@ $cep = preg_replace('/\D/', '', (string) ($_POST['cep'] ?? '')) ?? '';
 $latitude = filter_var($_POST['latitude'] ?? null, FILTER_VALIDATE_FLOAT);
 $longitude = filter_var($_POST['longitude'] ?? null, FILTER_VALIDATE_FLOAT);
 $categorias = array_values(array_filter($_POST['categorias'] ?? [], 'is_string'));
+$deficienciasPermitidas = ['fisica', 'visual', 'auditiva', 'cognitiva'];
+$deficiencias = array_values(array_intersect(
+    array_filter($_POST['deficiencias'] ?? [], 'is_string'),
+    $deficienciasPermitidas
+));
 $recursos = array_values(array_filter($_POST['recursos'] ?? [], 'is_string'));
 $outraCategoria = trim((string) ($_POST['outra_categoria'] ?? ''));
 $outroRecurso = trim((string) ($_POST['outro_recurso'] ?? ''));
@@ -64,7 +74,7 @@ $horario = trim((string) ($_POST['horario_funcionamento'] ?? ''));
 if (mb_strlen($nome) < 3 || mb_strlen($nome) > 150 || mb_strlen($endereco) < 3
     || $numero === '' || $bairro === '' || $cidade === '' || !preg_match('/^[A-Z]{2}$/', $estado)
     || strlen($cep) !== 8 || $latitude === false || $longitude === false
-    || !$categorias || !$recursos || empty($_POST['declaracao'])) {
+    || !$categorias || !$deficiencias || !$recursos || empty($_POST['declaracao'])) {
     responder(['erro' => 'Preencha todos os campos obrigatórios e confirme a declaração.'], 422);
 }
 
@@ -104,19 +114,20 @@ for ($i = 0; $i < $quantidadeFotos; $i++) {
     $arquivos[] = ['temporario' => $fotos['tmp_name'][$i], 'nome' => $nomeArquivo];
 }
 
-$usuarioId = isset($_SESSION['usuario_id']) ? (int) $_SESSION['usuario_id'] : null;
+$usuarioId = (int) $_SESSION['usuario_id'];
 $categoriasJson = json_encode($categorias, JSON_UNESCAPED_UNICODE);
+$deficienciasJson = json_encode($deficiencias, JSON_UNESCAPED_UNICODE);
 $recursosJson = json_encode($recursos, JSON_UNESCAPED_UNICODE);
 $con->begin_transaction();
 try {
     $stmt = $con->prepare(
         'INSERT INTO locais (usuario_id, nome, endereco, numero, complemento, bairro, cidade, estado, cep,
-         latitude, longitude, categorias, outra_categoria, recursos, outro_recurso, observacoes, site,
+         latitude, longitude, categorias, deficiencias, outra_categoria, recursos, outro_recurso, observacoes, site,
          instagram, telefone, horario_funcionamento, status)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, \'pendente\')'
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, \'pendente\')'
     );
-    $stmt->bind_param('issssssssddsssssssss', $usuarioId, $nome, $endereco, $numero, $complemento, $bairro,
-        $cidade, $estado, $cep, $latitude, $longitude, $categoriasJson, $outraCategoria, $recursosJson,
+    $stmt->bind_param('issssssssddssssssssss', $usuarioId, $nome, $endereco, $numero, $complemento, $bairro,
+        $cidade, $estado, $cep, $latitude, $longitude, $categoriasJson, $deficienciasJson, $outraCategoria, $recursosJson,
         $outroRecurso, $observacoes, $site, $instagram, $telefone, $horario);
     $stmt->execute();
     $localId = $stmt->insert_id;

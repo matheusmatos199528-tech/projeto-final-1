@@ -1,4 +1,7 @@
-<?php require_once dirname(__DIR__) . '/config/session.php'; ?>
+<?php
+require_once dirname(__DIR__) . '/config/session.php';
+$usuarioAutenticado = isset($_SESSION['usuario_id']) && (int) $_SESSION['usuario_id'] > 0;
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -55,7 +58,7 @@
    
     <!-- SIDEBAR -->
     <div class="sidebar">
-      <button type="button" id="btnMenuMapa" class="menu-hamburguer" aria-label="Abrir menu de contribuição" aria-expanded="false">
+      <button type="button" id="btnMenuMapa" class="menu-hamburguer" aria-label="Abrir menu de contribuição" aria-expanded="false" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
         <i class="fa-solid fa-bars" aria-hidden="true"></i>
         <span>Contribuir</span>
       </button>
@@ -134,7 +137,7 @@
     <!-- MAPA -->
     <div id="map"></div>
   </div>
-  <aside id="menuMapa" class="menu-mapa" aria-hidden="true">
+  <aside id="menuMapa" class="menu-mapa" aria-hidden="true" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
     <button type="button" id="btnFecharMenu" class="menu-fechar" aria-label="Fechar menu">&times;</button>
     <h2>Contribua com o mapa</h2>
     <button type="button" id="btnAdicionarLocal" class="menu-opcao">
@@ -142,7 +145,7 @@
     </button>
   </aside>
 
-  <div id="formAdicionarLocal" class="modal-form" role="dialog" aria-modal="true" aria-labelledby="tituloSolicitacao">
+  <div id="formAdicionarLocal" class="modal-form" role="dialog" aria-modal="true" aria-labelledby="tituloSolicitacao" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
     <form id="formLocal" class="form-accessible" enctype="multipart/form-data">
       <button type="button" id="btnFechar" class="btn-fechar" aria-label="Fechar formulário">&times;</button>
       <h3 id="tituloSolicitacao">Sugerir um novo local</h3>
@@ -171,6 +174,15 @@
           <?php endforeach; ?>
         </div>
         <label id="campoOutraCategoria" class="campo condicional">Especifique a categoria<input name="outra_categoria" id="outraCategoria" maxlength="100"></label>
+      </fieldset>
+
+      <fieldset><legend>Quais deficiências este local atende?</legend>
+        <p>Selecione todas as opções compatíveis com os recursos que você verificou no local.</p>
+        <div class="chips" id="deficiencias">
+          <?php foreach (['fisica' => 'Deficiência física ou mobilidade reduzida', 'visual' => 'Deficiência visual', 'auditiva' => 'Deficiência auditiva', 'cognitiva' => 'Deficiência intelectual, cognitiva ou psicossocial'] as $valor => $rotulo): ?>
+            <label class="chip"><input type="checkbox" name="deficiencias[]" value="<?= htmlspecialchars($valor, ENT_QUOTES, 'UTF-8') ?>"><span><?= htmlspecialchars($rotulo, ENT_QUOTES, 'UTF-8') ?></span></label>
+          <?php endforeach; ?>
+        </div>
       </fieldset>
 
       <fieldset><legend>Quais recursos de acessibilidade esse local possui?</legend>
@@ -210,7 +222,7 @@
     </form>
   </div>
 
-  <div id="confirmacaoSolicitacao" class="modal-confirmacao" role="dialog" aria-modal="true" aria-labelledby="tituloConfirmacao">
+  <div id="confirmacaoSolicitacao" class="modal-confirmacao" role="dialog" aria-modal="true" aria-labelledby="tituloConfirmacao" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
     <div><h2 id="tituloConfirmacao">Solicitação enviada com sucesso! 💙</h2><p>Obrigado por contribuir com o nosso mapa. Nossa equipe irá analisar as informações e as evidências enviadas. Se a solicitação for aprovada, o local será adicionado ao mapa.</p><button type="button" id="btnFecharConfirmacao">Entendi</button></div>
   </div>
 
@@ -256,7 +268,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="../assets/js/mapa.js?v=3"></script>
+  <script src="../assets/js/mapa.js?v=4"></script>
   <script src="../assets/js/telainicial.js"></script>
   
 <div vw class="enabled">

@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `locais` (
   `latitude` decimal(10,7) NOT NULL,
   `longitude` decimal(10,7) NOT NULL,
   `categorias` longtext NOT NULL,
+  `deficiencias` longtext NOT NULL,
   `outra_categoria` varchar(100) DEFAULT NULL,
   `recursos` longtext NOT NULL,
   `outro_recurso` varchar(150) DEFAULT NULL,

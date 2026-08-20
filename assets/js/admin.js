@@ -3,6 +3,26 @@ const filtroStatus = document.getElementById('statusAdmin');
 const mensagem = document.getElementById('mensagemAdmin');
 const semResultados = document.getElementById('semResultados');
 const token = document.querySelector('meta[name="csrf-token"]').content;
+const btnConfiguracoes = document.getElementById('btnConfiguracoes');
+const btnFecharConfiguracoes = document.getElementById('btnFecharConfiguracoes');
+const painelConfiguracoes = document.getElementById('painelConfiguracoes');
+const fundoConfiguracoes = document.getElementById('fundoConfiguracoes');
+
+function alternarConfiguracoes(aberto) {
+  painelConfiguracoes.classList.toggle('aberto', aberto);
+  painelConfiguracoes.setAttribute('aria-hidden', String(!aberto));
+  btnConfiguracoes.setAttribute('aria-expanded', String(aberto));
+  fundoConfiguracoes.hidden = !aberto;
+  document.body.classList.toggle('configuracoes-abertas', aberto);
+  if (aberto) btnFecharConfiguracoes.focus();
+}
+
+btnConfiguracoes.addEventListener('click', () => alternarConfiguracoes(true));
+btnFecharConfiguracoes.addEventListener('click', () => alternarConfiguracoes(false));
+fundoConfiguracoes.addEventListener('click', () => alternarConfiguracoes(false));
+document.addEventListener('keydown', evento => {
+  if (evento.key === 'Escape' && painelConfiguracoes.classList.contains('aberto')) alternarConfiguracoes(false);
+});
 
 function normalizar(texto) {
   return String(texto).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -23,8 +43,37 @@ function filtrarSolicitacoes() {
   semResultados.hidden = visiveis !== 0;
 }
 
+function atualizarResumo() {
+  const cards = [...document.querySelectorAll('.solicitacao')];
+  const totais = {
+    todos: cards.length,
+    pendente: cards.filter(card => card.dataset.status === 'pendente').length,
+    aprovado: cards.filter(card => card.dataset.status === 'aprovado').length,
+    reprovado: cards.filter(card => card.dataset.status === 'reprovado').length
+  };
+  Object.entries(totais).forEach(([tipo, total]) => {
+    const valor = document.querySelector(`[data-resumo="${tipo}"] strong`);
+    if (valor) valor.textContent = String(total);
+  });
+}
+
 busca.addEventListener('input', filtrarSolicitacoes);
 filtroStatus.addEventListener('change', filtrarSolicitacoes);
+filtroStatus.addEventListener('change', () => {
+  document.querySelectorAll('[data-filtrar-status]').forEach(card => {
+    const ativo = card.dataset.filtrarStatus === filtroStatus.value;
+    card.classList.toggle('ativo', ativo);
+    card.setAttribute('aria-pressed', String(ativo));
+  });
+});
+
+document.querySelectorAll('[data-filtrar-status]').forEach(card => {
+  card.addEventListener('click', () => {
+    filtroStatus.value = card.dataset.filtrarStatus;
+    filtroStatus.dispatchEvent(new Event('change'));
+    document.getElementById('listaAdmin').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 
 function exibirMensagem(texto, erro = false) {
   mensagem.textContent = texto;
@@ -65,6 +114,7 @@ document.getElementById('listaAdmin').addEventListener('click', async evento => 
       botao.remove();
       card.querySelectorAll('button').forEach(item => item.disabled = false);
     }
+    atualizarResumo();
     filtrarSolicitacoes();
   } catch (erro) {
     exibirMensagem(erro.message, true);
@@ -95,6 +145,7 @@ document.querySelectorAll('.tipo-usuario').forEach(select => {
       if (!resposta.ok) throw new Error(resultado.erro || 'Não foi possível alterar a permissão.');
       select.dataset.valorAnterior = tipo;
       exibirMensagem(resultado.mensagem);
+      window.setTimeout(() => window.location.reload(), 500);
     } catch (erro) {
       select.value = select.dataset.valorAnterior;
       exibirMensagem(erro.message, true);
