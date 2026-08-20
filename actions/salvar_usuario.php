@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require_once dirname(__DIR__) . '/config/session.php';
+require_once __DIR__ . '/config/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../pages/cadastro.php');
+    header('Location: cadastro.php');
     exit;
 }
 
@@ -14,7 +14,7 @@ if (!csrfValido($_POST['csrf_token'] ?? null)) {
     exit('Solicitação inválida. Atualize a página e tente novamente.');
 }
 
-require_once dirname(__DIR__) . '/config/conn.php';
+require_once __DIR__ . '/config/conn.php';
 
 function voltarComErro(string $mensagem): never
 {

@@ -1,9 +1,9 @@
 <?php
-require_once dirname(__DIR__) . '/config/session.php';
+require_once __DIR__ . '/config/session.php';
 require_once "conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ../pages/nova.senha.php");
+    header("Location: nova.senha.php");
     exit;
 }
 
@@ -17,7 +17,7 @@ $recuperacaoAutorizada = !empty($_SESSION["recuperacao_verificada"])
 $usuarioAutenticado = isset($_SESSION["usuario_id"], $_SESSION["usuario_email"]);
 
 if (!$recuperacaoAutorizada && !$usuarioAutenticado) {
-    header("Location: ../pages/esqueceu.senha.php");
+    header("Location: esqueceu.senha.php");
     exit;
 }
 

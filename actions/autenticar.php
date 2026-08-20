@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname(__DIR__) . '/config/session.php';
+require_once __DIR__ . '/config/session.php';
 
-require_once dirname(__DIR__) . '/config/conn.php';
+require_once __DIR__ . '/config/conn.php';
 
 
 /*
@@ -13,7 +13,7 @@ require_once dirname(__DIR__) . '/config/conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
-    header("Location: ../pages/login.php");
+    header("Location: login.php");
     exit;
 }
 
@@ -56,7 +56,7 @@ if ($login === "" || $senha === "") {
 |--------------------------------------------------------------------------
 */
 
-$sql = "SELECT id, nome, email, celular, cpf, senha, tipo_usuario
+$sql = "SELECT id, nome, email, celular, cpf, senha
         FROM usuarios
         WHERE email = ? OR cpf = ?";
 
@@ -130,7 +130,6 @@ $_SESSION["usuario_nome"] = $usuario["nome"];
 $_SESSION["usuario_email"] = $usuario["email"];
 $_SESSION["usuario_celular"] = $usuario["celular"];
 $_SESSION["usuario_cpf"] = $usuario["cpf"];
-$_SESSION["tipo_usuario"] = $usuario["tipo_usuario"];
 
 
 /*
@@ -142,9 +141,7 @@ $_SESSION["tipo_usuario"] = $usuario["tipo_usuario"];
 $stmt->close();
 $con->close();
 
-header($usuario['tipo_usuario'] === 'admin'
-    ? "Location: ../pages/admin.php"
-    : "Location: ../pages/TelaUsuario.php");
+header("Location: TelaUsuario.php");
 exit;
 
 ?>
