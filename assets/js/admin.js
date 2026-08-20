@@ -3,6 +3,26 @@ const filtroStatus = document.getElementById('statusAdmin');
 const mensagem = document.getElementById('mensagemAdmin');
 const semResultados = document.getElementById('semResultados');
 const token = document.querySelector('meta[name="csrf-token"]').content;
+const btnConfiguracoes = document.getElementById('btnConfiguracoes');
+const btnFecharConfiguracoes = document.getElementById('btnFecharConfiguracoes');
+const painelConfiguracoes = document.getElementById('painelConfiguracoes');
+const fundoConfiguracoes = document.getElementById('fundoConfiguracoes');
+
+function alternarConfiguracoes(aberto) {
+  painelConfiguracoes.classList.toggle('aberto', aberto);
+  painelConfiguracoes.setAttribute('aria-hidden', String(!aberto));
+  btnConfiguracoes.setAttribute('aria-expanded', String(aberto));
+  fundoConfiguracoes.hidden = !aberto;
+  document.body.classList.toggle('configuracoes-abertas', aberto);
+  if (aberto) btnFecharConfiguracoes.focus();
+}
+
+btnConfiguracoes.addEventListener('click', () => alternarConfiguracoes(true));
+btnFecharConfiguracoes.addEventListener('click', () => alternarConfiguracoes(false));
+fundoConfiguracoes.addEventListener('click', () => alternarConfiguracoes(false));
+document.addEventListener('keydown', evento => {
+  if (evento.key === 'Escape' && painelConfiguracoes.classList.contains('aberto')) alternarConfiguracoes(false);
+});
 
 function normalizar(texto) {
   return String(texto).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();

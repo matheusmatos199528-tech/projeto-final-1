@@ -15,6 +15,7 @@ $sql = "SELECT l.*, u.nome AS usuario_nome, u.email AS usuario_email,
         ORDER BY FIELD(l.status, 'pendente', 'em_analise', 'mais_informacoes', 'aprovado', 'reprovado'), l.data_cadastro DESC";
 $locais = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
 $usuarios = $con->query('SELECT id, nome, email, tipo_usuario, data_cadastro FROM usuarios ORDER BY nome, email')->fetch_all(MYSQLI_ASSOC);
+$administradores = array_values(array_filter($usuarios, static fn(array $usuario): bool => $usuario['tipo_usuario'] === 'admin'));
 
 function e(string|null $valor): string
 {
@@ -38,7 +39,7 @@ foreach ($locais as $local) {
   <meta name="csrf-token" content="<?= e(csrfToken()) ?>">
   <title>Painel administrativo — IncluCity</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../assets/css/admin.css?v=6">
+  <link rel="stylesheet" href="../assets/css/admin.css?v=7">
 </head>
 <body>
   <header class="topo-admin">
@@ -49,10 +50,41 @@ foreach ($locais as $local) {
         <a href="mapa.php"><i class="fa-solid fa-map"></i> Mapa de acessibilidade</a>
       </nav>
       <div class="admin-identidade"><span>Administrador</span><strong><?= e($_SESSION['usuario_nome'] ?? '') ?></strong>
-        <form action="../actions/logout.php" method="POST"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button type="submit"><i class="fa-solid fa-right-from-bracket"></i> Sair</button></form>
+        <button type="button" id="btnConfiguracoes" class="btn-configuracoes" aria-label="Abrir configurações" aria-expanded="false" aria-controls="painelConfiguracoes"><i class="fa-solid fa-gear"></i></button>
       </div>
     </div>
   </header>
+
+  <div id="fundoConfiguracoes" class="fundo-configuracoes" hidden></div>
+  <aside id="painelConfiguracoes" class="painel-configuracoes" aria-hidden="true" aria-labelledby="tituloConfiguracoes">
+    <div class="configuracoes-topo">
+      <div><span class="rotulo">CONTA E ACESSOS</span><h2 id="tituloConfiguracoes">Configurações</h2></div>
+      <button type="button" id="btnFecharConfiguracoes" aria-label="Fechar configurações"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <nav class="opcoes-configuracoes" aria-label="Configurações da conta">
+      <a href="TelaUsuario.php"><i class="fa-solid fa-user-pen"></i><span><strong>Informações pessoais</strong><small>Visualize seus dados e suas contribuições</small></span></a>
+      <a href="nova.senha.php"><i class="fa-solid fa-key"></i><span><strong>Alterar senha</strong><small>Atualize sua senha de acesso</small></span></a>
+    </nav>
+    <section class="usuarios-configuracoes">
+      <div class="secao-titulo"><h3>Usuários cadastrados</h3><p><?= count($usuarios) ?> conta<?= count($usuarios) === 1 ? '' : 's' ?> na plataforma</p></div>
+      <div class="lista-usuarios-configuracoes">
+        <?php foreach ($usuarios as $usuario): ?>
+          <div class="usuario-linha" data-usuario-id="<?= (int) $usuario['id'] ?>">
+            <div class="usuario-avatar"><?= e(mb_strtoupper(mb_substr($usuario['nome'], 0, 1))) ?></div>
+            <div class="usuario-dados"><strong><?= e($usuario['nome']) ?></strong><span><?= e($usuario['email']) ?></span></div>
+            <select class="tipo-usuario" aria-label="Permissão de <?= e($usuario['nome']) ?>" <?= (int) $usuario['id'] === (int) $_SESSION['usuario_id'] ? 'disabled title="Sua própria permissão não pode ser removida"' : '' ?>>
+              <option value="usuario" <?= $usuario['tipo_usuario'] === 'usuario' ? 'selected' : '' ?>>Usuário</option>
+              <option value="admin" <?= $usuario['tipo_usuario'] === 'admin' ? 'selected' : '' ?>>Administrador</option>
+            </select>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </section>
+    <form class="sair-configuracoes" action="../actions/logout.php" method="POST">
+      <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
+      <button type="submit"><i class="fa-solid fa-right-from-bracket"></i> Sair da conta</button>
+    </form>
+  </aside>
 
   <main class="admin-container">
     <section class="cabecalho-painel">
@@ -106,14 +138,11 @@ foreach ($locais as $local) {
     <section class="usuarios-admin">
       <div class="secao-titulo"><span class="rotulo">ACESSOS</span><h2>Administradores</h2><p>Escolha quais contas podem acessar este painel e moderar solicitações.</p></div>
       <div class="tabela-usuarios">
-        <?php foreach ($usuarios as $usuario): ?>
+        <?php foreach ($administradores as $usuario): ?>
           <div class="usuario-linha" data-usuario-id="<?= (int) $usuario['id'] ?>">
             <div class="usuario-avatar"><?= e(mb_strtoupper(mb_substr($usuario['nome'], 0, 1))) ?></div>
             <div class="usuario-dados"><strong><?= e($usuario['nome']) ?></strong><span><?= e($usuario['email']) ?></span></div>
-            <select class="tipo-usuario" aria-label="Permissão de <?= e($usuario['nome']) ?>" <?= (int) $usuario['id'] === (int) $_SESSION['usuario_id'] ? 'disabled title="Sua própria permissão não pode ser removida"' : '' ?>>
-              <option value="usuario" <?= $usuario['tipo_usuario'] === 'usuario' ? 'selected' : '' ?>>Usuário</option>
-              <option value="admin" <?= $usuario['tipo_usuario'] === 'admin' ? 'selected' : '' ?>>Administrador</option>
-            </select>
+            <span class="administrador-badge"><i class="fa-solid fa-shield-halved"></i> Administrador</span>
           </div>
         <?php endforeach; ?>
       </div>
