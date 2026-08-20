@@ -92,10 +92,10 @@ foreach ($locais as $local) {
     </section>
 
     <section class="resumo" aria-label="Resumo das solicitações">
-      <article data-resumo="todos"><span>Total</span><strong><?= $contadores['todos'] ?></strong></article>
-      <article class="pendentes" data-resumo="pendente"><span>Pendentes</span><strong><?= $contadores['pendente'] ?></strong></article>
-      <article class="aprovados" data-resumo="aprovado"><span>Aprovados</span><strong><?= $contadores['aprovado'] ?></strong></article>
-      <article class="recusados" data-resumo="reprovado"><span>Recusados</span><strong><?= $contadores['reprovado'] ?></strong></article>
+      <button type="button" class="resumo-card ativo" data-resumo="todos" data-filtrar-status="todos" aria-pressed="true"><span>Total</span><strong><?= $contadores['todos'] ?></strong></button>
+      <button type="button" class="resumo-card pendentes" data-resumo="pendente" data-filtrar-status="pendente" aria-pressed="false"><span>Pendentes</span><strong><?= $contadores['pendente'] ?></strong></button>
+      <button type="button" class="resumo-card aprovados" data-resumo="aprovado" data-filtrar-status="aprovado" aria-pressed="false"><span>Aprovados</span><strong><?= $contadores['aprovado'] ?></strong></button>
+      <button type="button" class="resumo-card recusados" data-resumo="reprovado" data-filtrar-status="reprovado" aria-pressed="false"><span>Recusados</span><strong><?= $contadores['reprovado'] ?></strong></button>
     </section>
 
     <section class="barra-filtros">
@@ -148,6 +148,6 @@ foreach ($locais as $local) {
       </div>
     </section>
   </main>
-  <script src="../assets/js/admin.js?v=4"></script>
+  <script src="../assets/js/admin.js?v=5"></script>
 </body>
 </html>

@@ -59,6 +59,21 @@ function atualizarResumo() {
 
 busca.addEventListener('input', filtrarSolicitacoes);
 filtroStatus.addEventListener('change', filtrarSolicitacoes);
+filtroStatus.addEventListener('change', () => {
+  document.querySelectorAll('[data-filtrar-status]').forEach(card => {
+    const ativo = card.dataset.filtrarStatus === filtroStatus.value;
+    card.classList.toggle('ativo', ativo);
+    card.setAttribute('aria-pressed', String(ativo));
+  });
+});
+
+document.querySelectorAll('[data-filtrar-status]').forEach(card => {
+  card.addEventListener('click', () => {
+    filtroStatus.value = card.dataset.filtrarStatus;
+    filtroStatus.dispatchEvent(new Event('change'));
+    document.getElementById('listaAdmin').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 
 function exibirMensagem(texto, erro = false) {
   mensagem.textContent = texto;
