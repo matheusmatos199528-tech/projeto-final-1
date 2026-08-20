@@ -38,7 +38,7 @@ foreach ($locais as $local) {
   <meta name="csrf-token" content="<?= e(csrfToken()) ?>">
   <title>Painel administrativo — IncluCity</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../assets/css/admin.css?v=2">
+  <link rel="stylesheet" href="../assets/css/admin.css?v=4">
 </head>
 <body>
   <header class="topo-admin">

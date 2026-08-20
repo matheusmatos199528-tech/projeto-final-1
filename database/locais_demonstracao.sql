@@ -3,16 +3,27 @@ USE `inclucity_db`;
 -- Locais fictícios para demonstrar o mapa e seus filtros.
 -- O WHERE NOT EXISTS permite executar este arquivo mais de uma vez sem duplicar registros.
 
--- Usa uma conta cadastrada como responsável pelos registros demonstrativos.
-SET @usuario_demonstracao = (
-  SELECT `id` FROM `usuarios`
-  ORDER BY (`tipo_usuario` = 'admin') DESC, `id`
-  LIMIT 1
-);
+-- Usuários fictícios cadastrados para representar contribuições da comunidade.
+-- A senha é um hash aleatório sem senha conhecida e não permite acesso às contas.
+INSERT INTO `usuarios` (`nome`, `email`, `celular`, `cpf`, `senha`, `tipo_usuario`)
+SELECT 'Mariana Costa', 'mariana.costa@example.com', '(12) 90000-1001', '900.000.001-00', '$2y$10$LAGeRO49Ofa16zB2tp607.rqHlFkiY80lWbtk.las9zBaDHiMRDz.', 'usuario'
+WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `email` = 'mariana.costa@example.com');
+
+INSERT INTO `usuarios` (`nome`, `email`, `celular`, `cpf`, `senha`, `tipo_usuario`)
+SELECT 'Rafael Mendes', 'rafael.mendes@example.com', '(12) 90000-1002', '900.000.002-00', '$2y$10$LAGeRO49Ofa16zB2tp607.rqHlFkiY80lWbtk.las9zBaDHiMRDz.', 'usuario'
+WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `email` = 'rafael.mendes@example.com');
+
+INSERT INTO `usuarios` (`nome`, `email`, `celular`, `cpf`, `senha`, `tipo_usuario`)
+SELECT 'Camila Nogueira', 'camila.nogueira@example.com', '(12) 90000-1003', '900.000.003-00', '$2y$10$LAGeRO49Ofa16zB2tp607.rqHlFkiY80lWbtk.las9zBaDHiMRDz.', 'usuario'
+WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `email` = 'camila.nogueira@example.com');
+
+SET @usuario_mariana = (SELECT `id` FROM `usuarios` WHERE `email` = 'mariana.costa@example.com' LIMIT 1);
+SET @usuario_rafael = (SELECT `id` FROM `usuarios` WHERE `email` = 'rafael.mendes@example.com' LIMIT 1);
+SET @usuario_camila = (SELECT `id` FROM `usuarios` WHERE `email` = 'camila.nogueira@example.com' LIMIT 1);
 
 INSERT INTO `locais`
   (`usuario_id`, `nome`, `endereco`, `numero`, `bairro`, `cidade`, `estado`, `cep`, `latitude`, `longitude`, `categorias`, `recursos`, `observacoes`, `status`)
-SELECT @usuario_demonstracao, 'Café Inclusivo (Demonstração)', 'Avenida São João', '100', 'Jardim Esplanada', 'São José dos Campos', 'SP', '12242000', -23.1969000, -45.8958000,
+SELECT @usuario_mariana, 'Café Inclusivo (Demonstração)', 'Avenida São João', '100', 'Jardim Esplanada', 'São José dos Campos', 'SP', '12242000', -23.1969000, -45.8958000,
   '["Restaurante"]',
   '["Rampa de acesso","Entrada acessível","Banheiro acessível","Braile","Cão-guia permitido"]',
   'Local fictício criado somente para demonstrar o funcionamento dos filtros do IncluCity.', 'aprovado'
@@ -20,7 +31,7 @@ WHERE NOT EXISTS (SELECT 1 FROM `locais` WHERE `nome` = 'Café Inclusivo (Demons
 
 INSERT INTO `locais`
   (`usuario_id`, `nome`, `endereco`, `numero`, `bairro`, `cidade`, `estado`, `cep`, `latitude`, `longitude`, `categorias`, `recursos`, `observacoes`, `status`)
-SELECT @usuario_demonstracao, 'Shopping Acessível (Demonstração)', 'Avenida Andrômeda', '500', 'Jardim Satélite', 'São José dos Campos', 'SP', '12230000', -23.2246000, -45.8907000,
+SELECT @usuario_rafael, 'Shopping Acessível (Demonstração)', 'Avenida Andrômeda', '500', 'Jardim Satélite', 'São José dos Campos', 'SP', '12230000', -23.2246000, -45.8907000,
   '["Shopping","Comércio"]',
   '["Rampa de acesso","Elevador acessível","Banheiro acessível","Vaga acessível","Piso tátil","Espaço para cadeira de rodas"]',
   'Local fictício criado somente para demonstrar o funcionamento dos filtros do IncluCity.', 'aprovado'
@@ -28,7 +39,7 @@ WHERE NOT EXISTS (SELECT 1 FROM `locais` WHERE `nome` = 'Shopping Acessível (De
 
 INSERT INTO `locais`
   (`usuario_id`, `nome`, `endereco`, `numero`, `bairro`, `cidade`, `estado`, `cep`, `latitude`, `longitude`, `categorias`, `recursos`, `observacoes`, `status`)
-SELECT @usuario_demonstracao, 'Centro Cultural para Todos (Demonstração)', 'Praça Afonso Pena', '50', 'Centro', 'São José dos Campos', 'SP', '12210090', -23.1865000, -45.8841000,
+SELECT @usuario_camila, 'Centro Cultural para Todos (Demonstração)', 'Praça Afonso Pena', '50', 'Centro', 'São José dos Campos', 'SP', '12210090', -23.1865000, -45.8841000,
   '["Espaço cultural","Instituição/serviço"]',
   '["Libras","Audiodescrição","Piso tátil","Comunicação acessível","Sala de conforto"]',
   'Local fictício criado somente para demonstrar o funcionamento dos filtros do IncluCity.', 'aprovado'
@@ -36,7 +47,7 @@ WHERE NOT EXISTS (SELECT 1 FROM `locais` WHERE `nome` = 'Centro Cultural para To
 
 INSERT INTO `locais`
   (`usuario_id`, `nome`, `endereco`, `numero`, `bairro`, `cidade`, `estado`, `cep`, `latitude`, `longitude`, `categorias`, `recursos`, `observacoes`, `status`)
-SELECT @usuario_demonstracao, 'Igreja Comunidade Aberta (Demonstração)', 'Rua Paraibuna', '300', 'Jardim São Dimas', 'São José dos Campos', 'SP', '12245120', -23.2024000, -45.8898000,
+SELECT @usuario_mariana, 'Igreja Comunidade Aberta (Demonstração)', 'Rua Paraibuna', '300', 'Jardim São Dimas', 'São José dos Campos', 'SP', '12245120', -23.2024000, -45.8898000,
   '["Igreja"]',
   '["Entrada acessível","Rampa de acesso","Libras","Atendimento prioritário","Vaga acessível"]',
   'Local fictício criado somente para demonstrar o funcionamento dos filtros do IncluCity.', 'aprovado'
@@ -44,17 +55,21 @@ WHERE NOT EXISTS (SELECT 1 FROM `locais` WHERE `nome` = 'Igreja Comunidade Abert
 
 INSERT INTO `locais`
   (`usuario_id`, `nome`, `endereco`, `numero`, `bairro`, `cidade`, `estado`, `cep`, `latitude`, `longitude`, `categorias`, `recursos`, `observacoes`, `status`)
-SELECT @usuario_demonstracao, 'Instituto Cidadania (Demonstração)', 'Avenida Cassiano Ricardo', '800', 'Parque Residencial Aquarius', 'São José dos Campos', 'SP', '12246000', -23.2137000, -45.9108000,
+SELECT @usuario_rafael, 'Instituto Cidadania (Demonstração)', 'Avenida Cassiano Ricardo', '800', 'Parque Residencial Aquarius', 'São José dos Campos', 'SP', '12246000', -23.2137000, -45.9108000,
   '["Instituição/serviço","Órgão público"]',
   '["Balcão acessível","Sinalização acessível","Braile","Libras","Comunicação acessível","Atendimento prioritário"]',
   'Local fictício criado somente para demonstrar o funcionamento dos filtros do IncluCity.', 'aprovado'
 WHERE NOT EXISTS (SELECT 1 FROM `locais` WHERE `nome` = 'Instituto Cidadania (Demonstração)');
 
 UPDATE `locais`
-SET `usuario_id` = @usuario_demonstracao
-WHERE `nome` LIKE '%(Demonstração)'
-  AND `usuario_id` IS NULL
-  AND @usuario_demonstracao IS NOT NULL;
+SET `usuario_id` = CASE `nome`
+  WHEN 'Café Inclusivo (Demonstração)' THEN @usuario_mariana
+  WHEN 'Shopping Acessível (Demonstração)' THEN @usuario_rafael
+  WHEN 'Centro Cultural para Todos (Demonstração)' THEN @usuario_camila
+  WHEN 'Igreja Comunidade Aberta (Demonstração)' THEN @usuario_mariana
+  WHEN 'Instituto Cidadania (Demonstração)' THEN @usuario_rafael
+END
+WHERE `nome` LIKE '%(Demonstração)';
 
 -- Estados variados para demonstrar a moderação no painel administrativo.
 UPDATE `locais`
