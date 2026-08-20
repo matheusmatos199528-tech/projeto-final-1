@@ -1,13 +1,13 @@
 :root { --verde: #0f6b55; --verde-escuro: #173f35; --fundo: #f2f6f4; --borda: #dce8e3; --texto: #263a35; --muted: #667873; --vermelho: #b42318; }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--fundo); color: var(--texto); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font-family: Arial, Helvetica, sans-serif; }
 button, input, select { font: inherit; }
 .topo-admin { position: sticky; top: 0; z-index: 20; min-height: 75px; background: #bfd5ec; box-shadow: 0 3px 14px rgba(23,63,53,.12); }
 .topo-container { display: flex; align-items: center; width: min(1200px, calc(100% - 32px)); min-height: 75px; margin: 0 auto; gap: 20px; }
 .marca { display: flex; flex: none; align-items: center; text-decoration: none; }
 .marca img { width: auto; height: 50px; object-fit: contain; }
 .navegacao-admin { display: flex; align-items: center; justify-content: flex-end; gap: 6px; min-width: 0; margin-left: auto; }
-.navegacao-admin a { padding: 10px 12px; border-radius: 10px; color: #1f2937; font-size: .9rem; white-space: nowrap; text-decoration: none; transition: background .2s, color .2s; }
+.navegacao-admin a { padding: .6rem .9rem; border-radius: 10px; color: #000; font-size: 1rem; font-weight: 400; white-space: nowrap; text-decoration: none; transition: .3s ease; }
 .navegacao-admin a:hover { background: rgba(0,0,0,.2); color: #ffe600; }
 .navegacao-admin i { margin-right: 6px; }
 .admin-identidade { display: grid; flex: none; grid-template-columns: auto auto; align-items: center; min-width: 0; column-gap: 12px; font-size: .82rem; }
