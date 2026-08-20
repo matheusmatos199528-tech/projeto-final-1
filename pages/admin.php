@@ -47,7 +47,6 @@ foreach ($locais as $local) {
       <nav class="navegacao-admin" aria-label="Navegação principal">
         <a href="TelaInicial.php"><i class="fa-solid fa-house"></i> Início</a>
         <a href="mapa.php"><i class="fa-solid fa-map"></i> Mapa de acessibilidade</a>
-        <a href="admin.php" class="ativo" aria-current="page"><i class="fa-solid fa-shield-halved"></i> Administração</a>
       </nav>
       <div class="admin-identidade"><span>Administrador</span><strong><?= e($_SESSION['usuario_nome'] ?? '') ?></strong>
         <form action="../actions/logout.php" method="POST"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button type="submit"><i class="fa-solid fa-right-from-bracket"></i> Sair</button></form>
