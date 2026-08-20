@@ -92,10 +92,10 @@ foreach ($locais as $local) {
     </section>
 
     <section class="resumo" aria-label="Resumo das solicitações">
-      <article><span>Total</span><strong><?= $contadores['todos'] ?></strong></article>
-      <article class="pendentes"><span>Pendentes</span><strong><?= $contadores['pendente'] ?></strong></article>
-      <article class="aprovados"><span>Aprovados</span><strong><?= $contadores['aprovado'] ?></strong></article>
-      <article class="recusados"><span>Recusados</span><strong><?= $contadores['reprovado'] ?></strong></article>
+      <article data-resumo="todos"><span>Total</span><strong><?= $contadores['todos'] ?></strong></article>
+      <article class="pendentes" data-resumo="pendente"><span>Pendentes</span><strong><?= $contadores['pendente'] ?></strong></article>
+      <article class="aprovados" data-resumo="aprovado"><span>Aprovados</span><strong><?= $contadores['aprovado'] ?></strong></article>
+      <article class="recusados" data-resumo="reprovado"><span>Recusados</span><strong><?= $contadores['reprovado'] ?></strong></article>
     </section>
 
     <section class="barra-filtros">
@@ -148,6 +148,6 @@ foreach ($locais as $local) {
       </div>
     </section>
   </main>
-  <script src="../assets/js/admin.js?v=3"></script>
+  <script src="../assets/js/admin.js?v=4"></script>
 </body>
 </html>

@@ -43,6 +43,20 @@ function filtrarSolicitacoes() {
   semResultados.hidden = visiveis !== 0;
 }
 
+function atualizarResumo() {
+  const cards = [...document.querySelectorAll('.solicitacao')];
+  const totais = {
+    todos: cards.length,
+    pendente: cards.filter(card => card.dataset.status === 'pendente').length,
+    aprovado: cards.filter(card => card.dataset.status === 'aprovado').length,
+    reprovado: cards.filter(card => card.dataset.status === 'reprovado').length
+  };
+  Object.entries(totais).forEach(([tipo, total]) => {
+    const valor = document.querySelector(`[data-resumo="${tipo}"] strong`);
+    if (valor) valor.textContent = String(total);
+  });
+}
+
 busca.addEventListener('input', filtrarSolicitacoes);
 filtroStatus.addEventListener('change', filtrarSolicitacoes);
 
@@ -85,6 +99,7 @@ document.getElementById('listaAdmin').addEventListener('click', async evento => 
       botao.remove();
       card.querySelectorAll('button').forEach(item => item.disabled = false);
     }
+    atualizarResumo();
     filtrarSolicitacoes();
   } catch (erro) {
     exibirMensagem(erro.message, true);
@@ -115,6 +130,7 @@ document.querySelectorAll('.tipo-usuario').forEach(select => {
       if (!resposta.ok) throw new Error(resultado.erro || 'Não foi possível alterar a permissão.');
       select.dataset.valorAnterior = tipo;
       exibirMensagem(resultado.mensagem);
+      window.setTimeout(() => window.location.reload(), 500);
     } catch (erro) {
       select.value = select.dataset.valorAnterior;
       exibirMensagem(erro.message, true);
