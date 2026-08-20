@@ -50,7 +50,7 @@ INSERT INTO `locais`
 SELECT @usuario_mariana, 'Igreja Comunidade Aberta (Demonstração)', 'Rua Paraibuna', '300', 'Jardim São Dimas', 'São José dos Campos', 'SP', '12245120', -23.2024000, -45.8898000,
   '["Igreja"]',
   '["Entrada acessível","Rampa de acesso","Libras","Atendimento prioritário","Vaga acessível"]',
-  'Local fictício criado somente para demonstrar o funcionamento dos filtros do IncluCity.', 'aprovado'
+  'Solicitação recusada porque não foram enviadas imagens que comprovem os recursos de acessibilidade informados.', 'reprovado'
 WHERE NOT EXISTS (SELECT 1 FROM `locais` WHERE `nome` = 'Igreja Comunidade Aberta (Demonstração)');
 
 INSERT INTO `locais`
@@ -86,6 +86,10 @@ WHERE `nome` IN (
   'Instituto Cidadania (Demonstração)'
 );
 
+UPDATE `locais`
+SET `observacoes` = 'Solicitação recusada porque não foram enviadas imagens que comprovem os recursos de acessibilidade informados.'
+WHERE `nome` = 'Igreja Comunidade Aberta (Demonstração)';
+
 -- Fotos demonstrativas correspondentes a cada local.
 -- Cada SELECT localiza o local pelo nome e evita cadastrar a mesma foto novamente.
 
@@ -116,14 +120,9 @@ WHERE l.nome = 'Centro Cultural para Todos (Demonstração)'
     WHERE f.local_id = l.id AND f.arquivo = 'assets/uploads/solicitacoes/demo-centro-cultural.png'
   );
 
-INSERT INTO `local_fotos` (`local_id`, `arquivo`)
-SELECT l.id, 'assets/uploads/solicitacoes/demo-igreja-comunidade.png'
-FROM `locais` l
-WHERE l.nome = 'Igreja Comunidade Aberta (Demonstração)'
-  AND NOT EXISTS (
-    SELECT 1 FROM `local_fotos` f
-    WHERE f.local_id = l.id AND f.arquivo = 'assets/uploads/solicitacoes/demo-igreja-comunidade.png'
-  );
+DELETE f FROM `local_fotos` f
+INNER JOIN `locais` l ON l.id = f.local_id
+WHERE l.nome = 'Igreja Comunidade Aberta (Demonstração)';
 
 INSERT INTO `local_fotos` (`local_id`, `arquivo`)
 SELECT l.id, 'assets/uploads/solicitacoes/demo-instituto-cidadania.png'
