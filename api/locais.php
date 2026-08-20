@@ -37,6 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     responder(['erro' => 'Método não permitido.'], 405);
 }
 
+if (!isset($_SESSION['usuario_id']) || (int) $_SESSION['usuario_id'] <= 0) {
+    responder(['erro' => 'Faça login para contribuir com o IncluCity.'], 401);
+}
+
 if (!csrfValido($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null)) {
     responder(['erro' => 'Solicitação inválida. Atualize a página.'], 403);
 }
@@ -104,7 +108,7 @@ for ($i = 0; $i < $quantidadeFotos; $i++) {
     $arquivos[] = ['temporario' => $fotos['tmp_name'][$i], 'nome' => $nomeArquivo];
 }
 
-$usuarioId = isset($_SESSION['usuario_id']) ? (int) $_SESSION['usuario_id'] : null;
+$usuarioId = (int) $_SESSION['usuario_id'];
 $categoriasJson = json_encode($categorias, JSON_UNESCAPED_UNICODE);
 $recursosJson = json_encode($recursos, JSON_UNESCAPED_UNICODE);
 $con->begin_transaction();

@@ -42,16 +42,22 @@ foreach ($locais as $local) {
 </head>
 <body>
   <header class="topo-admin">
-    <a href="TelaInicial.php" class="marca"><img src="../assets/img/Imagem1.png" alt="IncluCity"><span>IncluCity</span></a>
-    <div class="admin-identidade"><span>Administrador</span><strong><?= e($_SESSION['usuario_nome'] ?? '') ?></strong>
-      <form action="../actions/logout.php" method="POST"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button type="submit">Sair</button></form>
+    <div class="topo-container">
+      <a href="TelaInicial.php" class="marca"><img src="../assets/img/Imagem_logo40up.webp" alt="IncluCity"></a>
+      <nav class="navegacao-admin" aria-label="Navegação principal">
+        <a href="TelaInicial.php"><i class="fa-solid fa-house"></i> Início</a>
+        <a href="mapa.php"><i class="fa-solid fa-map"></i> Mapa de acessibilidade</a>
+        <a href="admin.php" class="ativo" aria-current="page"><i class="fa-solid fa-shield-halved"></i> Administração</a>
+      </nav>
+      <div class="admin-identidade"><span>Administrador</span><strong><?= e($_SESSION['usuario_nome'] ?? '') ?></strong>
+        <form action="../actions/logout.php" method="POST"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button type="submit"><i class="fa-solid fa-right-from-bracket"></i> Sair</button></form>
+      </div>
     </div>
   </header>
 
   <main class="admin-container">
     <section class="cabecalho-painel">
       <div><span class="rotulo">MODERAÇÃO</span><h1>Solicitações de locais</h1><p>Analise as informações enviadas antes de publicá-las no mapa.</p></div>
-      <a href="mapa.php" class="link-mapa"><i class="fa-solid fa-map"></i> Abrir mapa</a>
     </section>
 
     <section class="resumo" aria-label="Resumo das solicitações">
@@ -84,7 +90,7 @@ foreach ($locais as $local) {
           <div class="detalhes-grid">
             <div><h3>Categorias</h3><div class="chips"><?php foreach ($categorias as $item): ?><span><?= e($item) ?></span><?php endforeach; ?></div></div>
             <div><h3>Recursos informados</h3><div class="chips recursos"><?php foreach ($recursos as $item): ?><span><?= e($item) ?></span><?php endforeach; ?></div></div>
-            <div><h3>Responsável pelo envio</h3><p><?= e($local['usuario_nome'] ?: 'Visitante') ?><br><small><?= e($local['usuario_email']) ?></small></p></div>
+            <div><h3>Responsável pelo envio</h3><p><?= e($local['usuario_nome'] ?: 'Registro sem responsável') ?><br><small><?= e($local['usuario_email']) ?></small></p></div>
             <div><h3>Observações</h3><p><?= e($local['observacoes'] ?: 'Nenhuma observação informada.') ?></p></div>
           </div>
           <?php if ($fotos): ?><div class="galeria"><?php foreach ($fotos as $foto): ?><a href="../<?= e($foto) ?>" target="_blank"><img src="../<?= e($foto) ?>" alt="Evidência enviada para <?= e($local['nome']) ?>"></a><?php endforeach; ?></div><?php endif; ?>

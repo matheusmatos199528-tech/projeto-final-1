@@ -1,4 +1,7 @@
-<?php require_once dirname(__DIR__) . '/config/session.php'; ?>
+<?php
+require_once dirname(__DIR__) . '/config/session.php';
+$usuarioAutenticado = isset($_SESSION['usuario_id']) && (int) $_SESSION['usuario_id'] > 0;
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -55,7 +58,7 @@
    
     <!-- SIDEBAR -->
     <div class="sidebar">
-      <button type="button" id="btnMenuMapa" class="menu-hamburguer" aria-label="Abrir menu de contribuição" aria-expanded="false">
+      <button type="button" id="btnMenuMapa" class="menu-hamburguer" aria-label="Abrir menu de contribuição" aria-expanded="false" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
         <i class="fa-solid fa-bars" aria-hidden="true"></i>
         <span>Contribuir</span>
       </button>
@@ -134,7 +137,7 @@
     <!-- MAPA -->
     <div id="map"></div>
   </div>
-  <aside id="menuMapa" class="menu-mapa" aria-hidden="true">
+  <aside id="menuMapa" class="menu-mapa" aria-hidden="true" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
     <button type="button" id="btnFecharMenu" class="menu-fechar" aria-label="Fechar menu">&times;</button>
     <h2>Contribua com o mapa</h2>
     <button type="button" id="btnAdicionarLocal" class="menu-opcao">
@@ -142,7 +145,7 @@
     </button>
   </aside>
 
-  <div id="formAdicionarLocal" class="modal-form" role="dialog" aria-modal="true" aria-labelledby="tituloSolicitacao">
+  <div id="formAdicionarLocal" class="modal-form" role="dialog" aria-modal="true" aria-labelledby="tituloSolicitacao" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
     <form id="formLocal" class="form-accessible" enctype="multipart/form-data">
       <button type="button" id="btnFechar" class="btn-fechar" aria-label="Fechar formulário">&times;</button>
       <h3 id="tituloSolicitacao">Sugerir um novo local</h3>
@@ -210,7 +213,7 @@
     </form>
   </div>
 
-  <div id="confirmacaoSolicitacao" class="modal-confirmacao" role="dialog" aria-modal="true" aria-labelledby="tituloConfirmacao">
+  <div id="confirmacaoSolicitacao" class="modal-confirmacao" role="dialog" aria-modal="true" aria-labelledby="tituloConfirmacao" <?= $usuarioAutenticado ? '' : 'hidden' ?>>
     <div><h2 id="tituloConfirmacao">Solicitação enviada com sucesso! 💙</h2><p>Obrigado por contribuir com o nosso mapa. Nossa equipe irá analisar as informações e as evidências enviadas. Se a solicitação for aprovada, o local será adicionado ao mapa.</p><button type="button" id="btnFecharConfirmacao">Entendi</button></div>
   </div>
 
