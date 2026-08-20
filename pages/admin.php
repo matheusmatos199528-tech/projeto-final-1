@@ -109,6 +109,7 @@ foreach ($locais as $local) {
     <section id="listaAdmin" class="lista-admin">
       <?php foreach ($locais as $local):
         $categorias = json_decode($local['categorias'], true) ?: [];
+        $deficiencias = json_decode($local['deficiencias'] ?? '[]', true) ?: [];
         $recursos = json_decode($local['recursos'], true) ?: [];
         $fotos = $local['fotos'] ? explode('||', $local['fotos']) : [];
         $busca = strtolower($local['nome'] . ' ' . $local['bairro'] . ' ' . $local['cidade']);
@@ -120,6 +121,7 @@ foreach ($locais as $local) {
           </div>
           <div class="detalhes-grid">
             <div><h3>Categorias</h3><div class="chips"><?php foreach ($categorias as $item): ?><span><?= e($item) ?></span><?php endforeach; ?></div></div>
+            <div><h3>Deficiências atendidas</h3><div class="chips"><?php foreach ($deficiencias as $item): ?><span><?= e(['fisica'=>'Física ou mobilidade reduzida','visual'=>'Visual','auditiva'=>'Auditiva','cognitiva'=>'Intelectual, cognitiva ou psicossocial'][$item] ?? $item) ?></span><?php endforeach; ?><?php if (!$deficiencias): ?><span>Não informado</span><?php endif; ?></div></div>
             <div><h3>Recursos informados</h3><div class="chips recursos"><?php foreach ($recursos as $item): ?><span><?= e($item) ?></span><?php endforeach; ?></div></div>
             <div><h3>Responsável pelo envio</h3><p><?= e($local['usuario_nome'] ?: 'Registro sem responsável') ?><br><small><?= e($local['usuario_email']) ?></small></p></div>
             <div><h3>Observações</h3><p><?= e($local['observacoes'] ?: 'Nenhuma observação informada.') ?></p></div>

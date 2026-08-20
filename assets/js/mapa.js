@@ -76,11 +76,13 @@ function filtrar() {
   };
 
   renderizar(locais.filter(local => {
+    const deficiencias = local.deficiencias || [];
     const correspondeCategoria = categoria === 'todos' || local.categorias.includes(categoria);
     const correspondeRecurso = recurso === 'todos' || local.recursos.includes(recurso);
     const recursosRelacionados = recursosPorDeficiencia[deficiencia] || [];
     const correspondeDeficiencia = deficiencia === 'todos'
-      || local.recursos.some(item => recursosRelacionados.includes(item));
+      || deficiencias.includes(deficiencia)
+      || (!deficiencias.length && local.recursos.some(item => recursosRelacionados.includes(item)));
 
     return correspondeCategoria && correspondeRecurso && correspondeDeficiencia;
   }));
@@ -150,8 +152,9 @@ async function geocodificarEndereco() {
 formulario.addEventListener('submit', async evento => {
   evento.preventDefault(); erroFormulario.textContent = '';
   const categorias = formulario.querySelectorAll('input[name="categorias[]"]:checked');
+  const deficiencias = formulario.querySelectorAll('input[name="deficiencias[]"]:checked');
   const recursos = formulario.querySelectorAll('input[name="recursos[]"]:checked');
-  if (!categorias.length || !recursos.length) { erroFormulario.textContent = 'Selecione ao menos uma categoria e um recurso de acessibilidade.'; return; }
+  if (!categorias.length || !deficiencias.length || !recursos.length) { erroFormulario.textContent = 'Selecione ao menos uma categoria, uma deficiência atendida e um recurso de acessibilidade.'; return; }
   const botao = formulario.querySelector('.btn-enviar'); botao.disabled = true; botao.textContent = 'Enviando…';
   try {
     if (!document.getElementById('latitude').value) {
