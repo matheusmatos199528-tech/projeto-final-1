@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/config/session.php';
+require_once dirname(__DIR__) . '/config/session.php';
 
 $_SESSION = [];
 
@@ -12,5 +12,5 @@ if (ini_get('session.use_cookies')) {
 }
 
 session_destroy();
-header('Location: login.php');
+header('Location: ../pages/login.php');
 exit;

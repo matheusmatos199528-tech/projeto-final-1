@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/config/session.php';
+require_once dirname(__DIR__) . '/config/session.php';
 
-require_once __DIR__ . '/config/conn.php';
+require_once dirname(__DIR__) . '/config/conn.php';
 
 
 /*
@@ -13,7 +13,7 @@ require_once __DIR__ . '/config/conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
-    header("Location: login.php");
+    header("Location: ../pages/login.php");
     exit;
 }
 
@@ -43,7 +43,7 @@ if ($login === "" || $senha === "") {
 
     echo "<script>
         alert('Preencha o usuário e a senha.');
-        window.location.href = 'login.php';
+        window.location.href = '../pages/login.php';
     </script>";
 
     exit;
@@ -79,7 +79,7 @@ if ($resultado->num_rows === 0) {
 
     echo "<script>
         alert('E-mail, CPF ou senha incorretos.');
-        window.location.href = 'login.php';
+        window.location.href = '../pages/login.php';
     </script>";
 
     $stmt->close();
@@ -108,7 +108,7 @@ if (!password_verify($senha, $usuario["senha"])) {
 
     echo "<script>
         alert('E-mail, CPF ou senha incorretos.');
-        window.location.href = 'login.php';
+        window.location.href = '../pages/login.php';
     </script>";
 
     $stmt->close();
@@ -141,7 +141,7 @@ $_SESSION["usuario_cpf"] = $usuario["cpf"];
 $stmt->close();
 $con->close();
 
-header("Location: TelaUsuario.php");
+header("Location: ../pages/TelaUsuario.php");
 exit;
 
 ?>

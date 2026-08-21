@@ -11,9 +11,22 @@ $nomeUsuario = htmlspecialchars((string) ($_SESSION['usuario_nome'] ?? ''), ENT_
 $emailUsuario = htmlspecialchars((string) ($_SESSION['usuario_email'] ?? ''), ENT_QUOTES, 'UTF-8');
 $cpfUsuario = htmlspecialchars((string) ($_SESSION['usuario_cpf'] ?? ''), ENT_QUOTES, 'UTF-8');
 $usuarioId = (int) $_SESSION['usuario_id'];
+
+// Mantém a tela compatível tanto com o esquema atual quanto com bancos antigos.
+$colunasLocais = array_column(
+  $con->query('SHOW COLUMNS FROM locais')->fetch_all(MYSQLI_ASSOC),
+  'Field'
+);
+$colunaComentario = in_array('observacoes', $colunasLocais, true)
+  ? 'COALESCE(observacoes, "")'
+  : 'COALESCE(comentario, "")';
+$colunaRecursos = in_array('recursos', $colunasLocais, true)
+  ? 'recursos'
+  : "'[]'";
+
 $stmtLocais = $con->prepare(
-  'SELECT nome, COALESCE(observacoes, "") AS comentario, recursos, status, data_cadastro
-   FROM locais WHERE usuario_id = ? ORDER BY data_cadastro DESC'
+  "SELECT nome, {$colunaComentario} AS comentario, {$colunaRecursos} AS recursos, status, data_cadastro
+   FROM locais WHERE usuario_id = ? ORDER BY data_cadastro DESC"
 );
 $stmtLocais->bind_param('i', $usuarioId);
 $stmtLocais->execute();
@@ -269,4 +282,3 @@ function escapar(string $valor): string
 </body>
 
 </html>
-
