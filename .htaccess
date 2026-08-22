@@ -1,4 +1,5 @@
 DirectoryIndex index.php
+ErrorDocument 404 /projeto-final-1/pages/errors/404.php
 
 Options -Indexes
 

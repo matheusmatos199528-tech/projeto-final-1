@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/config/session.php';
-require_once __DIR__ . '/config/conn.php';
+require_once dirname(__DIR__) . '/config/session.php';
+require_once dirname(__DIR__) . '/config/conn.php';
 
 function falharOAuth(string $mensagem): never
 {
     http_response_code(400);
     $texto = htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8');
-    exit("<!doctype html><html lang=\"pt-br\"><meta charset=\"utf-8\"><title>Falha no login</title><p>{$texto}</p><p><a href=\"login.php\">Voltar ao login</a></p></html>");
+    exit("<!doctype html><html lang=\"pt-br\"><meta charset=\"utf-8\"><title>Falha no login</title><p>{$texto}</p><p><a href=\"../pages/login.php\">Voltar ao login</a></p></html>");
 }
 
 function requisicaoHttp(string $url, array $opcoes = []): array
@@ -99,7 +99,10 @@ function configuracaoProvedor(string $provedor): array
 
 $provedor = strtolower((string) ($_GET['provider'] ?? $_SESSION['oauth_provider'] ?? ''));
 $config = configuracaoProvedor($provedor);
-$redirectUri = urlBase() . '/oauth.php';
+$redirectUri = trim((string) ($_ENV['OAUTH_REDIRECT_URI'] ?? ''));
+if ($redirectUri === '') {
+    $redirectUri = urlBase() . '/oauth.php';
+}
 
 if (!isset($_GET['code'])) {
     $state = bin2hex(random_bytes(32));
@@ -162,7 +165,7 @@ if ($provedor === 'google' && empty($perfil['email_verified'])) {
 }
 
 try {
-    $stmt = $con->prepare('SELECT id, nome, email, celular, cpf FROM usuarios WHERE (oauth_provider = ? AND oauth_subject = ?) OR email = ? LIMIT 1');
+    $stmt = $con->prepare('SELECT id, nome, email, celular, cpf, tipo_usuario FROM usuarios WHERE (oauth_provider = ? AND oauth_subject = ?) OR email = ? LIMIT 1');
     $stmt->bind_param('sss', $provedor, $identificador, $email);
     $stmt->execute();
     $usuario = $stmt->get_result()->fetch_assoc();
@@ -177,12 +180,12 @@ try {
         $stmt = $con->prepare('INSERT INTO usuarios (nome, email, celular, cpf, senha, oauth_provider, oauth_subject) VALUES (?, ?, NULL, NULL, NULL, ?, ?)');
         $stmt->bind_param('ssss', $nome, $email, $provedor, $identificador);
         $stmt->execute();
-        $usuario = ['id' => $stmt->insert_id, 'nome' => $nome, 'email' => $email, 'celular' => '', 'cpf' => ''];
+        $usuario = ['id' => $stmt->insert_id, 'nome' => $nome, 'email' => $email, 'celular' => '', 'cpf' => '', 'tipo_usuario' => 'usuario'];
         $stmt->close();
     }
 } catch (mysqli_sql_exception $erro) {
     error_log('Erro no login OAuth: ' . $erro->getMessage());
-    falharOAuth('O banco ainda não recebeu a migração OAuth. Importe bd/oauth_migration.sql.');
+    falharOAuth('O banco ainda não recebeu a migração OAuth. Importe database/oauth_migration.sql.');
 }
 
 unset($_SESSION['oauth_state'], $_SESSION['oauth_provider'], $_SESSION['oauth_code_verifier']);
@@ -192,7 +195,10 @@ $_SESSION['usuario_nome'] = $usuario['nome'];
 $_SESSION['usuario_email'] = $usuario['email'];
 $_SESSION['usuario_celular'] = $usuario['celular'] ?? '';
 $_SESSION['usuario_cpf'] = $usuario['cpf'] ?? '';
+$_SESSION['tipo_usuario'] = $usuario['tipo_usuario'] ?? 'usuario';
 
 $con->close();
-header('Location: TelaUsuario.php');
+header('Location: ' . ($_SESSION['tipo_usuario'] === 'admin'
+    ? '../pages/admin.php'
+    : '../pages/TelaUsuario.php'));
 exit;
