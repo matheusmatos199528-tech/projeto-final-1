@@ -36,14 +36,17 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `celular` varchar(20) NOT NULL,
-  `cpf` varchar(14) NOT NULL,
-  `senha` varchar(255) NOT NULL,
+  `celular` varchar(20) DEFAULT NULL,
+  `cpf` varchar(14) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL,
+  `oauth_provider` varchar(20) DEFAULT NULL,
+  `oauth_subject` varchar(255) DEFAULT NULL,
   `tipo_usuario` enum('usuario','admin') NOT NULL DEFAULT 'usuario',
   `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `cpf` (`cpf`)
+  UNIQUE KEY `cpf` (`cpf`),
+  UNIQUE KEY `oauth_identity` (`oauth_provider`, `oauth_subject`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `locais` (
@@ -60,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `locais` (
   `latitude` decimal(10,7) NOT NULL,
   `longitude` decimal(10,7) NOT NULL,
   `categorias` longtext NOT NULL,
-  `deficiencias` longtext NOT NULL,
+  `deficiencias` longtext NOT NULL DEFAULT '[]',
   `outra_categoria` varchar(100) DEFAULT NULL,
   `recursos` longtext NOT NULL,
   `outro_recurso` varchar(150) DEFAULT NULL,
